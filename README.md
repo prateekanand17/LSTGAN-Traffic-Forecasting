@@ -19,12 +19,11 @@ Our solution explicitly abstracts the city as a dynamic **Spatial-Temporal Graph
 - **Heavy Horizon Forecasting:** Safely outperforms Baseline models (Graph WaveNet, DCRNN) for massive long-term predictions (15, 30, and 60 minutes out) with minimized Root Mean Square Error (RMSE).
 - **Interactive UI Intelligence:** Real-time percentage breakdowns of severe gridlock versus free flow, alongside highly granular 6-sensor multi-comparison capabilities wrapped in a Streamlit interface.
 
-## 3. Tech Stack
-- **AI/ML Engine:** PyTorch (LSTGAN Architecture)
-- **Frontend Dashboard:** Streamlit
-- **Visualization:** Plotly Graphic Objects, Folium, Leaflet.js
-- **Data Manipulation:** Pandas, NumPy, Scikit-learn
-- **Dataset:** PeMS-Bay (Performance Measurement System)
+## 3. Tech Stack & Technical Depth
+- **AI/ML Engine (PyTorch):** We utilized PyTorch over TensorFlow because its dynamic computational graph natively supports the highly irregular dimensions of Graph Convolutional Networks (GCNs). This solved the problem of tracking back-propagation errors through our 325-node spatial adjacency matrix.
+- **Frontend App (Streamlit):** Chosen instead of React/Node.js to tightly couple our Python-based ML layer directly with our View layer. It solved the problem of building massive, stateful geospatial UIs without needing a complex, latency-heavy REST API backend.
+- **Visualization (Folium & Plotly):** We integrated Folium (Leaflet.js) to render our graph nodes accurately onto real-world maps. This allowed us to physically verify our graph embeddings rather than relying exclusively on abstract matrix math.
+- **Data Engineering (Pandas & NumPy):** Essential for transforming the massive PeMS-Bay datasets into efficient, sliding-window temporal tensors (1D convolutions) before feeding them into the PyTorch engine.
 
 ## 4. Install and Run Instructions
 To run this application locally, you must first have Python 3.9+ installed and clone the repository.
