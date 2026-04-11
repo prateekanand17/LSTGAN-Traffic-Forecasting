@@ -1,4 +1,8 @@
 import os
+import sys
+# Add the repository root to the Python path so Streamlit Cloud can find the 'src' module
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pickle
 import numpy as np
 import pandas as pd
