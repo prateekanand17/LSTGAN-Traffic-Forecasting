@@ -49,7 +49,7 @@ To run this application locally, you must first have Python 3.9+ installed and c
 
 ## 6. Architecture Notes
 
-![Spatial Architecture](Figures/Architecture_figure/arch_local_enc.png)
+![Model Architecture](Figures/Architecture.png)
 
 Our underlying model (LSTGAN) operates using a highly advanced composite architecture:
 - **Spatial Topology:** Employs Chebyshev Graph Convolutional Networks (GCN) coupled with Multi-head Self-Attention to capture immediate upstream/downstream neighbor states *and* distant structural network states simultaneously.
