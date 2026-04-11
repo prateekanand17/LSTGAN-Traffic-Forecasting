@@ -543,7 +543,3 @@ with tab4:
                         legend=dict(bgcolor='rgba(0,0,0,0)', font=dict(size=12)),
                     )
                     st.plotly_chart(fig_sim, use_container_width=True)
-262d'), yaxis=dict(gridcolor='#21262d'),
-        showlegend=False,
-    )
-    st.plotly_chart(fig_bar, use_container_width=True)
