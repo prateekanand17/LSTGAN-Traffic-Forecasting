@@ -160,7 +160,9 @@ pred_speed = (pred.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
 actual_speed = (Y.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
 history_speed = (Xh.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
 
-sp    tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Network Map", "📊 Sensor Forecast", "📈 Network Summary", "🤖 Scenario Engine"])
+speeds_60 = pred_speed[-1]
+
+tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Network Map", "📊 Sensor Forecast", "📈 Network Summary", "🤖 Scenario Engine"])
 
 with tab1:
     st.markdown(f"### 🗺️ Traffic Map — {DAYS[query_day]} {query_hour:02d}:00 (+60min forecast)")
