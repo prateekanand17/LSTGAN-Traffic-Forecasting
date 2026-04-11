@@ -71,3 +71,7 @@ To validate our system's accuracy, robustness, and baseline comparative strength
 - **Prediction Proofs:** See the [`Figures/Visual_figure/`](Figures/Visual_figure/) directory for 24-hour traffic profiles, scatter plots, and direct Ground Truth vs Prediction visualizations.
 - **Data Engineering:** See the [`Figures/Data_pipeline_figure/`](Figures/Data_pipeline_figure/) directory for flowchart diagrams illustrating our complex time-series horizon windowing techniques.
 
+## 9. Future Improvements
+**LLM-Powered "What-If" Scenario Engine**
+If granted more time and resources, we plan to integrate a Natural Language Processing (LLM) interface for city planners. Instead of exclusively viewing static forward-predictions, a planner could type: *"Simulate a 3-lane closure on US-101 North at 8:00 AM"*. The system would dynamically sever the corresponding graph edges within the underlying Adjacency Matrix, forcing the LSTGAN model to re-calculate and visualize the predicted gridlock shockwaves in real-time.
+
