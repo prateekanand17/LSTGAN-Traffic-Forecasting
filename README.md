@@ -52,6 +52,8 @@ To run this application locally, you must first have Python 3.9+ installed and c
 ![Model Architecture](Figures/Architecture.png)
 
 Our underlying model (LSTGAN) operates using a highly advanced composite architecture:
+*(Note: Detailed, per-module schematic diagrams for every component are available in the [`Figures/Architecture_figure/`](Figures/Architecture_figure/) directory).*
+
 - **Spatial Topology:** Employs Chebyshev Graph Convolutional Networks (GCN) coupled with Multi-head Self-Attention to capture immediate upstream/downstream neighbor states *and* distant structural network states simultaneously.
 - **Temporal Processing:** Uses dilated 1D-convolutions with distinct paths covering Weekly, Daily, and Hourly historical timeframes.
 - **Frontend Segregation:** To maintain code stability, the Streamlit app acts exclusively as the View layer (`src/app.py`), directly sourcing the computational framework from `src/model.py`.
