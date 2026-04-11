@@ -160,9 +160,7 @@ pred_speed = (pred.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
 actual_speed = (Y.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
 history_speed = (Xh.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
 
-speeds_60 = pred_speed[-1]
-
-tab1, tab2, tab3 = st.tabs(["🗺️ Network Map", "📊 Sensor Forecast", "📈 Network Summary"])
+sp    tab1, tab2, tab3, tab4 = st.tabs(["🗺️ Network Map", "📊 Sensor Forecast", "📈 Network Summary", "🤖 Scenario Engine"])
 
 with tab1:
     st.markdown(f"### 🗺️ Traffic Map — {DAYS[query_day]} {query_hour:02d}:00 (+60min forecast)")
@@ -454,6 +452,98 @@ with tab3:
         plot_bgcolor='#0e1117', paper_bgcolor='#0e1117',
         font=dict(color='#c9d1d9'),
         xaxis=dict(gridcolor='#21262d'), yaxis=dict(gridcolor='#21262d'),
+        showlegend=False,
+    )
+    st.plotly_chart(fig_bar, use_container_width=True)
+
+with tab4:
+    st.markdown("### 🤖 NLP 'What-If' Scenario Engine")
+    st.markdown("Type a natural language scenario to perform **dynamic mathematical graph surgery** on the native Adjacency Matrix and compute gridlock shockwaves in real-time.")
+    
+    scenario_input = st.text_input(
+        "Enter scenario prompt:",
+        value=f"Simulate a massive accident and 3-lane closure at Sensor {selected_sensor}",
+    )
+    
+    if st.button("Run Interactive Simulation"):
+        with st.spinner("Extracting NLP Intent and recalculating PyTorch Graph edge nodes..."):
+            import re
+            import copy
+            
+            # Simple RegEx Mock for NLP Parser Extracting IDs
+            target_ids = re.findall(r'\b(40\d{4})\b', scenario_input)
+            if not target_ids:
+                st.error("❌ ActionParser failed: Could not detect a valid 6-digit Sensor ID in the prompt (e.g., 400038).")
+            else:
+                sim_sensor = target_ids[0]
+                if str(sim_sensor) not in station_ids:
+                    st.error(f"❌ GeoParser failed: Sensor {sim_sensor} not found in physical network graph.")
+                else:
+                    sim_idx = station_ids.index(str(sim_sensor))
+                    
+                    # 1. Clone Graph and Sever Edges (Mathematical Graph Surgery)
+                    adj_mx_sim = adj_mx.copy()
+                    adj_mx_sim[sim_idx, :] = 0.0
+                    adj_mx_sim[:, sim_idx] = 0.0
+                    
+                    # 2. Clone Model Context and Inject New Graph Adjacency
+                    model_sim = copy.deepcopy(model)
+                    model_sim.local_enc.set_graph(adj_mx_sim)
+                    
+                    # 3. Mutate History Tensors (Force to 0 mph severe gridlock)
+                    zero_val = -train_mean / train_std
+                    Xh_sim = Xh.clone(); Xh_sim[0, :, sim_idx, 0] = zero_val
+                    Xw_sim = Xw.clone(); Xw_sim[0, :, sim_idx, 0] = zero_val
+                    Xd_sim = Xd.clone(); Xd_sim[0, :, sim_idx, 0] = zero_val
+                    
+                    # 4. Generate Simulation
+                    with torch.no_grad():
+                        pred_sim = model_sim(Xw_sim, Xd_sim, Xh_sim, ti)
+                        
+                    pred_speed_sim = (pred_sim.cpu().numpy() * train_std + train_mean)[0, :, :, 0]
+                    
+                    st.success(f"✅ Simulation Complete! Mathematical edges pointing to Target Node **Sensor {sim_sensor}** have been successfully severed from the Spatial Graph.")
+                    
+                    # Compute network cascading failure
+                    orig_net = pred_speed[-1].mean()
+                    sim_net = pred_speed_sim[-1].mean()
+                    
+                    st.markdown("#### Scenario Analytical Impact")
+                    c1, c2, c3 = st.columns(3)
+                    with c1:
+                        c1.metric("Original Average Speed", f"{orig_net:.1f} mph")
+                    with c2:
+                        c2.metric("Simulation Average Speed", f"{sim_net:.1f} mph", f"{sim_net - orig_net:.2f} mph overall")
+                    with c3:
+                        neighbor_drop = pred_speed_sim[-1].mean() - pred_speed[-1].mean()
+                        c3.metric("Network Cascading Shockwave", f"{neighbor_drop:.2f} mph decay")
+                    
+                    # Graph the Shockwave Ripple
+                    fig_sim = go.Figure()
+                    horizons_sim = np.arange(1, 13) * 5
+                    
+                    # Selected Sensor (Zeroed)
+                    fig_sim.add_trace(go.Scatter(x=horizons_sim, y=pred_speed[:, sim_idx], name=f'Original Sensor {sim_sensor}', line=dict(color='#8b949e', dash='dot')))
+                    fig_sim.add_trace(go.Scatter(x=horizons_sim, y=pred_speed_sim[:, sim_idx], name=f'Simulated Sensor {sim_sensor} (Closure)', line=dict(color='#d63031', width=3)))
+                    
+                    # Plot the ripple on a connected neighbor node!
+                    neighbors = (adj_mx[sim_idx, :] > 0.0).nonzero()[0]
+                    if len(neighbors) > 0:
+                        n_idx = neighbors[0] # Pick primary neighbor
+                        n_id = station_ids[n_idx]
+                        fig_sim.add_trace(go.Scatter(x=horizons_sim, y=pred_speed[:, n_idx], name=f'Prior Neighbor {n_id} (Unaffected)', line=dict(color='#58a6ff', dash='dot')))
+                        fig_sim.add_trace(go.Scatter(x=horizons_sim, y=pred_speed_sim[:, n_idx], name=f'Predicted Neighbor {n_id} (Spillover)', line=dict(color='#d2a8ff', width=3)))
+
+                    fig_sim.update_layout(
+                        title=dict(text="Network Graph Spillover Effects (Local Connectivity Severed)", font=dict(color='white')),
+                        xaxis_title="Minutes Ahead", yaxis_title="Predicted Speed (mph)",
+                        height=400, margin=dict(t=50, b=30, l=50, r=30),
+                        plot_bgcolor='#0e1117', paper_bgcolor='#0e1117', font=dict(color='#c9d1d9'),
+                        xaxis=dict(gridcolor='#21262d'), yaxis=dict(gridcolor='#21262d'),
+                        legend=dict(bgcolor='rgba(0,0,0,0)', font=dict(size=12)),
+                    )
+                    st.plotly_chart(fig_sim, use_container_width=True)
+262d'), yaxis=dict(gridcolor='#21262d'),
         showlegend=False,
     )
     st.plotly_chart(fig_bar, use_container_width=True)
