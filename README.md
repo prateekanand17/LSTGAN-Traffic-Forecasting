@@ -1,7 +1,7 @@
 # LSTGAN Traffic Forecaster
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstgan-traffic-forecasting.streamlit.app/)
-🚀 **Live Deployment:** [Test the live dashboard here!](https://lstgan-traffic-forecasting.streamlit.app/)
+**Live Deployment:** [Test the live dashboard here!](https://lstgan-traffic-forecasting.streamlit.app/)
 ## 1. Overview
 The **LSTGAN Traffic Forecaster** is an interactive, real-time dashboard for predicting macroscopic traffic conditions across 325 sensors in the Bay Area network. 
 
