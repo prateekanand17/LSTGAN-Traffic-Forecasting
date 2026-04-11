@@ -60,18 +60,26 @@ Our underlying model (LSTGAN) operates using a highly advanced composite archite
 - **Spatial Topology:** Employs Chebyshev Graph Convolutional Networks (GCN) coupled with Multi-head Self-Attention to capture immediate upstream/downstream neighbor states *and* distant structural network states simultaneously.
 - **Temporal Processing:** Uses dilated 1D-convolutions with distinct paths covering Weekly, Daily, and Hourly historical timeframes.
 - **Frontend Segregation:** To maintain code stability, the Streamlit app acts exclusively as the View layer (`src/app.py`), directly sourcing the computational framework from `src/model.py`.
+The spatial topology translates the exact Latitude and Longitude (`traffic_stations.csv`) into a 325x325 weight matrix (`adj_mx.pkl`), while the temporal sequences span consecutive 12-horizon (+60 minute) prediction branches.
 
-## 7. Limitations
+## 7. Developer & Research Notebooks
+For judges and technical reviewers seeking to inspect the raw foundational model training, data preprocessing pipelines, and architectural proofs, we have included our comprehensive research suite.
+Please refer to the [`notebooks/`](notebooks/) directory to explore the original developmental workflows:
+- **`LSTGAN_Training.ipynb`**: Original PyTorch model compilation, forward-pass training loops, and MAE evaluation generation.
+- **`LSTGAN_Architecture_Demo.ipynb`**: Granular layer-by-layer architectural tracing of the Local Spatial Encoders and Global Attention mechanisms.
+- **`LSTGAN_Complete_Data_Pipeline.ipynb`**: The massive sliding-window algorithm that generates the historical memory slices from the raw PeMS binaries.
+
+## 8. Limitations
 - **Static Dataset Integration:** Live streaming API ingestion (e.g. hooking directly into Caltrans PeMS web sockets) is pending. Predictions run on an offline high-resolution slice of `test_5min.pkl`.
 - **CPU Inference Bound:** Streamlit defaults to deploying the model onto the CPU. Larger matrices may experience slow-down without an attached accelerator in production.
 
-## 8. Performance & Evaluation
+## 9. Performance & Evaluation
 To validate our system's accuracy, robustness, and baseline comparative strength, we have logged extensive graphical evidence:
 - **Baseline Analysis:** See the [`Figures/Complete_analysis_figure/`](Figures/Complete_analysis_figure/) directory for detailed spatial-temporal error distributions, horizon degradation charts, and multi-sensor heatmaps.
 - **Prediction Proofs:** See the [`Figures/Visual_figure/`](Figures/Visual_figure/) directory for 24-hour traffic profiles, scatter plots, and direct Ground Truth vs Prediction visualizations.
 - **Data Engineering:** See the [`Figures/Data_pipeline_figure/`](Figures/Data_pipeline_figure/) directory for flowchart diagrams illustrating our complex time-series horizon windowing techniques.
 
-## 9. Future Improvements
+## 10. Future Improvements
 **LLM-Powered "What-If" Scenario Engine**
 If granted more time and resources, we plan to integrate a Natural Language Processing (LLM) interface for city planners. Instead of exclusively viewing static forward-predictions, a planner could type: *"Simulate a 3-lane closure on US-101 North at 8:00 AM"*. The system would dynamically sever the corresponding graph edges within the underlying Adjacency Matrix, forcing the LSTGAN model to re-calculate and visualize the predicted gridlock shockwaves in real-time.
 
