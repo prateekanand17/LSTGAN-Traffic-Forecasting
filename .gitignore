@@ -1,0 +1,16 @@
+# Local environment variables (Don't commit secrets!)
+.env
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Streamlit/OS
+.streamlit/
+.DS_Store
+
+# Data and Models - Exceeds GitHub Limit!
+Results/train_5min.pkl
+LSTGAN_Data/pems-bay.h5

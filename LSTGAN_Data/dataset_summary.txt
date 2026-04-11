@@ -1,0 +1,11 @@
+PEMS-BAY Dataset Summary
+==================================================
+
+Dataset Name: PEMS-BAY
+Num Sensors: 325
+Time Period: January 1, 2017 - June 30, 2017
+Time Interval: 5 minutes
+Total Timesteps: 52116
+Location: Bay Area, California
+Data Type: Traffic Speed
+Source: Caltrans Performance Measurement System (PeMS)

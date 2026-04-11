@@ -1,0 +1,44 @@
+import os
+import torch
+
+# Paths
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE, "assets")
+CKPT_PATH = os.path.join(DATA_DIR, "best_lstgan.pt")
+ADJ_FILE = os.path.join(DATA_DIR, "adj_mx_bay.pkl")
+TEST_FILE = os.path.join(DATA_DIR, "test_5min.pkl")
+STATIONS_CSV = os.path.join(DATA_DIR, "traffic_stations.csv")
+
+# Hyperparameters
+NUM_SENSORS = 325
+STEPS_PER_HOUR = 12
+STEPS_PER_DAY = 288
+WEEKLY_WINDOW = 2016
+DAILY_WINDOW = 288
+HOURLY_WINDOW = 12
+FORECAST_HORIZON = 12
+
+WEEKLY_IN_CHANNELS = 3
+WEEKLY_OUT_CHANNELS = 16
+DAILY_IN_CHANNELS = 3
+DAILY_OUT_CHANNELS = 8
+HOURLY_IN_CHANNELS = 1
+
+WEEKLY_STRIDE_1 = 14
+WEEKLY_STRIDE_2 = 12
+DAILY_STRIDE_1 = 4
+DAILY_STRIDE_2 = 6
+
+SPATIAL_EMBED_DIM = 16
+GLOBAL_SPATIAL_CHANNELS = 16
+GLOBAL_ATTN_HEADS = 4
+GLOBAL_ATTN_LAYERS = 1
+LOCAL_SPATIAL_CHANNELS = 8
+CHEBYSHEV_K = 5
+D_MODEL = WEEKLY_OUT_CHANNELS + DAILY_OUT_CHANNELS + GLOBAL_SPATIAL_CHANNELS + LOCAL_SPATIAL_CHANNELS
+TIME_ONEHOT_DIM = 7 + STEPS_PER_DAY
+DECODER_HEADS = 6
+DECODER_LAYERS = 1
+
+DEVICE = torch.device("cpu")
+DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]

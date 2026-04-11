@@ -1,0 +1,116 @@
+============================================================
+CHECKPOINT CONTENTS
+============================================================
+Keys: ['epoch', 'model', 'opt', 'val_mae', 'mean', 'std']
+
+Epoch: 50
+Val MAE: 1.5933863246560696
+Train Mean: 62.73689571599971
+Train Std: 9.436833092265356
+
+============================================================
+MODEL LAYERS
+============================================================
+  weekly_enc.c1a.weight                         shape=[9, 3, 3]            params=81
+  weekly_enc.c1a.bias                           shape=[9]                  params=9
+  weekly_enc.c1b.weight                         shape=[9, 9, 14]           params=1,134
+  weekly_enc.c1b.bias                           shape=[9]                  params=9
+  weekly_enc.bn1.weight                         shape=[9]                  params=9
+  weekly_enc.bn1.bias                           shape=[9]                  params=9
+  weekly_enc.bn1.running_mean                   shape=[9]                  params=9
+  weekly_enc.bn1.running_var                    shape=[9]                  params=9
+  weekly_enc.bn1.num_batches_tracked            shape=[]                   params=1
+  weekly_enc.c2a.weight                         shape=[16, 9, 3]           params=432
+  weekly_enc.c2a.bias                           shape=[16]                 params=16
+  weekly_enc.c2b.weight                         shape=[16, 16, 12]         params=3,072
+  weekly_enc.c2b.bias                           shape=[16]                 params=16
+  weekly_enc.bn2.weight                         shape=[16]                 params=16
+  weekly_enc.bn2.bias                           shape=[16]                 params=16
+  weekly_enc.bn2.running_mean                   shape=[16]                 params=16
+  weekly_enc.bn2.running_var                    shape=[16]                 params=16
+  weekly_enc.bn2.num_batches_tracked            shape=[]                   params=1
+  daily_enc.c1a.weight                          shape=[8, 3, 3]            params=72
+  daily_enc.c1a.bias                            shape=[8]                  params=8
+  daily_enc.c1b.weight                          shape=[8, 8, 4]            params=256
+  daily_enc.c1b.bias                            shape=[8]                  params=8
+  daily_enc.bn1.weight                          shape=[8]                  params=8
+  daily_enc.bn1.bias                            shape=[8]                  params=8
+  daily_enc.bn1.running_mean                    shape=[8]                  params=8
+  daily_enc.bn1.running_var                     shape=[8]                  params=8
+  daily_enc.bn1.num_batches_tracked             shape=[]                   params=1
+  daily_enc.c2a.weight                          shape=[8, 8, 3]            params=192
+  daily_enc.c2a.bias                            shape=[8]                  params=8
+  daily_enc.c2b.weight                          shape=[8, 8, 6]            params=384
+  daily_enc.c2b.bias                            shape=[8]                  params=8
+  daily_enc.bn2.weight                          shape=[8]                  params=8
+  daily_enc.bn2.bias                            shape=[8]                  params=8
+  daily_enc.bn2.running_mean                    shape=[8]                  params=8
+  daily_enc.bn2.running_var                     shape=[8]                  params=8
+  daily_enc.bn2.num_batches_tracked             shape=[]                   params=1
+  sp_embed.conv.weight                          shape=[16, 1, 1]           params=16
+  sp_embed.conv.bias                            shape=[16]                 params=16
+  sp_embed.bn.weight                            shape=[16]                 params=16
+  sp_embed.bn.bias                              shape=[16]                 params=16
+  sp_embed.bn.running_mean                      shape=[16]                 params=16
+  sp_embed.bn.running_var                       shape=[16]                 params=16
+  sp_embed.bn.num_batches_tracked               shape=[]                   params=1
+  global_enc.layers.0.attn.in_proj_weight       shape=[48, 16]             params=768
+  global_enc.layers.0.attn.in_proj_bias         shape=[48]                 params=48
+  global_enc.layers.0.attn.out_proj.weight      shape=[16, 16]             params=256
+  global_enc.layers.0.attn.out_proj.bias        shape=[16]                 params=16
+  global_enc.layers.0.n1.weight                 shape=[16]                 params=16
+  global_enc.layers.0.n1.bias                   shape=[16]                 params=16
+  global_enc.layers.0.n2.weight                 shape=[16]                 params=16
+  global_enc.layers.0.n2.bias                   shape=[16]                 params=16
+  global_enc.layers.0.ffn.0.weight              shape=[64, 16]             params=1,024
+  global_enc.layers.0.ffn.0.bias                shape=[64]                 params=64
+  global_enc.layers.0.ffn.3.weight              shape=[16, 64]             params=1,024
+  global_enc.layers.0.ffn.3.bias                shape=[16]                 params=16
+  local_enc.L_scaled                            shape=[325, 325]           params=105,625
+  local_enc.cheb.bias                           shape=[8]                  params=8
+  local_enc.cheb.weights.0                      shape=[16, 8]              params=128
+  local_enc.cheb.weights.1                      shape=[16, 8]              params=128
+  local_enc.cheb.weights.2                      shape=[16, 8]              params=128
+  local_enc.cheb.weights.3                      shape=[16, 8]              params=128
+  local_enc.cheb.weights.4                      shape=[16, 8]              params=128
+  time_enc.mlp.0.weight                         shape=[96, 295]            params=28,320
+  time_enc.mlp.0.bias                           shape=[96]                 params=96
+  time_enc.mlp.1.weight                         shape=[96, 96]             params=9,216
+  time_enc.mlp.1.bias                           shape=[96]                 params=96
+  time_enc.mlp.3.weight                         shape=[48, 96]             params=4,608
+  time_enc.mlp.3.bias                           shape=[48]                 params=48
+  time_enc.norm.weight                          shape=[48]                 params=48
+  time_enc.norm.bias                            shape=[48]                 params=48
+  decoder.fq                                    shape=[1, 12, 48]          params=576
+  decoder.pe.pe                                 shape=[1, 500, 48]         params=24,000
+  decoder.enc_layers.0.attn.in_proj_weight      shape=[144, 48]            params=6,912
+  decoder.enc_layers.0.attn.in_proj_bias        shape=[144]                params=144
+  decoder.enc_layers.0.attn.out_proj.weight     shape=[48, 48]             params=2,304
+  decoder.enc_layers.0.attn.out_proj.bias       shape=[48]                 params=48
+  decoder.enc_layers.0.n1.weight                shape=[48]                 params=48
+  decoder.enc_layers.0.n1.bias                  shape=[48]                 params=48
+  decoder.enc_layers.0.n2.weight                shape=[48]                 params=48
+  decoder.enc_layers.0.n2.bias                  shape=[48]                 params=48
+  decoder.enc_layers.0.ffn.0.weight             shape=[192, 48]            params=9,216
+  decoder.enc_layers.0.ffn.0.bias               shape=[192]                params=192
+  decoder.enc_layers.0.ffn.3.weight             shape=[48, 192]            params=9,216
+  decoder.enc_layers.0.ffn.3.bias               shape=[48]                 params=48
+  decoder.dec_layers.0.attn.in_proj_weight      shape=[144, 48]            params=6,912
+  decoder.dec_layers.0.attn.in_proj_bias        shape=[144]                params=144
+  decoder.dec_layers.0.attn.out_proj.weight     shape=[48, 48]             params=2,304
+  decoder.dec_layers.0.attn.out_proj.bias       shape=[48]                 params=48
+  decoder.dec_layers.0.n1.weight                shape=[48]                 params=48
+  decoder.dec_layers.0.n1.bias                  shape=[48]                 params=48
+  decoder.dec_layers.0.n2.weight                shape=[48]                 params=48
+  decoder.dec_layers.0.n2.bias                  shape=[48]                 params=48
+  decoder.dec_layers.0.ffn.0.weight             shape=[192, 48]            params=9,216
+  decoder.dec_layers.0.ffn.0.bias               shape=[192]                params=192
+  decoder.dec_layers.0.ffn.3.weight             shape=[48, 192]            params=9,216
+  decoder.dec_layers.0.ffn.3.bias               shape=[48]                 params=48
+  decoder.out_proj.weight                       shape=[1, 48]              params=48
+  decoder.out_proj.bias                         shape=[1]                  params=1
+
+Total parameters: 239,172
+
+Optimizer param groups: 1
+  Group 0: lr=0.00125, weight_decay=0.0001
