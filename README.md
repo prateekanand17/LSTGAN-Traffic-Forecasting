@@ -41,7 +41,7 @@ To run this application locally, you must first have Python 3.9+ installed and c
 3. **View the Dashboard**
    - Open your browser and navigate to `http://localhost:8501`
 
-42: *(Note: The required pre-trained model and test dataset are already natively bundled in the `assets/` directory and will load automatically).*
+*(Note: We have natively bundled the required pre-trained LSTGAN model and testing dataset inside the repository's `assets/` directory so the dashboard will compile and load out-of-the-box).*
 ## 5. Usage Examples
 
 ![Dashboard Preview](Figures/Hackathon_Demo_figure/executive_dashboard.png)
