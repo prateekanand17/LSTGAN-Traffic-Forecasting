@@ -43,6 +43,7 @@ To run this application locally, you must first have Python 3.9+ installed and c
 ## 5. Usage Examples
 
 ![Dashboard Preview](Figures/Hackathon_Demo_figure/executive_dashboard.png)
+*(Note: Additional dashboard UI layouts and dynamic map rendering examples can be found in our [`Figures/Hackathon_Demo_figure/`](Figures/Hackathon_Demo_figure/) and [`Figures/Map_figure/`](Figures/Map_figure/) directories).*
 
 - **Check Rush Hour**: Use the left sidebar to select `Monday` and `08:00`. Watch the map instantly render the predicted rush hour congestion +60 mins into the future.
 - **Deep Dive a Sensor**: Select `Sensor #400001` to view its specific 5-10-15-30-60 minute predictions plotted against true historic states.
@@ -61,3 +62,10 @@ Our underlying model (LSTGAN) operates using a highly advanced composite archite
 ## 7. Limitations
 - **Static Dataset Integration:** Live streaming API ingestion (e.g. hooking directly into Caltrans PeMS web sockets) is pending. Predictions run on an offline high-resolution slice of `test_5min.pkl`.
 - **CPU Inference Bound:** Streamlit defaults to deploying the model onto the CPU. Larger matrices may experience slow-down without an attached accelerator in production.
+
+## 8. Performance & Evaluation
+To validate our system's accuracy, robustness, and baseline comparative strength, we have logged extensive graphical evidence:
+- **Baseline Analysis:** See the [`Figures/Complete_analysis_figure/`](Figures/Complete_analysis_figure/) directory for detailed spatial-temporal error distributions, horizon degradation charts, and multi-sensor heatmaps.
+- **Prediction Proofs:** See the [`Figures/Visual_figure/`](Figures/Visual_figure/) directory for 24-hour traffic profiles, scatter plots, and direct Ground Truth vs Prediction visualizations.
+- **Data Engineering:** See the [`Figures/Data_pipeline_figure/`](Figures/Data_pipeline_figure/) directory for flowchart diagrams illustrating our complex time-series horizon windowing techniques.
+
