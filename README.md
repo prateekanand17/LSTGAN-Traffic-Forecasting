@@ -39,9 +39,11 @@ To run this application locally, you must first have Python 3.9+ installed and c
 3. **View the Dashboard**
    - Open your browser and navigate to `http://localhost:8501`
 
-*(Note: Ensure the required pre-trained model `best_lstgan.pt` and dataset `test_5min.pkl` are located in the parent `results/` folder for it to load correctly).*
-
+42: *(Note: The required pre-trained model and test dataset are already natively bundled in the `assets/` directory and will load automatically).*
 ## 5. Usage Examples
+
+![Dashboard Preview](Figures/Hackathon_Demo_figure/executive_dashboard.png)
+
 - **Check Rush Hour**: Use the left sidebar to select `Monday` and `08:00`. Watch the map instantly render the predicted rush hour congestion +60 mins into the future.
 - **Deep Dive a Sensor**: Select `Sensor #400001` to view its specific 5-10-15-30-60 minute predictions plotted against true historic states.
 
