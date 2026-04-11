@@ -14,3 +14,6 @@ __pycache__/
 # Data and Models - Exceeds GitHub Limit!
 Results/train_5min.pkl
 LSTGAN_Data/pems-bay.h5
+
+# Hackathon Deprecated Scripts
+deprecated_single_file_app.py
