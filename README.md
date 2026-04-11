@@ -48,6 +48,9 @@ To run this application locally, you must first have Python 3.9+ installed and c
 - **Deep Dive a Sensor**: Select `Sensor #400001` to view its specific 5-10-15-30-60 minute predictions plotted against true historic states.
 
 ## 6. Architecture Notes
+
+![Spatial Architecture](Figures/Architecture_figure/arch_local_enc.png)
+
 Our underlying model (LSTGAN) operates using a highly advanced composite architecture:
 - **Spatial Topology:** Employs Chebyshev Graph Convolutional Networks (GCN) coupled with Multi-head Self-Attention to capture immediate upstream/downstream neighbor states *and* distant structural network states simultaneously.
 - **Temporal Processing:** Uses dilated 1D-convolutions with distinct paths covering Weekly, Daily, and Hourly historical timeframes.
