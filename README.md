@@ -3,18 +3,21 @@
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://lstgan-traffic-forecasting.streamlit.app/)
 **Live Deployment:** [Test the live dashboard here!](https://lstgan-traffic-forecasting.streamlit.app/)
 ## 1. Overview
-The **LSTGAN Traffic Forecaster** is an interactive, real-time dashboard for predicting macroscopic traffic conditions across 325 sensors in the Bay Area network. 
+The **LSTGAN Traffic Forecaster** is an intelligent, real-time diagnostic dashboard designed to solve one of the most complex challenges in smart city management: predicting macroscopic traffic speeds up to a full hour into the future before congestion even occurs.
 
-**What problem it solves:** Traffic congestion leads to massive economic and environmental waste. Traditional forecasting methods fail to capture both the complex geographic (spatial) topology of highways and the periodic (temporal) fluctuations of rush hours. This project solves that by deploying a state-of-the-art Spatio-Temporal Graph Attention Network to accurately predict traffic speeds up to 60 minutes into the future.
+**What problem it solves:** Traditional forecasting models analyze traffic strictly as isolated streams of linear data. Real-world traffic, however, is a deeply interconnected web governed by the mathematical geometry of the city (where one crash eventually spills into downstream arteries) and deep historical cycles (where Friday at 5:00 PM looks vastly different from Sunday at 5:00 AM). 
 
-**Intended users:** City planners, traffic control centers, and logistics companies needing macro-level insights to reroute vehicles and mitigate bottlenecks before they occur.
+Our solution explicitly abstracts the city as a dynamic **Spatial-Temporal Graph $G(V, E, A)$**. It applies a state-of-the-art **Long-Term Spatio-Temporal Graph Attention Network (LSTGAN)** to seamlessly fuse immediate road network physics (GCNs) with global city-wide semantic correlations (Multi-Head Self Attention).
+
+**Intended users:** City planners, traffic control centers, and logistics companies needing mathematically proven, macro-level insights to proactively reroute fleets, deploy emergency services, and drastically minimize urban congestion pipelines.
 
 ## 2. Features
-- **Dynamic 60-Minute Forecasts**: Real-time evaluation of traffic conditions up to an hour ahead.
-- **Geographically Accurate Graph Mapping**: Interactive Map projecting exact network node structure onto the physical highways (US-101, I-880).
-- **Per-Sensor Analytics**: Time-series charts comparing historical, actual, and predicted speeds alongside 80%/95% confidence intervals.
-- **Network Congestion Analytics**: High-level summaries computing the percentage of the network in Free Flow versus Severe Gridlock.
-- **Cross-Sensor Comparison**: Ability to graph up to 6 sensors simultaneously to view propagating traffic shockwaves.
+- **Local Spatial Mapping (Graph Convolutions):** Utilizes Chebyshev Polynomial approximations on the road Adjacency Matrix to mathematically "bleed" congestion into physically connected intersections in real-time.
+- **Global Spatial Attention:** Implements a Transformer-style Query/Key attention mechanism to uncover invisible, city-wide correlations (e.g., matching a commercial district's behavior with a distant industrial park).
+- **Temporal Downsampling:** Deploys 1D Convolutional sliding windows across massive weekly and daily historical subsets to seamlessly filter out minute-by-minute noise and extract underlying macro-rhythms.
+- **Dynamic Time Fusions:** Injects exact `Day-of-Week` and `Time-of-Day` timestamps via one-hot encoded matrix addition, explicitly forcing the AI to recognize complex cyclical habits like the morning rush hour.
+- **Heavy Horizon Forecasting:** Safely outperforms Baseline models (Graph WaveNet, DCRNN) for massive long-term predictions (15, 30, and 60 minutes out) with minimized Root Mean Square Error (RMSE).
+- **Interactive UI Intelligence:** Real-time percentage breakdowns of severe gridlock versus free flow, alongside highly granular 6-sensor multi-comparison capabilities wrapped in a Streamlit interface.
 
 ## 3. Tech Stack
 - **AI/ML Engine:** PyTorch (LSTGAN Architecture)
