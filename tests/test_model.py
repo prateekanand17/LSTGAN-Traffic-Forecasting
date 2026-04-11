@@ -15,4 +15,4 @@ def test_model_instantiation():
     assert model.local_enc is not None
     assert model.decoder is not None
     
-    print("✅ Model instantiation successful.")
+    print("Model instantiation successful.")
