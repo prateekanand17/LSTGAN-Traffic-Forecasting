@@ -81,11 +81,11 @@ st.markdown("""
 # 2. HYPERPARAMETERS
 # ═══════════════════════════════════════════════════════════
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE, "results")
+DATA_DIR = os.path.join(BASE, "assets")
 CKPT_PATH = os.path.join(DATA_DIR, "best_lstgan.pt")
 ADJ_FILE = os.path.join(DATA_DIR, "adj_mx_bay.pkl")
 TEST_FILE = os.path.join(DATA_DIR, "test_5min.pkl")
-STATIONS_CSV = os.path.join(BASE, "data", "traffic_stations.csv")
+STATIONS_CSV = os.path.join(DATA_DIR, "traffic_stations.csv")
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
 NUM_SENSORS = 325; STEPS_PER_HOUR = 12; STEPS_PER_DAY = 288
