@@ -355,7 +355,7 @@ def call_groq(prompt, system_msg=None, max_tokens=400):
                 "Keep it under 4 sentences. Use specific numbers. Use plain language for non-experts."
             )
         resp = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
             messages=[
                 {"role": "system", "content": system_msg},
                 {"role": "user", "content": prompt}
@@ -1009,7 +1009,7 @@ with tab5:
                         messages.append({"role": h["role"], "content": h["content"]})
 
                     resp = client.chat.completions.create(
-                        model="llama-3.3-70b-versatile",
+                        model="llama-3.1-8b-instant",
                         messages=messages,
                         max_tokens=500,
                         temperature=0.4
