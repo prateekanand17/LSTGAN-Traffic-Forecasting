@@ -1,0 +1,20 @@
+### 15-Minute Forecast Horizon
+| Model Architecture | MAE (mph) | RMSE (mph) | MAPE (%) |
+|--------------------|-----------|------------|----------|
+| LSTGAN (Static)    | 1.45      | 3.15       | 3.01%    |
+| **LSTGAN-Adaptive**| **1.36**  | **2.91**   | **2.75%**|
+| **Improvement**    | **↓ 6.2%**| **↓ 7.6%** | **↓ 8.6%**|
+
+### 30-Minute Forecast Horizon
+| Model Architecture | MAE (mph) | RMSE (mph) | MAPE (%) |
+|--------------------|-----------|------------|----------|
+| LSTGAN (Static)    | 1.87      | 4.12       | 3.84%    |
+| **LSTGAN-Adaptive**| **1.72**  | **3.80**   | **3.51%**|
+| **Improvement**    | **↓ 8.0%**| **↓ 7.7%** | **↓ 8.5%**|
+
+### 60-Minute Forecast Horizon
+| Model Architecture | MAE (mph) | RMSE (mph) | MAPE (%) |
+|--------------------|-----------|------------|----------|
+| LSTGAN (Static)    | 2.34      | 5.28       | 4.95%    |
+| **LSTGAN-Adaptive**| **2.12**  | **4.75**   | **4.38%**|
+| **Improvement**    | **↓ 9.4%**| **↓ 10.0%**| **↓ 11.5%**|
