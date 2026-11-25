@@ -1,0 +1,122 @@
+{
+ "R_neg": {
+  "coverage": 0.5642583366560349,
+  "coverage_ci95": [
+   0.5069972861840669,
+   0.6196873352794069
+  ],
+  "link_density": 0.5244031979326096,
+  "coverage_over_density": 1.0760009452279256,
+  "n_scenarios": 74
+ },
+ "R_neg_consensus": {
+  "coverage": 0.46873530752686765,
+  "coverage_ci95": [
+   0.40341796922367573,
+   0.5349780731474306
+  ],
+  "link_density": 0.4329097108508873,
+  "coverage_over_density": 1.082755354703328,
+  "n_scenarios": 74
+ },
+ "R_neg_learned_dense": {
+  "coverage": 1.0,
+  "coverage_ci95": [
+   1.0,
+   1.0
+  ],
+  "link_density": 1.0,
+  "coverage_over_density": 1.0,
+  "n_scenarios": 74
+ },
+ "R_neg_distance": {
+  "coverage": 0.24800217923299764,
+  "coverage_ci95": [
+   0.2044357719846051,
+   0.2953922290423249
+  ],
+  "link_density": 0.11041481188540012,
+  "coverage_over_density": 2.2460952022487697,
+  "n_scenarios": 74
+ },
+ "R_neg_knn": {
+  "coverage": 0.15881720409214015,
+  "coverage_ci95": [
+   0.12625416331266712,
+   0.19454192230478992
+  ],
+  "link_density": 0.0647155213331684,
+  "coverage_over_density": 2.454082124665543,
+  "n_scenarios": 74
+ },
+ "R_neg_consensus3": {
+  "coverage": 0.11237173772340012,
+  "coverage_ci95": [
+   0.06936952019672607,
+   0.1601663896908462
+  ],
+  "link_density": 0.0588775162304574,
+  "coverage_over_density": 1.908567903638403,
+  "n_scenarios": 74
+ },
+ "R_neg_knn40": {
+  "coverage": 0.33701986521679617,
+  "coverage_ci95": [
+   0.28081033610445366,
+   0.39468000314707474
+  ],
+  "link_density": 0.23420373273314452,
+  "coverage_over_density": 1.4390029624369907,
+  "n_scenarios": 74
+ },
+ "R_neg_knn60": {
+  "coverage": 0.43145481634292376,
+  "coverage_ci95": [
+   0.3655313317215491,
+   0.49811351744256155
+  ],
+  "link_density": 0.3265235868177045,
+  "coverage_over_density": 1.321358804574818,
+  "n_scenarios": 74
+ },
+ "R_neg_knn80": {
+  "coverage": 0.5693611563624351,
+  "coverage_ci95": [
+   0.49891768269245884,
+   0.6387007979354526
+  ],
+  "link_density": 0.42243676728970847,
+  "coverage_over_density": 1.347802086488285,
+  "n_scenarios": 74
+ },
+ "R_neg_knn100": {
+  "coverage": 0.6501174101589702,
+  "coverage_ci95": [
+   0.5802585415372341,
+   0.717075461804442
+  ],
+  "link_density": 0.5049222630104983,
+  "coverage_over_density": 1.2875594082201383,
+  "n_scenarios": 74
+ },
+ "R_neg_random_mean": {
+  "coverage": 0.4697427000201936,
+  "coverage_ci95": [
+   0.42544603986478985,
+   0.5122276946191908
+  ],
+  "link_density": 0.4637293990235166,
+  "coverage_over_density": 1.0129672628246975,
+  "n_scenarios": 74
+ },
+ "R_neg_random_consensus_mean": {
+  "coverage": 0.36495548057440635,
+  "coverage_ci95": [
+   0.3248445152342531,
+   0.4061849329325352
+  ],
+  "link_density": 0.33040609952374655,
+  "coverage_over_density": 1.1045664141807912,
+  "n_scenarios": 74
+ }
+}

@@ -1,0 +1,12 @@
+{
+  "projectRoot": "D:/Deep Traffic Brain/PART_1/New_ipynb_file/pipeline",
+  "batchFiles": [
+    {"path": "coordination/agents.py", "language": "python", "sizeLines": 133, "fileCategory": "code"},
+    {"path": "coordination/common.py", "language": "python", "sizeLines": 152, "fileCategory": "code"},
+    {"path": "coordination/coordinators.py", "language": "python", "sizeLines": 57, "fileCategory": "code"},
+    {"path": "coordination/negotiation.py", "language": "python", "sizeLines": 75, "fileCategory": "code"},
+    {"path": "generate/rules.py", "language": "python", "sizeLines": 41, "fileCategory": "code"},
+    {"path": "graph/zone_state.py", "language": "python", "sizeLines": 23, "fileCategory": "code"}
+  ],
+  "batchImportData": {"coordination/agents.py":["config.py","coordination/common.py","generate/rules.py","generate/zone_worker.py","graph/zone_state.py","inputs.py"],"coordination/common.py":["config.py","graph/zone_state.py","inputs.py"],"coordination/coordinators.py":["coordination/agents.py","coordination/common.py","generate/rules.py","generate/supervisor_agent.py"],"coordination/negotiation.py":["coordination/agents.py","coordination/common.py"],"generate/rules.py":["config.py","graph/zone_state.py"],"graph/zone_state.py":["zone_detection.py"]}
+}

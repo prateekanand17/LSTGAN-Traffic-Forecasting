@@ -1,0 +1,8 @@
+K10 s456 R_neg done (120 runs, 9s)
+K10 s456 R_neg_knn100 done (240 runs, 16s)
+K10 s456 R_neg_knn80 done (360 runs, 24s)
+K10 s456 R_neg_random0 done (480 runs, 41s)
+K10 s456 R_neg_random1 done (600 runs, 51s)
+K10 s456 R_neg_random2 done (720 runs, 60s)
+K10 s456 R_neg_random3 done (840 runs, 69s)
+K10 s456 R_neg_random4 done (960 runs, 76s)

@@ -1,0 +1,266 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 8,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 8,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 7,
+      "failed": 0,
+      "skipped": 1
+    }
+  },
+  "results": [
+    {
+      "path": "FLOW.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 158,
+      "nonEmptyLines": 130,
+      "sections": [
+        {
+          "heading": "MASTRA pipeline: execution flow and debugging guide",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. One-screen map",
+          "level": 2,
+          "line": 8
+        },
+        {
+          "heading": "2. The data that travels",
+          "level": 2,
+          "line": 33
+        },
+        {
+          "heading": "3. Stage by stage (what, where, what can go wrong)",
+          "level": 2,
+          "line": 51
+        },
+        {
+          "heading": "Stage 1 — Parse (`parse.py:22`)",
+          "level": 3,
+          "line": 53
+        },
+        {
+          "heading": "Stage 2 — Forecast gate (`validate/forecast_gate.py:20`)",
+          "level": 3,
+          "line": 60
+        },
+        {
+          "heading": "Stage 3 — Zone detection (`zone_detection.py:41`)",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "Stage 4 — Graph message passing (`graph/message_passing.py:33`)",
+          "level": 3,
+          "line": 72
+        },
+        {
+          "heading": "Stage 5 — Candidates and neighbours (`coordination/common.py`)",
+          "level": 3,
+          "line": 78
+        },
+        {
+          "heading": "Stage 6 — Round 0 proposals (`coordination/agents.py`)",
+          "level": 3,
+          "line": 83
+        },
+        {
+          "heading": "Stage 7 — Coordination",
+          "level": 3,
+          "line": 93
+        },
+        {
+          "heading": "Stage 8 — Override gates (`generate/det_guards.py:34`)",
+          "level": 3,
+          "line": 108
+        },
+        {
+          "heading": "4. Invariants (if one breaks, you found the bug)",
+          "level": 2,
+          "line": 119
+        },
+        {
+          "heading": "5. Debugging drills (symptom → where to look)",
+          "level": 2,
+          "line": 130
+        },
+        {
+          "heading": "6. How to debug any unfamiliar code (assessment method)",
+          "level": 2,
+          "line": 151
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 15
+      }
+    },
+    {
+      "path": "__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "coordination/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "generate/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "graph/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "outputs/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "outputs/writer.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "OutputWriter",
+          "startLine": 4,
+          "endLine": 15,
+          "methods": [
+            "write"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "OutputWriter",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "write",
+          "callee": "os.path.join",
+          "lineNumber": 6
+        },
+        {
+          "caller": "write",
+          "callee": "os.makedirs",
+          "lineNumber": 7
+        },
+        {
+          "caller": "write",
+          "callee": "open",
+          "lineNumber": 9
+        },
+        {
+          "caller": "write",
+          "callee": "os.path.join",
+          "lineNumber": 9
+        },
+        {
+          "caller": "write",
+          "callee": "json.dump",
+          "lineNumber": 10
+        },
+        {
+          "caller": "write",
+          "callee": "open",
+          "lineNumber": 12
+        },
+        {
+          "caller": "write",
+          "callee": "os.path.join",
+          "lineNumber": 12
+        },
+        {
+          "caller": "write",
+          "callee": "json.dump",
+          "lineNumber": 13
+        },
+        {
+          "caller": "write",
+          "callee": "print",
+          "lineNumber": 15
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "validate/__init__.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

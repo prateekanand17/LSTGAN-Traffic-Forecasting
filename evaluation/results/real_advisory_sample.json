@@ -1,0 +1,18 @@
+{
+  "zone_id": "zone_b67f21ff",
+  "severity_level": "LOW",
+  "predicted_mean_speed_mph": 65.7,
+  "cascade_risk": 1.0,
+  "network_pressure_score": 0.0,
+  "sensor_count": 2,
+  "sample_station_ids": [
+    "400097",
+    "400582"
+  ],
+  "scenario_timestamp": "2017-05-25 19:20:00",
+  "advisory": {
+    "now": "Severe congestion. Mean speed 66 mph. Reduce speed limit to 45 mph on affected corridor.",
+    "soon": "Activate upstream ramp metering. Alert downstream TMC operators.",
+    "prevent": "Cascade risk 1.00. Divert traffic upstream. Monitor 2 sensors."
+  }
+}

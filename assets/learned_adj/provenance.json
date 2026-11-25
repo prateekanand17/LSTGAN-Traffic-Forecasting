@@ -1,0 +1,92 @@
+{
+ "formula": "P1.1 - Extract the learned adjacency from the Adaptive-LSTGAN PeMS-BAY checkpoints.\n\nGraph learner (verbatim formula from notebooks/LSTGAN_Seed_Sweep.ipynb, cell 6, which trained the checkpoints):\n    S   = E_src E_tgt^T / sqrt(d)\n    A_k = rownorm( softmax_row( topk_mask(S, k) ) * (1 - I) )      # form (b): what the model propagates over\n    A_d = rownorm( softmax_row( S ) * (1 - I) )                     # form (a): same without the top-k mask\nFusion in the model is on Laplacians: L = s*L_static + (1-s)*L_learned with s = sigmoid(alpha_logit);\nthe weight on the learned graph is alpha = 1 - s (CLAUDE.md convention). The fused operator is a Laplacian,\nnot an adjacency, so it is not saved as a communication graph; alpha is recorded in the provenance file.",
+ "seeds": {
+  "42": {
+   "checkpoint": "Results/adaptive_seed_42/adaptive_seed42_dim10_topk10.pt",
+   "epoch": 66,
+   "val_mae": 1.5795301344226953,
+   "sigmoid_alpha_logit": 0.11551985144615173,
+   "alpha_learned_weight": 0.8844801485538483,
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "123": {
+   "checkpoint": "Results/adaptive_seed_123/adaptive_seed123_dim10_topk10.pt",
+   "epoch": 47,
+   "val_mae": 1.5803621804714203,
+   "sigmoid_alpha_logit": 0.10833808034658432,
+   "alpha_learned_weight": 0.8916619196534157,
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "456": {
+   "checkpoint": "Results/adaptive_seed_456/adaptive_seed456_dim10_topk10.pt",
+   "epoch": 42,
+   "val_mae": 1.591342214345932,
+   "sigmoid_alpha_logit": 0.12091995030641556,
+   "alpha_learned_weight": 0.8790800496935844,
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998211860657,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "789": {
+   "checkpoint": "Results/adaptive_seed_789/adaptive_seed789_dim10_topk10.pt",
+   "epoch": 47,
+   "val_mae": 1.5894419729709626,
+   "sigmoid_alpha_logit": 0.10930143296718597,
+   "alpha_learned_weight": 0.890698567032814,
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "1024": {
+   "checkpoint": "Results/adaptive_seed_1024/adaptive_seed1024_dim10_topk10.pt",
+   "epoch": 51,
+   "val_mae": 1.5958254730701447,
+   "sigmoid_alpha_logit": 0.11601662635803223,
+   "alpha_learned_weight": 0.8839833736419678,
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998211860657,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  }
+ },
+ "npz_learned_graph_check": {
+  "42": 1.043081283569336e-07,
+  "123": 0.8234544992446899,
+  "456": 0.9380506277084351,
+  "789": 0.8588483929634094,
+  "1024": 0.8234544992446899
+ }
+}

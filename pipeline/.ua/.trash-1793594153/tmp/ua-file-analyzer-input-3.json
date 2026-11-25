@@ -1,0 +1,12 @@
+{
+  "projectRoot": "D:/Deep Traffic Brain/PART_1/New_ipynb_file/pipeline",
+  "batchFiles": [
+    {"path": "data_source.py", "language": "python", "sizeLines": 267, "fileCategory": "code"},
+    {"path": "graph/message_passing.py", "language": "python", "sizeLines": 95, "fileCategory": "code"},
+    {"path": "inputs.py", "language": "python", "sizeLines": 36, "fileCategory": "code"},
+    {"path": "parse.py", "language": "python", "sizeLines": 51, "fileCategory": "code"},
+    {"path": "validate/forecast_gate.py", "language": "python", "sizeLines": 33, "fileCategory": "code"},
+    {"path": "zone_detection.py", "language": "python", "sizeLines": 92, "fileCategory": "code"}
+  ],
+  "batchImportData": {"data_source.py":["config.py","inputs.py"],"graph/message_passing.py":["config.py","graph/zone_state.py","inputs.py","zone_detection.py"],"inputs.py":[],"parse.py":["config.py","inputs.py"],"validate/forecast_gate.py":["inputs.py","parse.py"],"zone_detection.py":["config.py","inputs.py","parse.py"]}
+}

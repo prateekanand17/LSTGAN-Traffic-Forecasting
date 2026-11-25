@@ -1,0 +1,14 @@
+{
+  "projectRoot": "D:/Deep Traffic Brain/PART_1/New_ipynb_file/pipeline",
+  "batchFiles": [
+    {"path": "config.py", "language": "python", "sizeLines": 109, "fileCategory": "code"},
+    {"path": "generate/advisory_dq_agent.py", "language": "python", "sizeLines": 34, "fileCategory": "code"},
+    {"path": "generate/det_guards.py", "language": "python", "sizeLines": 57, "fileCategory": "code"},
+    {"path": "generate/schema.py", "language": "python", "sizeLines": 66, "fileCategory": "code"},
+    {"path": "generate/supervisor_agent.py", "language": "python", "sizeLines": 68, "fileCategory": "code"},
+    {"path": "generate/zone_worker.py", "language": "python", "sizeLines": 146, "fileCategory": "code"},
+    {"path": "llm_client.py", "language": "python", "sizeLines": 141, "fileCategory": "code"},
+    {"path": "orchestrator.py", "language": "python", "sizeLines": 245, "fileCategory": "code"}
+  ],
+  "batchImportData": {"config.py":[],"generate/advisory_dq_agent.py":["config.py","graph/zone_state.py","llm_client.py"],"generate/det_guards.py":["config.py","graph/zone_state.py","parse.py"],"generate/schema.py":["config.py"],"generate/supervisor_agent.py":["config.py","llm_client.py"],"generate/zone_worker.py":["config.py","coordination/common.py","generate/det_guards.py","generate/schema.py","llm_client.py"],"llm_client.py":["config.py"],"orchestrator.py":["config.py","coordination/agents.py","coordination/common.py","coordination/coordinators.py","coordination/negotiation.py","data_source.py","generate/advisory_dq_agent.py","generate/det_guards.py","generate/schema.py","generate/zone_worker.py","graph/message_passing.py","inputs.py","llm_client.py","parse.py","validate/forecast_gate.py","zone_detection.py"]}
+}

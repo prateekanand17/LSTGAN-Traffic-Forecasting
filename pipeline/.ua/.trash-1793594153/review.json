@@ -1,0 +1,31 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'file:__init__.py' has no edges (orphan)",
+    "Node 'file:coordination/__init__.py' has no edges (orphan)",
+    "Node 'file:generate/__init__.py' has no edges (orphan)",
+    "Node 'file:graph/__init__.py' has no edges (orphan)",
+    "Node 'file:outputs/__init__.py' has no edges (orphan)",
+    "Node 'file:validate/__init__.py' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 107,
+    "totalEdges": 312,
+    "totalLayers": 7,
+    "tourSteps": 14,
+    "nodeTypes": {
+      "file": 27,
+      "function": 53,
+      "class": 26,
+      "document": 1
+    },
+    "edgeTypes": {
+      "contains": 79,
+      "exports": 78,
+      "imports": 62,
+      "calls": 73,
+      "related": 2,
+      "documents": 18
+    }
+  }
+}

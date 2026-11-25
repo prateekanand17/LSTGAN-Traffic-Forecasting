@@ -1,0 +1,1887 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "data_source.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 267,
+      "nonEmptyLines": 234,
+      "functions": [
+        {
+          "name": "load_test",
+          "startLine": 22,
+          "endLine": 23,
+          "params": []
+        },
+        {
+          "name": "load_stations",
+          "startLine": 27,
+          "endLine": 32,
+          "params": []
+        },
+        {
+          "name": "load_distance_adj",
+          "startLine": 36,
+          "endLine": 42,
+          "params": []
+        },
+        {
+          "name": "load_forecasts",
+          "startLine": 46,
+          "endLine": 52,
+          "params": [
+            "seed",
+            "forecaster"
+          ]
+        },
+        {
+          "name": "learned_adj",
+          "startLine": 55,
+          "endLine": 60,
+          "params": [
+            "seed",
+            "form",
+            "name"
+          ]
+        },
+        {
+          "name": "_knn_geo",
+          "startLine": 64,
+          "endLine": 73,
+          "params": [
+            "k"
+          ]
+        },
+        {
+          "name": "_distance_topk",
+          "startLine": 76,
+          "endLine": 85,
+          "params": [
+            "k"
+          ]
+        },
+        {
+          "name": "_rewire",
+          "startLine": 88,
+          "endLine": 107,
+          "params": [
+            "A",
+            "rng",
+            "n_swaps_per_edge"
+          ]
+        },
+        {
+          "name": "consensus_adj",
+          "startLine": 110,
+          "endLine": 121,
+          "params": [
+            "min_seeds",
+            "seeds"
+          ]
+        },
+        {
+          "name": "topology",
+          "startLine": 124,
+          "endLine": 174,
+          "params": [
+            "name",
+            "seed",
+            "rand_seed",
+            "k"
+          ]
+        },
+        {
+          "name": "n_samples",
+          "startLine": 186,
+          "endLine": 187,
+          "params": []
+        },
+        {
+          "name": "build_input",
+          "startLine": 190,
+          "endLine": 226,
+          "params": [
+            "sample_idx",
+            "forecast_seed",
+            "mode",
+            "comm_adj",
+            "forecaster"
+          ]
+        },
+        {
+          "name": "select_scenarios",
+          "startLine": 229,
+          "endLine": 267,
+          "params": [
+            "n_per_regime",
+            "stride",
+            "seed"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Scenario",
+          "startLine": 179,
+          "endLine": 183,
+          "methods": [],
+          "properties": [
+            "sample_idx",
+            "t0",
+            "timestamp",
+            "regime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "load_test",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "load_stations",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "load_distance_adj",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "load_forecasts",
+          "line": 45,
+          "isDefault": false
+        },
+        {
+          "name": "learned_adj",
+          "line": 55,
+          "isDefault": false
+        },
+        {
+          "name": "_knn_geo",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "_distance_topk",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "_rewire",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "consensus_adj",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "topology",
+          "line": 124,
+          "isDefault": false
+        },
+        {
+          "name": "Scenario",
+          "line": 178,
+          "isDefault": false
+        },
+        {
+          "name": "n_samples",
+          "line": 186,
+          "isDefault": false
+        },
+        {
+          "name": "build_input",
+          "line": 190,
+          "isDefault": false
+        },
+        {
+          "name": "select_scenarios",
+          "line": 229,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "load_test",
+          "callee": "pd.read_pickle",
+          "lineNumber": 23
+        },
+        {
+          "caller": "load_stations",
+          "callee": "load_test",
+          "lineNumber": 28
+        },
+        {
+          "caller": "load_stations",
+          "callee": "pd.read_csv",
+          "lineNumber": 29
+        },
+        {
+          "caller": "load_stations",
+          "callee": "meta[\"station_id\"].astype",
+          "lineNumber": 30
+        },
+        {
+          "caller": "load_stations",
+          "callee": "meta.set_index(\"station_id\").loc[[str(c) for c in test.columns]].reset_index",
+          "lineNumber": 31
+        },
+        {
+          "caller": "load_stations",
+          "callee": "meta.set_index",
+          "lineNumber": 31
+        },
+        {
+          "caller": "load_stations",
+          "callee": "str",
+          "lineNumber": 31
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "open",
+          "lineNumber": 37
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "pickle.load",
+          "lineNumber": 38
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "str",
+          "lineNumber": 39
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "load_test",
+          "lineNumber": 39
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "str",
+          "lineNumber": 40
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "ValueError",
+          "lineNumber": 41
+        },
+        {
+          "caller": "load_distance_adj",
+          "callee": "adj.astype",
+          "lineNumber": 42
+        },
+        {
+          "caller": "load_forecasts",
+          "callee": "np.load",
+          "lineNumber": 49
+        },
+        {
+          "caller": "load_forecasts",
+          "callee": "np.load",
+          "lineNumber": 49
+        },
+        {
+          "caller": "load_forecasts",
+          "callee": "load_test",
+          "lineNumber": 50
+        },
+        {
+          "caller": "load_forecasts",
+          "callee": "ValueError",
+          "lineNumber": 51
+        },
+        {
+          "caller": "load_forecasts",
+          "callee": "arr.astype",
+          "lineNumber": 52
+        },
+        {
+          "caller": "learned_adj",
+          "callee": "os.path.join",
+          "lineNumber": 57
+        },
+        {
+          "caller": "learned_adj",
+          "callee": "os.path.exists",
+          "lineNumber": 58
+        },
+        {
+          "caller": "learned_adj",
+          "callee": "FileNotFoundError",
+          "lineNumber": 59
+        },
+        {
+          "caller": "learned_adj",
+          "callee": "np.load",
+          "lineNumber": 60
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "load_stations",
+          "lineNumber": 65
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.cos",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.deg2rad",
+          "lineNumber": 66
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.sqrt",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "((xy[:, None, :] - xy[None, :, :]) ** 2).sum",
+          "lineNumber": 67
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.fill_diagonal",
+          "lineNumber": 68
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.zeros_like",
+          "lineNumber": 69
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.argsort",
+          "lineNumber": 70
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.repeat",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "np.arange",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "len",
+          "lineNumber": 71
+        },
+        {
+          "caller": "_knn_geo",
+          "callee": "idx.ravel",
+          "lineNumber": 72
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "load_distance_adj().copy",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "load_distance_adj",
+          "lineNumber": 77
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "np.fill_diagonal",
+          "lineNumber": 78
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "np.zeros_like",
+          "lineNumber": 79
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "range",
+          "lineNumber": 80
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "len",
+          "lineNumber": 80
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "np.nonzero",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "np.argsort",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "len",
+          "lineNumber": 83
+        },
+        {
+          "caller": "_distance_topk",
+          "callee": "D[i, keep].sum",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_rewire",
+          "callee": "np.nonzero",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_rewire",
+          "callee": "A[rows, cols].copy",
+          "lineNumber": 91
+        },
+        {
+          "caller": "_rewire",
+          "callee": "list",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_rewire",
+          "callee": "zip",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_rewire",
+          "callee": "rows.tolist",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_rewire",
+          "callee": "cols.tolist",
+          "lineNumber": 92
+        },
+        {
+          "caller": "_rewire",
+          "callee": "set",
+          "lineNumber": 93
+        },
+        {
+          "caller": "_rewire",
+          "callee": "len",
+          "lineNumber": 94
+        },
+        {
+          "caller": "_rewire",
+          "callee": "range",
+          "lineNumber": 95
+        },
+        {
+          "caller": "_rewire",
+          "callee": "rng.integers",
+          "lineNumber": 96
+        },
+        {
+          "caller": "_rewire",
+          "callee": "np.zeros_like",
+          "lineNumber": 103
+        },
+        {
+          "caller": "_rewire",
+          "callee": "zip",
+          "lineNumber": 104
+        },
+        {
+          "caller": "_rewire",
+          "callee": "R.sum",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_rewire",
+          "callee": "np.divide",
+          "lineNumber": 107
+        },
+        {
+          "caller": "_rewire",
+          "callee": "np.zeros_like",
+          "lineNumber": 107
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "tuple",
+          "lineNumber": 110
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "learned_adj",
+          "lineNumber": 114
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.stack",
+          "lineNumber": 115
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "present.sum",
+          "lineNumber": 116
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.stack(mats).sum",
+          "lineNumber": 117
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.stack",
+          "lineNumber": 117
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.maximum",
+          "lineNumber": 117
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.where(count >= min_seeds, w, 0.0).astype",
+          "lineNumber": 118
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.where",
+          "lineNumber": 118
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.fill_diagonal",
+          "lineNumber": 119
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "A.sum",
+          "lineNumber": 120
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.divide",
+          "lineNumber": 121
+        },
+        {
+          "caller": "consensus_adj",
+          "callee": "np.zeros_like",
+          "lineNumber": 121
+        },
+        {
+          "caller": "topology",
+          "callee": "load_test",
+          "lineNumber": 141
+        },
+        {
+          "caller": "topology",
+          "callee": "learned_adj",
+          "lineNumber": 143
+        },
+        {
+          "caller": "topology",
+          "callee": "learned_adj",
+          "lineNumber": 145
+        },
+        {
+          "caller": "topology",
+          "callee": "_distance_topk",
+          "lineNumber": 147
+        },
+        {
+          "caller": "topology",
+          "callee": "load_distance_adj().copy",
+          "lineNumber": 149
+        },
+        {
+          "caller": "topology",
+          "callee": "load_distance_adj",
+          "lineNumber": 149
+        },
+        {
+          "caller": "topology",
+          "callee": "np.fill_diagonal",
+          "lineNumber": 150
+        },
+        {
+          "caller": "topology",
+          "callee": "_knn_geo",
+          "lineNumber": 153
+        },
+        {
+          "caller": "topology",
+          "callee": "name.startswith",
+          "lineNumber": 154
+        },
+        {
+          "caller": "topology",
+          "callee": "_knn_geo",
+          "lineNumber": 155
+        },
+        {
+          "caller": "topology",
+          "callee": "int",
+          "lineNumber": 155
+        },
+        {
+          "caller": "topology",
+          "callee": "name.split",
+          "lineNumber": 155
+        },
+        {
+          "caller": "topology",
+          "callee": "np.full",
+          "lineNumber": 157
+        },
+        {
+          "caller": "topology",
+          "callee": "np.fill_diagonal",
+          "lineNumber": 158
+        },
+        {
+          "caller": "topology",
+          "callee": "learned_adj",
+          "lineNumber": 161
+        },
+        {
+          "caller": "topology",
+          "callee": "_rewire",
+          "lineNumber": 163
+        },
+        {
+          "caller": "topology",
+          "callee": "learned_adj",
+          "lineNumber": 163
+        },
+        {
+          "caller": "topology",
+          "callee": "name.split",
+          "lineNumber": 163
+        },
+        {
+          "caller": "topology",
+          "callee": "np.random.default_rng",
+          "lineNumber": 163
+        },
+        {
+          "caller": "topology",
+          "callee": "_rewire",
+          "lineNumber": 165
+        },
+        {
+          "caller": "topology",
+          "callee": "learned_adj",
+          "lineNumber": 165
+        },
+        {
+          "caller": "topology",
+          "callee": "np.random.default_rng",
+          "lineNumber": 165
+        },
+        {
+          "caller": "topology",
+          "callee": "consensus_adj",
+          "lineNumber": 167
+        },
+        {
+          "caller": "topology",
+          "callee": "name.startswith",
+          "lineNumber": 168
+        },
+        {
+          "caller": "topology",
+          "callee": "consensus_adj",
+          "lineNumber": 169
+        },
+        {
+          "caller": "topology",
+          "callee": "int",
+          "lineNumber": 169
+        },
+        {
+          "caller": "topology",
+          "callee": "name.split",
+          "lineNumber": 169
+        },
+        {
+          "caller": "topology",
+          "callee": "_rewire",
+          "lineNumber": 171
+        },
+        {
+          "caller": "topology",
+          "callee": "consensus_adj",
+          "lineNumber": 171
+        },
+        {
+          "caller": "topology",
+          "callee": "np.random.default_rng",
+          "lineNumber": 171
+        },
+        {
+          "caller": "topology",
+          "callee": "np.zeros",
+          "lineNumber": 173
+        },
+        {
+          "caller": "topology",
+          "callee": "ValueError",
+          "lineNumber": 174
+        },
+        {
+          "caller": "n_samples",
+          "callee": "load_test",
+          "lineNumber": 187
+        },
+        {
+          "caller": "build_input",
+          "callee": "load_test",
+          "lineNumber": 194
+        },
+        {
+          "caller": "build_input",
+          "callee": "test.values.astype",
+          "lineNumber": 195
+        },
+        {
+          "caller": "build_input",
+          "callee": "v[t0:t0 + C.HORIZON].copy",
+          "lineNumber": 197
+        },
+        {
+          "caller": "build_input",
+          "callee": "v[t0 - C.HIST_WINDOW:t0].copy",
+          "lineNumber": 198
+        },
+        {
+          "caller": "build_input",
+          "callee": "load_forecasts",
+          "lineNumber": 200
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.tile",
+          "lineNumber": 202
+        },
+        {
+          "caller": "build_input",
+          "callee": "actual.copy",
+          "lineNumber": 204
+        },
+        {
+          "caller": "build_input",
+          "callee": "ValueError",
+          "lineNumber": 206
+        },
+        {
+          "caller": "build_input",
+          "callee": "max",
+          "lineNumber": 207
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.where",
+          "lineNumber": 208
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.nan_to_num",
+          "lineNumber": 209
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.nanmean",
+          "lineNumber": 209
+        },
+        {
+          "caller": "build_input",
+          "callee": "float",
+          "lineNumber": 209
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.nanmean",
+          "lineNumber": 209
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.nan_to_num",
+          "lineNumber": 210
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.nanstd",
+          "lineNumber": 210
+        },
+        {
+          "caller": "build_input",
+          "callee": "np.where",
+          "lineNumber": 211
+        },
+        {
+          "caller": "build_input",
+          "callee": "load_stations",
+          "lineNumber": 213
+        },
+        {
+          "caller": "build_input",
+          "callee": "PipelineInput",
+          "lineNumber": 214
+        },
+        {
+          "caller": "build_input",
+          "callee": "load_distance_adj",
+          "lineNumber": 216
+        },
+        {
+          "caller": "build_input",
+          "callee": "str",
+          "lineNumber": 217
+        },
+        {
+          "caller": "build_input",
+          "callee": "st[\"latitude\"].values.astype",
+          "lineNumber": 218
+        },
+        {
+          "caller": "build_input",
+          "callee": "st[\"longitude\"].values.astype",
+          "lineNumber": 218
+        },
+        {
+          "caller": "build_input",
+          "callee": "means.astype",
+          "lineNumber": 219
+        },
+        {
+          "caller": "build_input",
+          "callee": "stds.astype",
+          "lineNumber": 219
+        },
+        {
+          "caller": "build_input",
+          "callee": "int",
+          "lineNumber": 220
+        },
+        {
+          "caller": "build_input",
+          "callee": "origin.weekday",
+          "lineNumber": 220
+        },
+        {
+          "caller": "build_input",
+          "callee": "int",
+          "lineNumber": 220
+        },
+        {
+          "caller": "build_input",
+          "callee": "int",
+          "lineNumber": 220
+        },
+        {
+          "caller": "build_input",
+          "callee": "learned_adj",
+          "lineNumber": 222
+        },
+        {
+          "caller": "build_input",
+          "callee": "str",
+          "lineNumber": 224
+        },
+        {
+          "caller": "build_input",
+          "callee": "(st[\"road_name\"].astype(str) + \"-\" + st[\"direction\"].astype(str)).tolist",
+          "lineNumber": 225
+        },
+        {
+          "caller": "build_input",
+          "callee": "st[\"road_name\"].astype",
+          "lineNumber": 225
+        },
+        {
+          "caller": "build_input",
+          "callee": "st[\"direction\"].astype",
+          "lineNumber": 225
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "load_test().values.astype",
+          "lineNumber": 240
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "load_test",
+          "lineNumber": 240
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "load_test",
+          "lineNumber": 241
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "range",
+          "lineNumber": 243
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "n_samples",
+          "lineNumber": 243
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "int",
+          "lineNumber": 248
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "low_now.sum",
+          "lineNumber": 248
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "min",
+          "lineNumber": 249
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "len",
+          "lineNumber": 249
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "int",
+          "lineNumber": 250
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "((now >= C.SEV_HIGH_BELOW) & (fut < C.SEV_HIGH_BELOW) & (fut > 0)).sum",
+          "lineNumber": 250
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "pools[\"HIGH\"].append",
+          "lineNumber": 252
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "pools[\"MODERATE\"].append",
+          "lineNumber": 254
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "pools[\"CASCADE\"].append",
+          "lineNumber": 256
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "pools[\"NORMAL\"].append",
+          "lineNumber": 258
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "np.random.default_rng",
+          "lineNumber": 259
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "n_per_regime.items",
+          "lineNumber": 261
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "len",
+          "lineNumber": 263
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "ValueError",
+          "lineNumber": 264
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "len",
+          "lineNumber": 264
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "sorted",
+          "lineNumber": 265
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "rng.choice(pool, size=n, replace=False).tolist",
+          "lineNumber": 265
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "rng.choice",
+          "lineNumber": 265
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "out.append",
+          "lineNumber": 266
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "Scenario",
+          "lineNumber": 266
+        },
+        {
+          "caller": "select_scenarios",
+          "callee": "str",
+          "lineNumber": 266
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 14,
+        "functionCount": 13,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "graph/message_passing.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 95,
+      "nonEmptyLines": 83,
+      "functions": [
+        {
+          "name": "no_communication",
+          "startLine": 89,
+          "endLine": 95,
+          "params": [
+            "zones"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GraphMessagePassingLayer",
+          "startLine": 12,
+          "endLine": 86,
+          "methods": [
+            "__init__",
+            "run"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GraphMessagePassingLayer",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "no_communication",
+          "line": 89,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "__init__",
+          "callee": "ValueError",
+          "lineNumber": 30
+        },
+        {
+          "caller": "run",
+          "callee": "getattr",
+          "lineNumber": 34
+        },
+        {
+          "caller": "run",
+          "callee": "ValueError",
+          "lineNumber": 36
+        },
+        {
+          "caller": "run",
+          "callee": "ZoneMessage",
+          "lineNumber": 40
+        },
+        {
+          "caller": "run",
+          "callee": "min",
+          "lineNumber": 46
+        },
+        {
+          "caller": "run",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "run",
+          "callee": "max",
+          "lineNumber": 46
+        },
+        {
+          "caller": "run",
+          "callee": "len",
+          "lineNumber": 46
+        },
+        {
+          "caller": "run",
+          "callee": "np.ix_",
+          "lineNumber": 56
+        },
+        {
+          "caller": "run",
+          "callee": "float",
+          "lineNumber": 57
+        },
+        {
+          "caller": "run",
+          "callee": "sub.max",
+          "lineNumber": 57
+        },
+        {
+          "caller": "run",
+          "callee": "sub.mean",
+          "lineNumber": 57
+        },
+        {
+          "caller": "run",
+          "callee": "received.append",
+          "lineNumber": 61
+        },
+        {
+          "caller": "run",
+          "callee": "weights.append",
+          "lineNumber": 62
+        },
+        {
+          "caller": "run",
+          "callee": "max",
+          "lineNumber": 67
+        },
+        {
+          "caller": "run",
+          "callee": "min",
+          "lineNumber": 70
+        },
+        {
+          "caller": "run",
+          "callee": "np.argsort",
+          "lineNumber": 73
+        },
+        {
+          "caller": "run",
+          "callee": "lines.append",
+          "lineNumber": 78
+        },
+        {
+          "caller": "run",
+          "callee": "\"\\n\".join",
+          "lineNumber": 80
+        },
+        {
+          "caller": "run",
+          "callee": "enriched.append",
+          "lineNumber": 83
+        },
+        {
+          "caller": "run",
+          "callee": "EnrichedZoneState",
+          "lineNumber": 83
+        },
+        {
+          "caller": "run",
+          "callee": "float",
+          "lineNumber": 84
+        },
+        {
+          "caller": "no_communication",
+          "callee": "EnrichedZoneState",
+          "lineNumber": 91
+        },
+        {
+          "caller": "no_communication",
+          "callee": "min",
+          "lineNumber": 92
+        },
+        {
+          "caller": "no_communication",
+          "callee": "len",
+          "lineNumber": 92
+        },
+        {
+          "caller": "no_communication",
+          "callee": "max",
+          "lineNumber": 92
+        },
+        {
+          "caller": "no_communication",
+          "callee": "len",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "inputs.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 33,
+      "classes": [
+        {
+          "name": "LineageTracker",
+          "startLine": 6,
+          "endLine": 9,
+          "methods": [],
+          "properties": [
+            "source_model",
+            "run_timestamp",
+            "scenario_id"
+          ]
+        },
+        {
+          "name": "PipelineInput",
+          "startLine": 12,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "pred_speed",
+            "actual_speed",
+            "adj_mx",
+            "station_ids",
+            "lats",
+            "lngs",
+            "hist_means",
+            "hist_stds",
+            "day_of_week",
+            "hour",
+            "timestamp_idx"
+          ]
+        },
+        {
+          "name": "PipelineResult",
+          "startLine": 27,
+          "endLine": 36,
+          "methods": [],
+          "properties": [
+            "status",
+            "run_id",
+            "lineage",
+            "outputs",
+            "evals",
+            "gt_result",
+            "integrated_plan",
+            "network_avg"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LineageTracker",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "PipelineInput",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "PipelineResult",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "parse.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 51,
+      "nonEmptyLines": 41,
+      "classes": [
+        {
+          "name": "ParsedData",
+          "startLine": 8,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "z_scores",
+            "speed_levels",
+            "speed_trends",
+            "faulty",
+            "is_rush_hour",
+            "network_avg",
+            "num_severe",
+            "num_heavy"
+          ]
+        },
+        {
+          "name": "Parser",
+          "startLine": 19,
+          "endLine": 51,
+          "methods": [
+            "parse"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ParsedData",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "Parser",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parse",
+          "callee": "np.mean",
+          "lineNumber": 23
+        },
+        {
+          "caller": "parse",
+          "callee": "np.where",
+          "lineNumber": 24
+        },
+        {
+          "caller": "parse",
+          "callee": "np.array",
+          "lineNumber": 27
+        },
+        {
+          "caller": "parse",
+          "callee": "C.speed_to_severity",
+          "lineNumber": 27
+        },
+        {
+          "caller": "parse",
+          "callee": "np.mean",
+          "lineNumber": 29
+        },
+        {
+          "caller": "parse",
+          "callee": "np.mean",
+          "lineNumber": 29
+        },
+        {
+          "caller": "parse",
+          "callee": "np.full",
+          "lineNumber": 30
+        },
+        {
+          "caller": "parse",
+          "callee": "getattr",
+          "lineNumber": 34
+        },
+        {
+          "caller": "parse",
+          "callee": "np.any",
+          "lineNumber": 36
+        },
+        {
+          "caller": "parse",
+          "callee": "np.zeros",
+          "lineNumber": 38
+        },
+        {
+          "caller": "parse",
+          "callee": "any",
+          "lineNumber": 40
+        },
+        {
+          "caller": "parse",
+          "callee": "ParsedData",
+          "lineNumber": 42
+        },
+        {
+          "caller": "parse",
+          "callee": "bool",
+          "lineNumber": 47
+        },
+        {
+          "caller": "parse",
+          "callee": "float",
+          "lineNumber": 48
+        },
+        {
+          "caller": "parse",
+          "callee": "np.mean",
+          "lineNumber": 48
+        },
+        {
+          "caller": "parse",
+          "callee": "int",
+          "lineNumber": 49
+        },
+        {
+          "caller": "parse",
+          "callee": "np.sum",
+          "lineNumber": 49
+        },
+        {
+          "caller": "parse",
+          "callee": "int",
+          "lineNumber": 50
+        },
+        {
+          "caller": "parse",
+          "callee": "np.sum",
+          "lineNumber": 50
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "validate/forecast_gate.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "GateResult",
+          "startLine": 10,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "passed",
+            "reason"
+          ]
+        },
+        {
+          "name": "ForecastIntegrityGate",
+          "startLine": 15,
+          "endLine": 33,
+          "methods": [
+            "check"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "GateResult",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ForecastIntegrityGate",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "check",
+          "callee": "np.all",
+          "lineNumber": 21
+        },
+        {
+          "caller": "check",
+          "callee": "np.isfinite",
+          "lineNumber": 21
+        },
+        {
+          "caller": "check",
+          "callee": "GateResult",
+          "lineNumber": 22
+        },
+        {
+          "caller": "check",
+          "callee": "GateResult",
+          "lineNumber": 24
+        },
+        {
+          "caller": "check",
+          "callee": "getattr",
+          "lineNumber": 25
+        },
+        {
+          "caller": "check",
+          "callee": "len",
+          "lineNumber": 26
+        },
+        {
+          "caller": "check",
+          "callee": "ok.any",
+          "lineNumber": 29
+        },
+        {
+          "caller": "check",
+          "callee": "float",
+          "lineNumber": 30
+        },
+        {
+          "caller": "check",
+          "callee": "np.max",
+          "lineNumber": 30
+        },
+        {
+          "caller": "check",
+          "callee": "np.abs",
+          "lineNumber": 30
+        },
+        {
+          "caller": "check",
+          "callee": "GateResult",
+          "lineNumber": 32
+        },
+        {
+          "caller": "check",
+          "callee": "GateResult",
+          "lineNumber": 33
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "zone_detection.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 80,
+      "classes": [
+        {
+          "name": "CongestionZone",
+          "startLine": 15,
+          "endLine": 27,
+          "methods": [],
+          "properties": [
+            "zone_id",
+            "sensor_indices",
+            "center_lat",
+            "center_lng",
+            "avg_speed_60min",
+            "min_speed_60min",
+            "severity",
+            "trend",
+            "cascade_risk_raw",
+            "anomaly_score",
+            "roads",
+            "n_faulty"
+          ]
+        },
+        {
+          "name": "ZoneDetector",
+          "startLine": 30,
+          "endLine": 92,
+          "methods": [
+            "__init__",
+            "detect",
+            "_bfs"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "CongestionZone",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "ZoneDetector",
+          "line": 30,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "detect",
+          "callee": "np.mean",
+          "lineNumber": 42
+        },
+        {
+          "caller": "detect",
+          "callee": "np.where",
+          "lineNumber": 43
+        },
+        {
+          "caller": "detect",
+          "callee": "len",
+          "lineNumber": 44
+        },
+        {
+          "caller": "detect",
+          "callee": "np.column_stack",
+          "lineNumber": 47
+        },
+        {
+          "caller": "detect",
+          "callee": "DBSCAN(eps=self.eps, min_samples=C.DBSCAN_MIN_SAMPLES).fit",
+          "lineNumber": 48
+        },
+        {
+          "caller": "detect",
+          "callee": "DBSCAN",
+          "lineNumber": 48
+        },
+        {
+          "caller": "detect",
+          "callee": "getattr",
+          "lineNumber": 49
+        },
+        {
+          "caller": "detect",
+          "callee": "sorted",
+          "lineNumber": 52
+        },
+        {
+          "caller": "detect",
+          "callee": "set",
+          "lineNumber": 52
+        },
+        {
+          "caller": "detect",
+          "callee": "float",
+          "lineNumber": 57
+        },
+        {
+          "caller": "detect",
+          "callee": "np.mean",
+          "lineNumber": 57
+        },
+        {
+          "caller": "detect",
+          "callee": "int",
+          "lineNumber": 59
+        },
+        {
+          "caller": "detect",
+          "callee": "np.sum",
+          "lineNumber": 59
+        },
+        {
+          "caller": "detect",
+          "callee": "sorted",
+          "lineNumber": 60
+        },
+        {
+          "caller": "detect",
+          "callee": "hashlib.sha1(\",\".join(members).encode()).hexdigest",
+          "lineNumber": 61
+        },
+        {
+          "caller": "detect",
+          "callee": "hashlib.sha1",
+          "lineNumber": 61
+        },
+        {
+          "caller": "detect",
+          "callee": "\",\".join(members).encode",
+          "lineNumber": 61
+        },
+        {
+          "caller": "detect",
+          "callee": "\",\".join",
+          "lineNumber": 61
+        },
+        {
+          "caller": "detect",
+          "callee": "zones.append",
+          "lineNumber": 62
+        },
+        {
+          "caller": "detect",
+          "callee": "CongestionZone",
+          "lineNumber": 62
+        },
+        {
+          "caller": "detect",
+          "callee": "idx.tolist",
+          "lineNumber": 64
+        },
+        {
+          "caller": "detect",
+          "callee": "float",
+          "lineNumber": 65
+        },
+        {
+          "caller": "detect",
+          "callee": "np.mean",
+          "lineNumber": 65
+        },
+        {
+          "caller": "detect",
+          "callee": "float",
+          "lineNumber": 66
+        },
+        {
+          "caller": "detect",
+          "callee": "np.mean",
+          "lineNumber": 66
+        },
+        {
+          "caller": "detect",
+          "callee": "float",
+          "lineNumber": 68
+        },
+        {
+          "caller": "detect",
+          "callee": "np.min",
+          "lineNumber": 68
+        },
+        {
+          "caller": "detect",
+          "callee": "C.speed_to_severity",
+          "lineNumber": 69
+        },
+        {
+          "caller": "detect",
+          "callee": "max",
+          "lineNumber": 70
+        },
+        {
+          "caller": "detect",
+          "callee": "self._bfs",
+          "lineNumber": 71
+        },
+        {
+          "caller": "detect",
+          "callee": "idx.tolist",
+          "lineNumber": 71
+        },
+        {
+          "caller": "detect",
+          "callee": "float",
+          "lineNumber": 72
+        },
+        {
+          "caller": "detect",
+          "callee": "np.mean",
+          "lineNumber": 72
+        },
+        {
+          "caller": "detect",
+          "callee": "np.abs",
+          "lineNumber": 72
+        },
+        {
+          "caller": "detect",
+          "callee": "sorted",
+          "lineNumber": 73
+        },
+        {
+          "caller": "detect",
+          "callee": "int",
+          "lineNumber": 74
+        },
+        {
+          "caller": "detect",
+          "callee": "parsed.faulty[idx].sum",
+          "lineNumber": 74
+        },
+        {
+          "caller": "_bfs",
+          "callee": "set",
+          "lineNumber": 80
+        },
+        {
+          "caller": "_bfs",
+          "callee": "deque",
+          "lineNumber": 81
+        },
+        {
+          "caller": "_bfs",
+          "callee": "set",
+          "lineNumber": 82
+        },
+        {
+          "caller": "_bfs",
+          "callee": "queue.popleft",
+          "lineNumber": 84
+        },
+        {
+          "caller": "_bfs",
+          "callee": "np.where",
+          "lineNumber": 87
+        },
+        {
+          "caller": "_bfs",
+          "callee": "visited.add",
+          "lineNumber": 89
+        },
+        {
+          "caller": "_bfs",
+          "callee": "int",
+          "lineNumber": 89
+        },
+        {
+          "caller": "_bfs",
+          "callee": "at_risk.add",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_bfs",
+          "callee": "int",
+          "lineNumber": 90
+        },
+        {
+          "caller": "_bfs",
+          "callee": "queue.append",
+          "lineNumber": 91
+        },
+        {
+          "caller": "_bfs",
+          "callee": "int",
+          "lineNumber": 91
+        },
+        {
+          "caller": "_bfs",
+          "callee": "sorted",
+          "lineNumber": 92
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    }
+  ]
+}

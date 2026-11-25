@@ -1,0 +1,8 @@
+thr1 s123 R_neg done (120 runs, 8s)
+thr1 s123 R_neg_knn100 done (240 runs, 17s)
+thr1 s123 R_neg_knn80 done (360 runs, 28s)
+thr1 s123 R_neg_random0 done (480 runs, 36s)
+thr1 s123 R_neg_random1 done (600 runs, 43s)
+thr1 s123 R_neg_random2 done (720 runs, 49s)
+thr1 s123 R_neg_random3 done (840 runs, 55s)
+thr1 s123 R_neg_random4 done (960 runs, 62s)

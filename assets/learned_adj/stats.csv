@@ -1,0 +1,7 @@
+seed,directed_edges,jaccard_vs_distance_graph,frac_edges_in_distance_graph,jaccard_vs_seed42,jaccard_vs_seed123,jaccard_vs_seed456,jaccard_vs_seed789,jaccard_vs_seed1024
+42,3229,0.0139,0.0238,1.0,0.0419,0.0315,0.0165,0.0154
+123,3229,0.0171,0.0291,0.0419,1.0,0.0445,0.0344,0.021
+456,3222,0.0178,0.0304,0.0315,0.0445,1.0,0.0356,0.0162
+789,3233,0.0134,0.0229,0.0165,0.0344,0.0356,1.0,0.0244
+1024,3230,0.0147,0.0251,0.0154,0.021,0.0162,0.0244,1.0
+"distance_graph(adj_mx_bay, off-diag)",2369,,,,,,,

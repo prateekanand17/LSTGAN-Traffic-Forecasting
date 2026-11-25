@@ -1,0 +1,53 @@
+{
+ "sha1": "80686ad2a4c3b20366ad5bcaf3b5ad24be0fe1b5",
+ "scenarios": [
+  {
+   "sample_idx": 5706,
+   "t0": 7722,
+   "timestamp": "2017-06-21 14:45:00",
+   "regime": "HIGH"
+  },
+  {
+   "sample_idx": 7476,
+   "t0": 9492,
+   "timestamp": "2017-06-27 18:15:00",
+   "regime": "HIGH"
+  },
+  {
+   "sample_idx": 2550,
+   "t0": 4566,
+   "timestamp": "2017-06-10 15:45:00",
+   "regime": "MODERATE"
+  },
+  {
+   "sample_idx": 3168,
+   "t0": 5184,
+   "timestamp": "2017-06-12 19:15:00",
+   "regime": "MODERATE"
+  },
+  {
+   "sample_idx": 132,
+   "t0": 2148,
+   "timestamp": "2017-06-02 06:15:00",
+   "regime": "CASCADE"
+  },
+  {
+   "sample_idx": 462,
+   "t0": 2478,
+   "timestamp": "2017-06-03 09:45:00",
+   "regime": "CASCADE"
+  },
+  {
+   "sample_idx": 5256,
+   "t0": 7272,
+   "timestamp": "2017-06-20 01:15:00",
+   "regime": "NORMAL"
+  },
+  {
+   "sample_idx": 6738,
+   "t0": 8754,
+   "timestamp": "2017-06-25 04:45:00",
+   "regime": "NORMAL"
+  }
+ ]
+}

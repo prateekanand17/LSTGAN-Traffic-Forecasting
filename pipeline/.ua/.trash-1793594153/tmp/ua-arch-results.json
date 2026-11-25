@@ -1,0 +1,443 @@
+{
+  "scriptCompleted": true,
+  "directoryGroups": {
+    "root": [
+      "file:config.py",
+      "file:llm_client.py",
+      "file:orchestrator.py",
+      "file:data_source.py",
+      "file:inputs.py",
+      "file:parse.py",
+      "file:zone_detection.py",
+      "document:FLOW.md",
+      "file:__init__.py"
+    ],
+    "generate": [
+      "file:generate/advisory_dq_agent.py",
+      "file:generate/det_guards.py",
+      "file:generate/schema.py",
+      "file:generate/supervisor_agent.py",
+      "file:generate/zone_worker.py",
+      "file:generate/rules.py",
+      "file:generate/__init__.py"
+    ],
+    "coordination": [
+      "file:coordination/agents.py",
+      "file:coordination/common.py",
+      "file:coordination/coordinators.py",
+      "file:coordination/negotiation.py",
+      "file:coordination/__init__.py"
+    ],
+    "graph": [
+      "file:graph/zone_state.py",
+      "file:graph/message_passing.py",
+      "file:graph/__init__.py"
+    ],
+    "validate": [
+      "file:validate/forecast_gate.py",
+      "file:validate/__init__.py"
+    ],
+    "outputs": [
+      "file:outputs/__init__.py",
+      "file:outputs/writer.py"
+    ]
+  },
+  "nodeTypeGroups": {
+    "file": [
+      "file:config.py",
+      "file:generate/advisory_dq_agent.py",
+      "file:generate/det_guards.py",
+      "file:generate/schema.py",
+      "file:generate/supervisor_agent.py",
+      "file:generate/zone_worker.py",
+      "file:llm_client.py",
+      "file:orchestrator.py",
+      "file:coordination/agents.py",
+      "file:coordination/common.py",
+      "file:coordination/coordinators.py",
+      "file:coordination/negotiation.py",
+      "file:generate/rules.py",
+      "file:graph/zone_state.py",
+      "file:data_source.py",
+      "file:graph/message_passing.py",
+      "file:inputs.py",
+      "file:parse.py",
+      "file:validate/forecast_gate.py",
+      "file:zone_detection.py",
+      "file:__init__.py",
+      "file:coordination/__init__.py",
+      "file:generate/__init__.py",
+      "file:graph/__init__.py",
+      "file:outputs/__init__.py",
+      "file:outputs/writer.py",
+      "file:validate/__init__.py"
+    ],
+    "document": [
+      "document:FLOW.md"
+    ]
+  },
+  "crossCategoryEdges": [
+    {
+      "fromType": "document",
+      "toType": "file",
+      "edgeType": "documents",
+      "count": 18
+    }
+  ],
+  "interGroupImports": [
+    {
+      "from": "generate",
+      "to": "root",
+      "count": 10
+    },
+    {
+      "from": "root",
+      "to": "coordination",
+      "count": 4
+    },
+    {
+      "from": "root",
+      "to": "generate",
+      "count": 4
+    },
+    {
+      "from": "coordination",
+      "to": "root",
+      "count": 4
+    },
+    {
+      "from": "coordination",
+      "to": "generate",
+      "count": 4
+    },
+    {
+      "from": "graph",
+      "to": "root",
+      "count": 4
+    },
+    {
+      "from": "generate",
+      "to": "graph",
+      "count": 3
+    },
+    {
+      "from": "coordination",
+      "to": "graph",
+      "count": 2
+    },
+    {
+      "from": "validate",
+      "to": "root",
+      "count": 2
+    },
+    {
+      "from": "generate",
+      "to": "coordination",
+      "count": 1
+    },
+    {
+      "from": "root",
+      "to": "graph",
+      "count": 1
+    },
+    {
+      "from": "root",
+      "to": "validate",
+      "count": 1
+    }
+  ],
+  "intraGroupDensity": {
+    "root": {
+      "internalEdges": 14,
+      "totalEdges": 44,
+      "density": 0.318
+    },
+    "generate": {
+      "internalEdges": 2,
+      "totalEdges": 24,
+      "density": 0.083
+    },
+    "coordination": {
+      "internalEdges": 5,
+      "totalEdges": 20,
+      "density": 0.25
+    },
+    "graph": {
+      "internalEdges": 1,
+      "totalEdges": 11,
+      "density": 0.091
+    },
+    "validate": {
+      "internalEdges": 0,
+      "totalEdges": 3,
+      "density": 0
+    },
+    "outputs": {
+      "internalEdges": 0,
+      "totalEdges": 0,
+      "density": 0
+    }
+  },
+  "patternMatches": {},
+  "filePatternMatches": {
+    "document:FLOW.md": "documentation",
+    "file:__init__.py": "entry",
+    "file:coordination/__init__.py": "entry",
+    "file:generate/__init__.py": "entry",
+    "file:graph/__init__.py": "entry",
+    "file:outputs/__init__.py": "entry",
+    "file:validate/__init__.py": "entry"
+  },
+  "deploymentTopology": {
+    "hasDockerfile": false,
+    "hasCompose": false,
+    "hasK8s": false,
+    "hasTerraform": false,
+    "hasCI": false,
+    "infraFiles": []
+  },
+  "dataPipeline": {
+    "schemaFiles": [],
+    "migrationFiles": [],
+    "dataModelFiles": [
+      "generate/schema.py",
+      "graph/zone_state.py",
+      "inputs.py",
+      "parse.py",
+      "zone_detection.py"
+    ],
+    "apiHandlerFiles": []
+  },
+  "docCoverage": {
+    "groupsWithDocs": 5,
+    "totalGroups": 6,
+    "coverageRatio": 0.83,
+    "undocumentedGroups": [
+      "outputs"
+    ]
+  },
+  "dependencyDirection": [
+    {
+      "dependent": "generate",
+      "dependsOn": "root",
+      "counts": [
+        10,
+        4
+      ]
+    },
+    {
+      "dependent": "generate",
+      "dependsOn": "graph",
+      "counts": [
+        3,
+        0
+      ]
+    },
+    {
+      "dependent": "coordination",
+      "dependsOn": "generate",
+      "counts": [
+        4,
+        1
+      ]
+    },
+    {
+      "dependent": "root",
+      "dependsOn": "coordination",
+      "mutual": true,
+      "counts": [
+        4,
+        4
+      ]
+    },
+    {
+      "dependent": "graph",
+      "dependsOn": "root",
+      "counts": [
+        4,
+        1
+      ]
+    },
+    {
+      "dependent": "validate",
+      "dependsOn": "root",
+      "counts": [
+        2,
+        1
+      ]
+    },
+    {
+      "dependent": "coordination",
+      "dependsOn": "graph",
+      "counts": [
+        2,
+        0
+      ]
+    }
+  ],
+  "importAdjacency": {
+    "file:generate/advisory_dq_agent.py": [
+      "file:config.py",
+      "file:graph/zone_state.py",
+      "file:llm_client.py"
+    ],
+    "file:generate/det_guards.py": [
+      "file:config.py",
+      "file:graph/zone_state.py",
+      "file:parse.py"
+    ],
+    "file:generate/schema.py": [
+      "file:config.py"
+    ],
+    "file:generate/supervisor_agent.py": [
+      "file:config.py",
+      "file:llm_client.py"
+    ],
+    "file:generate/zone_worker.py": [
+      "file:config.py",
+      "file:coordination/common.py",
+      "file:generate/det_guards.py",
+      "file:generate/schema.py",
+      "file:llm_client.py"
+    ],
+    "file:llm_client.py": [
+      "file:config.py"
+    ],
+    "file:orchestrator.py": [
+      "file:config.py",
+      "file:coordination/agents.py",
+      "file:coordination/common.py",
+      "file:coordination/coordinators.py",
+      "file:coordination/negotiation.py",
+      "file:data_source.py",
+      "file:generate/advisory_dq_agent.py",
+      "file:generate/det_guards.py",
+      "file:generate/schema.py",
+      "file:generate/zone_worker.py",
+      "file:graph/message_passing.py",
+      "file:inputs.py",
+      "file:llm_client.py",
+      "file:parse.py",
+      "file:validate/forecast_gate.py",
+      "file:zone_detection.py"
+    ],
+    "file:coordination/agents.py": [
+      "file:config.py",
+      "file:coordination/common.py",
+      "file:generate/rules.py",
+      "file:generate/zone_worker.py",
+      "file:graph/zone_state.py",
+      "file:inputs.py"
+    ],
+    "file:coordination/common.py": [
+      "file:config.py",
+      "file:graph/zone_state.py",
+      "file:inputs.py"
+    ],
+    "file:coordination/coordinators.py": [
+      "file:coordination/agents.py",
+      "file:coordination/common.py",
+      "file:generate/rules.py",
+      "file:generate/supervisor_agent.py"
+    ],
+    "file:coordination/negotiation.py": [
+      "file:coordination/agents.py",
+      "file:coordination/common.py"
+    ],
+    "file:generate/rules.py": [
+      "file:config.py",
+      "file:graph/zone_state.py"
+    ],
+    "file:graph/zone_state.py": [
+      "file:zone_detection.py"
+    ],
+    "file:data_source.py": [
+      "file:config.py",
+      "file:inputs.py"
+    ],
+    "file:graph/message_passing.py": [
+      "file:config.py",
+      "file:graph/zone_state.py",
+      "file:inputs.py",
+      "file:zone_detection.py"
+    ],
+    "file:parse.py": [
+      "file:config.py",
+      "file:inputs.py"
+    ],
+    "file:validate/forecast_gate.py": [
+      "file:inputs.py",
+      "file:parse.py"
+    ],
+    "file:zone_detection.py": [
+      "file:config.py",
+      "file:inputs.py",
+      "file:parse.py"
+    ]
+  },
+  "edgeTypeCounts": {
+    "contains": 79,
+    "exports": 78,
+    "imports": 62,
+    "calls": 73,
+    "related": 2,
+    "documents": 18
+  },
+  "fileStats": {
+    "totalFileNodes": 28,
+    "fileLevelImportEdges": 62,
+    "filesPerGroup": {
+      "root": 9,
+      "generate": 7,
+      "coordination": 5,
+      "graph": 3,
+      "validate": 2,
+      "outputs": 2
+    },
+    "nodeTypeCounts": {
+      "file": 27,
+      "document": 1
+    }
+  },
+  "fileFanIn": {
+    "file:config.py": 14,
+    "file:graph/zone_state.py": 6,
+    "file:llm_client.py": 4,
+    "file:parse.py": 4,
+    "file:coordination/common.py": 5,
+    "file:generate/det_guards.py": 2,
+    "file:generate/schema.py": 2,
+    "file:coordination/agents.py": 3,
+    "file:coordination/coordinators.py": 1,
+    "file:coordination/negotiation.py": 1,
+    "file:data_source.py": 1,
+    "file:generate/advisory_dq_agent.py": 1,
+    "file:generate/zone_worker.py": 2,
+    "file:graph/message_passing.py": 1,
+    "file:inputs.py": 8,
+    "file:validate/forecast_gate.py": 1,
+    "file:zone_detection.py": 3,
+    "file:generate/rules.py": 2,
+    "file:generate/supervisor_agent.py": 1
+  },
+  "fileFanOut": {
+    "file:generate/advisory_dq_agent.py": 3,
+    "file:generate/det_guards.py": 3,
+    "file:generate/schema.py": 1,
+    "file:generate/supervisor_agent.py": 2,
+    "file:generate/zone_worker.py": 5,
+    "file:llm_client.py": 1,
+    "file:orchestrator.py": 16,
+    "file:coordination/agents.py": 6,
+    "file:coordination/common.py": 3,
+    "file:coordination/coordinators.py": 4,
+    "file:coordination/negotiation.py": 2,
+    "file:generate/rules.py": 2,
+    "file:graph/zone_state.py": 1,
+    "file:data_source.py": 2,
+    "file:graph/message_passing.py": 4,
+    "file:parse.py": 2,
+    "file:validate/forecast_gate.py": 2,
+    "file:zone_detection.py": 3
+  }
+}

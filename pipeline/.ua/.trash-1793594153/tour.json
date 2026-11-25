@@ -1,0 +1,88 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "This package is the Python implementation of MASTRA, a multi-agent traffic-advisory system that turns speed forecasts into congested zones and per-zone JSON advisories with reroutes. There is no README here, so FLOW.md is the place to start: it walks the eight stages of run_scenario from parsing to override gates and documents the data objects, index conventions and invariants. Keep its 14 symptom-to-cause debugging drills in mind as a reference for later.",
+    "nodeIds": ["document:FLOW.md"]
+  },
+  {
+    "order": 2,
+    "title": "The Pipeline Entry Point",
+    "description": "orchestrator.py holds the main pipeline and is the single code path used by both the evaluation runner and the dashboard, so every result passes through the same sequence. It parses inputs, detects zones, gathers proposals from zone agents, coordinates them and applies override gates to produce the final per-zone records. It connects to nearly every other module, which makes it the map for the rest of this tour: each following step opens one part of the sequence it runs.",
+    "nodeIds": ["file:orchestrator.py"]
+  },
+  {
+    "order": 3,
+    "title": "Constants and Data Contracts",
+    "description": "Before following the stages, learn the two modules everything else leans on, since they are the most depended-upon in the package. config.py is the single source of truth for file paths, the speed-based severity scale, negotiation limits, safety-gate thresholds and pinned LLM model IDs. inputs.py defines the contract the orchestrator works with: the standardized forecast input, the run result and the run lineage metadata.",
+    "nodeIds": ["file:config.py", "file:inputs.py"],
+    "languageLesson": "Python dataclasses generate boilerplate such as __init__ from annotated class fields, which suits modules like inputs.py: the data shape shared between stages is declared in one readable place."
+  },
+  {
+    "order": 4,
+    "title": "Loading Real Scenarios",
+    "description": "data_source.py produces what the contract from Step 3 describes. It loads the real PEMS-BAY test data, the Adaptive-LSTGAN forecasts and the adjacency matrices, builds the agent communication topologies, and assembles per-sample PipelineInput objects plus stratified evaluation scenarios. Note that the topologies created here are used again later, when zones pass messages and negotiate.",
+    "nodeIds": ["file:data_source.py"]
+  },
+  {
+    "order": 5,
+    "title": "Reading the Forecast",
+    "description": "The first two pipeline stages interpret the forecast tensor from Step 4. parse.py (Stage 1) converts it into per-sensor severity levels, trends, z-scores and fault flags, plus network-level summary values. forecast_gate.py (Stage 2) applies plausibility checks and records a pass or fail result without stopping the run, so a suspicious forecast is documented rather than aborting the scenario.",
+    "nodeIds": ["file:parse.py", "file:validate/forecast_gate.py"]
+  },
+  {
+    "order": 6,
+    "title": "Clustering Congested Zones",
+    "description": "Stage 3 moves from individual sensors to the unit the rest of the system reasons about: the congestion zone. zone_detection.py uses DBSCAN to cluster sensors with low forecast speed, building on the per-sensor view from Step 5. It then computes each zone's severity, trend, deterministic ID and downstream cascade risk.",
+    "nodeIds": ["file:zone_detection.py"]
+  },
+  {
+    "order": 7,
+    "title": "Zones Share Context",
+    "description": "Zones from Step 6 do not stay isolated. In Stage 4, message_passing.py runs two rounds of deterministic message passing over a communication topology, producing enriched zone states with network pressure and updated cascade risk. zone_state.py declares the dataclasses for those messages and states, and it is among the most widely used modules because these enriched states are what later agents and gates consume.",
+    "nodeIds": ["file:graph/message_passing.py", "file:graph/zone_state.py"]
+  },
+  {
+    "order": 8,
+    "title": "The Zone-Agent Interface",
+    "description": "With zone states ready, agents can write advisories. agents.py defines the shared propose-and-revise interface, so deterministic rule agents and LLM-backed agents run inside the same coordination protocols. rules.py supplies the deterministic content, used by RuleAgent and the dry-run stand-in: severities from the detector or per-horizon forecast, plus one reroute to the fastest free candidate corridor for HIGH or MEDIUM zones.",
+    "nodeIds": ["file:coordination/agents.py", "file:generate/rules.py"],
+    "languageLesson": "This is the strategy pattern: callers depend on a common interface (propose and revise), not on a concrete agent, so an implementation can be swapped without changing the protocol code that uses it."
+  },
+  {
+    "order": 9,
+    "title": "The LLM Zone Agent",
+    "description": "This step covers the LLM-backed side of the interface from Step 8. zone_worker.py builds propose and negotiation-revise prompts from zone state and runs a validate-and-retry loop; a revision that still fails the gates is discarded in favour of the previous proposal. llm_client.py talks to OpenAI-compatible endpoints, logs every call to calls.jsonl and raises on a missing key or transport failure instead of silently mocking, so dry runs must be requested explicitly.",
+    "nodeIds": ["file:generate/zone_worker.py", "file:llm_client.py"]
+  },
+  {
+    "order": 10,
+    "title": "Checking Each Advisory",
+    "description": "The retry loop in Step 9 needs something to validate against, and these deterministic modules provide it. schema.py defines the advisory JSON field specification shown to agents and the structural gate that checks fields, severity enums and reroute road validity. det_guards.py finds the roads of zones forecast HIGH and produces the CONGESTED_TARGET retry errors, so an agent is told when a reroute points into a road the forecast marks as congested.",
+    "nodeIds": ["file:generate/schema.py", "file:generate/det_guards.py"]
+  },
+  {
+    "order": 11,
+    "title": "Negotiating Reroute Conflicts",
+    "description": "Valid advisories can still collide, because each zone's reroute may be fine on its own while several zones overload one road. common.py holds the single definition of a reroute conflict, shared by agents, coordinators and evaluation metrics, along with candidate corridor ranking, the priority order and the communication topologies. negotiation.py then runs rounds in which agents exchange proposals only with topology neighbours and revise until no conflict is visible, nothing changes or the round limit is reached.",
+    "nodeIds": ["file:coordination/common.py", "file:coordination/negotiation.py"]
+  },
+  {
+    "order": 12,
+    "title": "Centralized Coordination",
+    "description": "Negotiation in Step 11 relies on local views, so some conflicts may stay invisible to it; these modules take the opposite approach with a global view of every zone. coordinators.py implements a greedy priority-based rule coordinator and an LLM Global Supervisor, used in the centralized design cells and as the fallback after negotiation. supervisor_agent.py is that LLM coordinator: it detects routing conflicts itself and rewrites reroutes, its output is validated per zone, and invalid entries fall back to the zone's own proposal.",
+    "nodeIds": ["file:coordination/coordinators.py", "file:generate/supervisor_agent.py"]
+  },
+  {
+    "order": 13,
+    "title": "Final Override Gates",
+    "description": "The sequence from Step 2 closes with deterministic safety. Besides the retry errors from Step 10, det_guards.py applies the sensor-fault, severe-speed, cascade-risk and rush-hour overrides, and orchestrator.py applies these gates to produce the final per-zone records. The overall design is worth noticing here: whichever agent or coordinator wrote an advisory, deterministic rules have the last word on the record.",
+    "nodeIds": ["file:generate/det_guards.py", "file:orchestrator.py"]
+  },
+  {
+    "order": 14,
+    "title": "Evaluation and Run Outputs",
+    "description": "Two modules sit beside the main path once final records exist. advisory_dq_agent.py is an evaluation-only LLM plausibility check: its verdict is recorded and never changes the output, and API failures are recorded as ERROR rather than PASS. writer.py persists the integrated plan and evaluation results as JSON in a per-run directory, though no other module in this package imports it, so any use of it comes from outside the pipeline package. From here, FLOW.md's debugging drills are a good way to test what you have learned.",
+    "nodeIds": ["file:generate/advisory_dq_agent.py", "file:outputs/writer.py"]
+  }
+]

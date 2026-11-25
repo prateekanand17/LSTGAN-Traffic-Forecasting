@@ -1,0 +1,519 @@
+{
+ "scriptCompleted": true,
+ "entryPointCandidates": [
+  {
+   "id": "document:FLOW.md",
+   "score": 2,
+   "name": "FLOW.md",
+   "summary": "Study and debugging guide to the MASTRA pipeline that walks the eight stages of run_scenario from parsing to override gates, and documents the data objects, index conventions, invariants, and 14 symptom-to-cause debugging drills.",
+   "type": "document"
+  },
+  {
+   "id": "file:orchestrator.py",
+   "score": 2,
+   "name": "orchestrator.py",
+   "summary": "Main MASTRA pipeline and the single code path used by the evaluation runner and dashboard: parses inputs, detects zones, gathers proposals from zone agents, coordinates them, and applies override gates to produce the final per-zone records.",
+   "type": "file"
+  },
+  {
+   "id": "file:coordination/agents.py",
+   "score": 2,
+   "name": "agents.py",
+   "summary": "Defines the shared zone-agent interface (propose and revise) so deterministic rule agents and LLM-backed agents run inside the same coordination protocols, along with the local context and neighbour messages they exchange.",
+   "type": "file"
+  },
+  {
+   "id": "file:__init__.py",
+   "score": 2,
+   "name": "__init__.py",
+   "summary": "Root package marker for the MASTRA pipeline that holds the package docstring naming the architecture and sets __version__ to 1.0.0.",
+   "type": "file"
+  },
+  {
+   "id": "file:coordination/__init__.py",
+   "score": 2,
+   "name": "__init__.py",
+   "summary": "Empty package marker that makes the coordination directory, which holds the agent, negotiation, and coordinator modules, importable as a Python package.",
+   "type": "file"
+  }
+ ],
+ "fanInRanking": [
+  {
+   "id": "file:config.py",
+   "fanIn": 15,
+   "name": "config.py"
+  },
+  {
+   "id": "file:inputs.py",
+   "fanIn": 9,
+   "name": "inputs.py"
+  },
+  {
+   "id": "file:graph/zone_state.py",
+   "fanIn": 7,
+   "name": "zone_state.py"
+  },
+  {
+   "id": "file:coordination/common.py",
+   "fanIn": 6,
+   "name": "common.py"
+  },
+  {
+   "id": "file:llm_client.py",
+   "fanIn": 5,
+   "name": "llm_client.py"
+  },
+  {
+   "id": "file:parse.py",
+   "fanIn": 5,
+   "name": "parse.py"
+  },
+  {
+   "id": "file:coordination/agents.py",
+   "fanIn": 4,
+   "name": "agents.py"
+  },
+  {
+   "id": "file:zone_detection.py",
+   "fanIn": 4,
+   "name": "zone_detection.py"
+  },
+  {
+   "id": "file:generate/det_guards.py",
+   "fanIn": 3,
+   "name": "det_guards.py"
+  },
+  {
+   "id": "file:generate/rules.py",
+   "fanIn": 3,
+   "name": "rules.py"
+  },
+  {
+   "id": "file:generate/schema.py",
+   "fanIn": 3,
+   "name": "schema.py"
+  },
+  {
+   "id": "file:generate/zone_worker.py",
+   "fanIn": 3,
+   "name": "zone_worker.py"
+  },
+  {
+   "id": "file:coordination/coordinators.py",
+   "fanIn": 2,
+   "name": "coordinators.py"
+  },
+  {
+   "id": "file:coordination/negotiation.py",
+   "fanIn": 2,
+   "name": "negotiation.py"
+  },
+  {
+   "id": "file:data_source.py",
+   "fanIn": 2,
+   "name": "data_source.py"
+  },
+  {
+   "id": "file:graph/message_passing.py",
+   "fanIn": 2,
+   "name": "message_passing.py"
+  },
+  {
+   "id": "file:validate/forecast_gate.py",
+   "fanIn": 2,
+   "name": "forecast_gate.py"
+  },
+  {
+   "id": "file:generate/advisory_dq_agent.py",
+   "fanIn": 1,
+   "name": "advisory_dq_agent.py"
+  },
+  {
+   "id": "file:generate/supervisor_agent.py",
+   "fanIn": 1,
+   "name": "supervisor_agent.py"
+  },
+  {
+   "id": "file:orchestrator.py",
+   "fanIn": 1,
+   "name": "orchestrator.py"
+  }
+ ],
+ "fanOutRanking": [
+  {
+   "id": "document:FLOW.md",
+   "fanOut": 18,
+   "name": "FLOW.md"
+  },
+  {
+   "id": "file:orchestrator.py",
+   "fanOut": 16,
+   "name": "orchestrator.py"
+  },
+  {
+   "id": "file:coordination/agents.py",
+   "fanOut": 6,
+   "name": "agents.py"
+  },
+  {
+   "id": "file:generate/zone_worker.py",
+   "fanOut": 5,
+   "name": "zone_worker.py"
+  },
+  {
+   "id": "file:coordination/coordinators.py",
+   "fanOut": 4,
+   "name": "coordinators.py"
+  },
+  {
+   "id": "file:graph/message_passing.py",
+   "fanOut": 4,
+   "name": "message_passing.py"
+  },
+  {
+   "id": "file:coordination/common.py",
+   "fanOut": 3,
+   "name": "common.py"
+  },
+  {
+   "id": "file:generate/advisory_dq_agent.py",
+   "fanOut": 3,
+   "name": "advisory_dq_agent.py"
+  },
+  {
+   "id": "file:generate/det_guards.py",
+   "fanOut": 3,
+   "name": "det_guards.py"
+  },
+  {
+   "id": "file:zone_detection.py",
+   "fanOut": 3,
+   "name": "zone_detection.py"
+  },
+  {
+   "id": "file:coordination/negotiation.py",
+   "fanOut": 2,
+   "name": "negotiation.py"
+  },
+  {
+   "id": "file:data_source.py",
+   "fanOut": 2,
+   "name": "data_source.py"
+  },
+  {
+   "id": "file:generate/rules.py",
+   "fanOut": 2,
+   "name": "rules.py"
+  },
+  {
+   "id": "file:generate/supervisor_agent.py",
+   "fanOut": 2,
+   "name": "supervisor_agent.py"
+  },
+  {
+   "id": "file:parse.py",
+   "fanOut": 2,
+   "name": "parse.py"
+  },
+  {
+   "id": "file:validate/forecast_gate.py",
+   "fanOut": 2,
+   "name": "forecast_gate.py"
+  },
+  {
+   "id": "file:generate/schema.py",
+   "fanOut": 1,
+   "name": "schema.py"
+  },
+  {
+   "id": "file:graph/zone_state.py",
+   "fanOut": 1,
+   "name": "zone_state.py"
+  },
+  {
+   "id": "file:llm_client.py",
+   "fanOut": 1,
+   "name": "llm_client.py"
+  }
+ ],
+ "bfsTraversal": {
+  "startNode": "file:orchestrator.py",
+  "order": [
+   "file:orchestrator.py",
+   "file:config.py",
+   "file:coordination/agents.py",
+   "file:coordination/common.py",
+   "file:coordination/coordinators.py",
+   "file:coordination/negotiation.py",
+   "file:data_source.py",
+   "file:generate/advisory_dq_agent.py",
+   "file:generate/det_guards.py",
+   "file:generate/schema.py",
+   "file:generate/zone_worker.py",
+   "file:graph/message_passing.py",
+   "file:inputs.py",
+   "file:llm_client.py",
+   "file:parse.py",
+   "file:validate/forecast_gate.py",
+   "file:zone_detection.py",
+   "file:generate/rules.py",
+   "file:graph/zone_state.py",
+   "file:generate/supervisor_agent.py"
+  ],
+  "depthMap": {
+   "file:orchestrator.py": 0,
+   "file:config.py": 1,
+   "file:coordination/agents.py": 1,
+   "file:coordination/common.py": 1,
+   "file:coordination/coordinators.py": 1,
+   "file:coordination/negotiation.py": 1,
+   "file:data_source.py": 1,
+   "file:generate/advisory_dq_agent.py": 1,
+   "file:generate/det_guards.py": 1,
+   "file:generate/schema.py": 1,
+   "file:generate/zone_worker.py": 1,
+   "file:graph/message_passing.py": 1,
+   "file:inputs.py": 1,
+   "file:llm_client.py": 1,
+   "file:parse.py": 1,
+   "file:validate/forecast_gate.py": 1,
+   "file:zone_detection.py": 1,
+   "file:generate/rules.py": 2,
+   "file:graph/zone_state.py": 2,
+   "file:generate/supervisor_agent.py": 2
+  },
+  "byDepth": {
+   "0": [
+    "file:orchestrator.py"
+   ],
+   "1": [
+    "file:config.py",
+    "file:coordination/agents.py",
+    "file:coordination/common.py",
+    "file:coordination/coordinators.py",
+    "file:coordination/negotiation.py",
+    "file:data_source.py",
+    "file:generate/advisory_dq_agent.py",
+    "file:generate/det_guards.py",
+    "file:generate/schema.py",
+    "file:generate/zone_worker.py",
+    "file:graph/message_passing.py",
+    "file:inputs.py",
+    "file:llm_client.py",
+    "file:parse.py",
+    "file:validate/forecast_gate.py",
+    "file:zone_detection.py"
+   ],
+   "2": [
+    "file:generate/rules.py",
+    "file:graph/zone_state.py",
+    "file:generate/supervisor_agent.py"
+   ]
+  }
+ },
+ "nonCodeFiles": {
+  "documentation": [
+   {
+    "id": "document:FLOW.md",
+    "name": "FLOW.md",
+    "summary": "Study and debugging guide to the MASTRA pipeline that walks the eight stages of run_scenario from parsing to override gates, and documents the data objects, index conventions, invariants, and 14 symptom-to-cause debugging drills."
+   }
+  ],
+  "infrastructure": [],
+  "data": [],
+  "config": []
+ },
+ "clusters": [],
+ "layers": {
+  "count": 7,
+  "list": [
+   {
+    "id": "layer:orchestration",
+    "name": "Pipeline Orchestration",
+    "description": "The run_scenario entry path that sequences the MASTRA stages from parsing to override gates for the evaluation runner and dashboard, with the package root and the FLOW.md guide that walks those stages."
+   },
+   {
+    "id": "layer:coordination",
+    "name": "Agent Coordination",
+    "description": "The shared zone-agent interface, conflict definition, round-based negotiation among topology neighbours, and centralized coordinators that keep zones from rerouting onto the same road."
+   },
+   {
+    "id": "layer:advisory-generation",
+    "name": "Advisory Generation",
+    "description": "Producers of per-zone JSON advisories and reroutes: the deterministic rule generator, the LLM zone worker with its retry loop, the LLM Global Supervisor, and the evaluation-only LLM plausibility check."
+   },
+   {
+    "id": "layer:validation-gates",
+    "name": "Validation and Safety Gates",
+    "description": "Deterministic checks around the LLM and rule outputs: forecast plausibility, the advisory schema and reroute road validity, CONGESTED_TARGET retry errors, and the sensor-fault, severe-speed, cascade-risk and rush-hour overrides."
+   },
+   {
+    "id": "layer:forecast-zone-analysis",
+    "name": "Forecast and Zone Analysis",
+    "description": "Turns PEMS-BAY data and Adaptive-LSTGAN forecasts into enriched zone states by loading scenarios, deriving per-sensor severity, clustering congested sensors with DBSCAN, and running two-round message passing between zones."
+   },
+   {
+    "id": "layer:foundation",
+    "name": "Configuration and Shared Contracts",
+    "description": "The most widely imported modules: pinned constants and model IDs in config.py, the PipelineInput and run-result dataclasses in inputs.py, and the logging LLM client that raises rather than silently mocking."
+   },
+   {
+    "id": "layer:outputs",
+    "name": "Run Outputs",
+    "description": "Writes the integrated plan and evaluation results as JSON into a per-run directory; no other module in this package imports it, so it is called from outside the pipeline package if at all."
+   }
+  ]
+ },
+ "nodeSummaryIndex": {
+  "file:config.py": {
+   "name": "config.py",
+   "type": "file",
+   "summary": "Single source of truth for MASTRA constants: data and forecast file paths, the speed-based severity scale, zone detection and message-passing settings, negotiation limits, safety-gate thresholds, and pinned LLM providers and model IDs."
+  },
+  "file:generate/advisory_dq_agent.py": {
+   "name": "advisory_dq_agent.py",
+   "type": "file",
+   "summary": "Evaluation-only LLM plausibility check that compares one final advisory with its zone state; the verdict is recorded and never changes the output, and API failures are recorded as ERROR rather than PASS."
+  },
+  "file:generate/det_guards.py": {
+   "name": "det_guards.py",
+   "type": "file",
+   "summary": "Deterministic safety gates for zone advisories: finds roads of zones forecast HIGH, produces the CONGESTED_TARGET retry errors, and applies the sensor-fault, severe-speed, cascade-risk and rush-hour overrides."
+  },
+  "file:generate/schema.py": {
+   "name": "schema.py",
+   "type": "file",
+   "summary": "Defines the advisory JSON field specification shown to agents and the structural gate that checks fields, severity enums and reroute road validity; also counts invalid road references for metrics."
+  },
+  "file:generate/supervisor_agent.py": {
+   "name": "supervisor_agent.py",
+   "type": "file",
+   "summary": "Central LLM coordinator that sees every zone's proposal, detects routing conflicts itself and rewrites reroutes; its output is validated per zone, and invalid entries fall back to the zone's own proposal."
+  },
+  "file:generate/zone_worker.py": {
+   "name": "zone_worker.py",
+   "type": "file",
+   "summary": "LLM zone agent that builds propose and negotiation-revise prompts from zone state and runs the validate-and-retry loop; a revision that still fails the gates is discarded in favour of the previous proposal."
+  },
+  "file:llm_client.py": {
+   "name": "llm_client.py",
+   "type": "file",
+   "summary": "Provider-agnostic client for OpenAI-compatible chat endpoints that logs every call to calls.jsonl, tracks running usage totals, and raises on a missing key or transport failure instead of silently mocking; dry runs must be requested explicitly."
+  },
+  "file:orchestrator.py": {
+   "name": "orchestrator.py",
+   "type": "file",
+   "summary": "Main MASTRA pipeline and the single code path used by the evaluation runner and dashboard: parses inputs, detects zones, gathers proposals from zone agents, coordinates them, and applies override gates to produce the final per-zone records."
+  },
+  "file:coordination/agents.py": {
+   "name": "agents.py",
+   "type": "file",
+   "summary": "Defines the shared zone-agent interface (propose and revise) so deterministic rule agents and LLM-backed agents run inside the same coordination protocols, along with the local context and neighbour messages they exchange."
+  },
+  "file:coordination/common.py": {
+   "name": "common.py",
+   "type": "file",
+   "summary": "Provides the deterministic coordination primitives shared by agents, coordinators and evaluation metrics: candidate corridor ranking, the priority order, communication topologies, and the single definition of reroute conflicts."
+  },
+  "file:coordination/coordinators.py": {
+   "name": "coordinators.py",
+   "type": "file",
+   "summary": "Implements the centralized coordinators used in the centralized design cells and as the fallback after negotiation: a greedy priority-based rule coordinator and an LLM Global Supervisor, both with a global view of every zone."
+  },
+  "file:coordination/negotiation.py": {
+   "name": "negotiation.py",
+   "type": "file",
+   "summary": "Runs the round-based negotiation loop in which zone agents exchange proposals only with topology neighbours, see only conflicts with those neighbours, and revise until no conflict is visible, nothing changes, or the round limit is reached."
+  },
+  "file:generate/rules.py": {
+   "name": "rules.py",
+   "type": "file",
+   "summary": "Generates deterministic advisory content without an LLM, used by RuleAgent and the dry-run stand-in: severities from the detector or the per-horizon forecast, plus one reroute to the fastest free candidate corridor for HIGH or MEDIUM zones."
+  },
+  "file:graph/zone_state.py": {
+   "name": "zone_state.py",
+   "type": "file",
+   "summary": "Declares the dataclasses for messages passed between zones and for a zone's state after graph message passing, including its updated cascade risk and neighbour context."
+  },
+  "file:data_source.py": {
+   "name": "data_source.py",
+   "type": "file",
+   "summary": "Loads the real PEMS-BAY test data, Adaptive-LSTGAN forecasts and adjacency matrices, builds the agent communication topologies, and assembles per-sample PipelineInput objects plus stratified evaluation scenarios."
+  },
+  "file:graph/message_passing.py": {
+   "name": "message_passing.py",
+   "type": "file",
+   "summary": "Stage 4 of the pipeline: runs two-round deterministic message passing between congestion zones over a communication topology, producing enriched zone states with network pressure and updated cascade risk."
+  },
+  "file:inputs.py": {
+   "name": "inputs.py",
+   "type": "file",
+   "summary": "Defines the dataclasses that form the pipeline's data contract: the standardized forecast input, the run result, and run lineage metadata."
+  },
+  "file:parse.py": {
+   "name": "parse.py",
+   "type": "file",
+   "summary": "Stage 1 of the pipeline: converts the forecast tensor into per-sensor severity levels, trends, z-scores and fault flags, plus network-level summary values."
+  },
+  "file:validate/forecast_gate.py": {
+   "name": "forecast_gate.py",
+   "type": "file",
+   "summary": "Stage 2 of the pipeline: applies plausibility checks to the forecast tensor and records a pass or fail result without stopping the run."
+  },
+  "file:zone_detection.py": {
+   "name": "zone_detection.py",
+   "type": "file",
+   "summary": "Stage 3 of the pipeline: clusters sensors with low forecast speed into congestion zones using DBSCAN and computes each zone's severity, trend, deterministic ID and downstream cascade risk."
+  },
+  "document:FLOW.md": {
+   "name": "FLOW.md",
+   "type": "document",
+   "summary": "Study and debugging guide to the MASTRA pipeline that walks the eight stages of run_scenario from parsing to override gates, and documents the data objects, index conventions, invariants, and 14 symptom-to-cause debugging drills."
+  },
+  "file:__init__.py": {
+   "name": "__init__.py",
+   "type": "file",
+   "summary": "Root package marker for the MASTRA pipeline that holds the package docstring naming the architecture and sets __version__ to 1.0.0."
+  },
+  "file:coordination/__init__.py": {
+   "name": "__init__.py",
+   "type": "file",
+   "summary": "Empty package marker that makes the coordination directory, which holds the agent, negotiation, and coordinator modules, importable as a Python package."
+  },
+  "file:generate/__init__.py": {
+   "name": "__init__.py",
+   "type": "file",
+   "summary": "Empty package marker that makes the generate directory, which holds the advisory rules, schema, zone worker, and deterministic guard modules, importable as a Python package."
+  },
+  "file:graph/__init__.py": {
+   "name": "__init__.py",
+   "type": "file",
+   "summary": "Empty package marker that makes the graph directory, which holds the message passing and zone state modules, importable as a Python package."
+  },
+  "file:outputs/__init__.py": {
+   "name": "__init__.py",
+   "type": "file",
+   "summary": "Empty package marker that makes the outputs directory, which holds the run output writer, importable as a Python package."
+  },
+  "file:outputs/writer.py": {
+   "name": "writer.py",
+   "type": "file",
+   "summary": "Persists the artifacts of a pipeline run by writing the integrated plan and evaluation results as JSON files in a per-run output directory."
+  },
+  "file:validate/__init__.py": {
+   "name": "__init__.py",
+   "type": "file",
+   "summary": "Empty package marker that makes the validate directory, which holds the forecast integrity gate, importable as a Python package."
+  }
+ },
+ "totalNodes": 28,
+ "totalEdges": 312,
+ "fileLevelEdges": 115,
+ "droppedEdges": 0,
+ "edgeTypeCounts": {
+  "imports": 62,
+  "calls": 33,
+  "related": 2,
+  "documents": 18
+ }
+}

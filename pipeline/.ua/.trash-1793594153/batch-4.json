@@ -1,0 +1,119 @@
+{
+  "nodes": [
+    {
+      "id": "document:FLOW.md",
+      "type": "document",
+      "name": "FLOW.md",
+      "filePath": "FLOW.md",
+      "summary": "Study and debugging guide to the MASTRA pipeline that walks the eight stages of run_scenario from parsing to override gates, and documents the data objects, index conventions, invariants, and 14 symptom-to-cause debugging drills.",
+      "tags": ["documentation", "architecture-overview", "debugging-guide", "execution-flow", "invariants"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "__init__.py",
+      "summary": "Root package marker for the MASTRA pipeline that holds the package docstring naming the architecture and sets __version__ to 1.0.0.",
+      "tags": ["python-package", "package-metadata", "versioning"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:coordination/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "coordination/__init__.py",
+      "summary": "Empty package marker that makes the coordination directory, which holds the agent, negotiation, and coordinator modules, importable as a Python package.",
+      "tags": ["python-package", "package-marker", "coordination"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:generate/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "generate/__init__.py",
+      "summary": "Empty package marker that makes the generate directory, which holds the advisory rules, schema, zone worker, and deterministic guard modules, importable as a Python package.",
+      "tags": ["python-package", "package-marker", "advisory-generation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:graph/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "graph/__init__.py",
+      "summary": "Empty package marker that makes the graph directory, which holds the message passing and zone state modules, importable as a Python package.",
+      "tags": ["python-package", "package-marker", "graph"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:outputs/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "outputs/__init__.py",
+      "summary": "Empty package marker that makes the outputs directory, which holds the run output writer, importable as a Python package.",
+      "tags": ["python-package", "package-marker", "outputs"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:outputs/writer.py",
+      "type": "file",
+      "name": "writer.py",
+      "filePath": "outputs/writer.py",
+      "summary": "Persists the artifacts of a pipeline run by writing the integrated plan and evaluation results as JSON files in a per-run output directory.",
+      "tags": ["serialization", "file-io", "outputs", "json"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:outputs/writer.py:OutputWriter",
+      "type": "class",
+      "name": "OutputWriter",
+      "filePath": "outputs/writer.py",
+      "lineRange": [4, 15],
+      "summary": "Stateless writer class whose single write method saves a run's integrated plan and evaluations to disk under a directory named after the run id.",
+      "tags": ["serialization", "file-io", "outputs"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:outputs/writer.py:write",
+      "type": "function",
+      "name": "write",
+      "filePath": "outputs/writer.py",
+      "lineRange": [5, 15],
+      "summary": "Creates <base_dir>/<run_id> if needed, dumps integrated_plan.json and evals.json into it with two-space indentation, and prints the output location.",
+      "tags": ["serialization", "file-io", "json"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:validate/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "validate/__init__.py",
+      "summary": "Empty package marker that makes the validate directory, which holds the forecast integrity gate, importable as a Python package.",
+      "tags": ["python-package", "package-marker", "validation"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {"source": "file:outputs/writer.py", "target": "class:outputs/writer.py:OutputWriter", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:outputs/writer.py", "target": "function:outputs/writer.py:write", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:outputs/writer.py", "target": "class:outputs/writer.py:OutputWriter", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "document:FLOW.md", "target": "file:orchestrator.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:data_source.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:inputs.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:config.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:parse.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:validate/forecast_gate.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:zone_detection.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:graph/message_passing.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:graph/zone_state.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:coordination/common.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:coordination/agents.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:coordination/negotiation.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:coordination/coordinators.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:generate/zone_worker.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:generate/rules.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:generate/schema.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:generate/det_guards.py", "type": "documents", "direction": "forward", "weight": 0.5},
+    {"source": "document:FLOW.md", "target": "file:llm_client.py", "type": "documents", "direction": "forward", "weight": 0.5}
+  ]
+}

@@ -1,0 +1,2067 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "3f83b073bef6fcb8aa0c217a12f7902bc2447acf",
+  "generatedAt": "2026-11-02T04:35:53.026Z",
+  "files": {
+    "FLOW.md": {
+      "filePath": "FLOW.md",
+      "contentHash": "19c1ff0880221b7962a1248e0af6a9f4ceb17fbcc710286f9e34280df8b80e8b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 159,
+      "hasStructuralAnalysis": false
+    },
+    "__init__.py": {
+      "filePath": "__init__.py",
+      "contentHash": "401ca837e5c469468c70abed6cdb6805f57d9f04363911e33dc28cb049ecd12f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 5,
+      "hasStructuralAnalysis": true
+    },
+    "config.py": {
+      "filePath": "config.py",
+      "contentHash": "bfb5735a1dc7321cb31d695c7377dddfbd758145a6f66493cf7601bb03431c8f",
+      "functions": [
+        {
+          "name": "speed_to_severity",
+          "params": [
+            "speed_mph"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        }
+      ],
+      "exports": [
+        "speed_to_severity"
+      ],
+      "totalLines": 110,
+      "hasStructuralAnalysis": true
+    },
+    "coordination/__init__.py": {
+      "filePath": "coordination/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "coordination/agents.py": {
+      "filePath": "coordination/agents.py",
+      "contentHash": "4ea5f5d67d4bcd783e7cd714581af36383129bb86dc402389d642ec9a9c1517b",
+      "functions": [
+        {
+          "name": "message_from",
+          "params": [
+            "ctx",
+            "proposal"
+          ],
+          "returnType": "NeighborMsg",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "yield_targets",
+          "params": [
+            "ctx",
+            "inbox"
+          ],
+          "returnType": "Set[str]",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "rule_severities",
+          "params": [
+            "ctx",
+            "per_horizon"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "make_agent",
+          "params": [
+            "kind",
+            "llm",
+            "use_retry"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [
+        {
+          "name": "ZoneContext",
+          "methods": [
+            "zone_id"
+          ],
+          "properties": [
+            "state",
+            "inp",
+            "is_rush",
+            "candidates",
+            "candidate_speeds",
+            "blocked",
+            "include_neighbors",
+            "meta"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "NeighborMsg",
+          "methods": [],
+          "properties": [
+            "zone_id",
+            "roads",
+            "severity",
+            "cascade_risk",
+            "priority",
+            "reroutes"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "RuleAgent",
+          "methods": [
+            "__init__",
+            "propose",
+            "revise"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "LLMAgent",
+          "methods": [
+            "__init__",
+            "_dry",
+            "propose",
+            "revise"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "List",
+            "Optional",
+            "Set"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.common",
+          "specifiers": [
+            "priority",
+            "targets_of"
+          ]
+        },
+        {
+          "source": "pipeline.generate.rules",
+          "specifiers": [
+            "pick_target",
+            "rule_advisory"
+          ]
+        },
+        {
+          "source": "pipeline.graph.zone_state",
+          "specifiers": [
+            "EnrichedZoneState"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        }
+      ],
+      "exports": [
+        "ZoneContext",
+        "NeighborMsg",
+        "message_from",
+        "yield_targets",
+        "rule_severities",
+        "RuleAgent",
+        "LLMAgent",
+        "make_agent"
+      ],
+      "totalLines": 134,
+      "hasStructuralAnalysis": true
+    },
+    "coordination/common.py": {
+      "filePath": "coordination/common.py",
+      "contentHash": "d9fbfe75ace5aaa8477c9485dcb91de81cac73ed5cf89bb104b2cdf496e67e52",
+      "functions": [
+        {
+          "name": "_haversine_km",
+          "params": [
+            "lat1",
+            "lng1",
+            "lat2",
+            "lng2"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "candidate_corridors",
+          "params": [
+            "state",
+            "inp",
+            "radius_km"
+          ],
+          "returnType": "List[Tuple[str, float]]",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "priority",
+          "params": [
+            "state"
+          ],
+          "returnType": "Tuple",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "zone_link",
+          "params": [
+            "A",
+            "a",
+            "b"
+          ],
+          "returnType": "float",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "neighbors",
+          "params": [
+            "states",
+            "A",
+            "thr"
+          ],
+          "returnType": "Dict[str, Set[str]]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "link_density",
+          "params": [
+            "nb"
+          ],
+          "returnType": "float",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "targets_of",
+          "params": [
+            "reroutes"
+          ],
+          "returnType": "Set[str]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "zone_footprints",
+          "params": [
+            "states",
+            "inp",
+            "candidates",
+            "radius_km"
+          ],
+          "returnType": "Dict[str, Dict[str, frozenset]]",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "_overlap",
+          "params": [
+            "footprints",
+            "a",
+            "b",
+            "road"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "detect_conflicts",
+          "params": [
+            "reroutes",
+            "zone_roads",
+            "footprints"
+          ],
+          "returnType": "Set[tuple]",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "corridor_neighbors",
+          "params": [
+            "states",
+            "candidates",
+            "footprints"
+          ],
+          "returnType": "Dict[str, Set[str]]",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "conflicts_visible_to",
+          "params": [
+            "zid",
+            "conflicts",
+            "nbrs"
+          ],
+          "returnType": "List[tuple]",
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "itertools",
+          "specifiers": [
+            "combinations"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "Iterable",
+            "List",
+            "Set",
+            "Tuple"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.graph.zone_state",
+          "specifiers": [
+            "EnrichedZoneState"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        }
+      ],
+      "exports": [
+        "_haversine_km",
+        "candidate_corridors",
+        "priority",
+        "zone_link",
+        "neighbors",
+        "link_density",
+        "targets_of",
+        "zone_footprints",
+        "_overlap",
+        "detect_conflicts",
+        "corridor_neighbors",
+        "conflicts_visible_to"
+      ],
+      "totalLines": 153,
+      "hasStructuralAnalysis": true
+    },
+    "coordination/coordinators.py": {
+      "filePath": "coordination/coordinators.py",
+      "contentHash": "34a4d9d585905e4db457c74666588e77112a937b8c85125d57d892b40ad9979e",
+      "functions": [
+        {
+          "name": "central_rule",
+          "params": [
+            "proposals",
+            "ctxs",
+            "zone_roads"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "central_llm",
+          "params": [
+            "llm",
+            "proposals",
+            "ctxs",
+            "zone_roads",
+            "meta"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "coordinate",
+          "params": [
+            "kind",
+            "llm",
+            "proposals",
+            "ctxs",
+            "zone_roads",
+            "meta"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "List"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.agents",
+          "specifiers": [
+            "ZoneContext"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.common",
+          "specifiers": [
+            "priority"
+          ]
+        },
+        {
+          "source": "pipeline.generate.rules",
+          "specifiers": [
+            "pick_target"
+          ]
+        }
+      ],
+      "exports": [
+        "central_rule",
+        "central_llm",
+        "coordinate"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "coordination/negotiation.py": {
+      "filePath": "coordination/negotiation.py",
+      "contentHash": "72a1188e25e79cb0523b6083f3e51a42546b2f889ee641c177e616da83fd1dcd",
+      "functions": [
+        {
+          "name": "_rr",
+          "params": [
+            "p"
+          ],
+          "returnType": "list",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "plan_conflicts",
+          "params": [
+            "proposals",
+            "zone_roads",
+            "footprints"
+          ],
+          "returnType": "Set[tuple]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_snapshot",
+          "params": [
+            "p"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "negotiate",
+          "params": [
+            "agents",
+            "ctxs",
+            "proposals",
+            "nb",
+            "zone_roads",
+            "max_rounds",
+            "footprints"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 44
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "List",
+            "Set"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.agents",
+          "specifiers": [
+            "ZoneContext",
+            "message_from"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.common",
+          "specifiers": [
+            "conflicts_visible_to",
+            "detect_conflicts"
+          ]
+        }
+      ],
+      "exports": [
+        "_rr",
+        "plan_conflicts",
+        "_snapshot",
+        "negotiate"
+      ],
+      "totalLines": 76,
+      "hasStructuralAnalysis": true
+    },
+    "data_source.py": {
+      "filePath": "data_source.py",
+      "contentHash": "6131538addc415f7e0c1bef1a472473cc07c5336abe74aa38b20d44f8116cfee",
+      "functions": [
+        {
+          "name": "load_test",
+          "params": [],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "load_stations",
+          "params": [],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "load_distance_adj",
+          "params": [],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "load_forecasts",
+          "params": [
+            "seed",
+            "forecaster"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "learned_adj",
+          "params": [
+            "seed",
+            "form",
+            "name"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_knn_geo",
+          "params": [
+            "k"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "_distance_topk",
+          "params": [
+            "k"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "_rewire",
+          "params": [
+            "A",
+            "rng",
+            "n_swaps_per_edge"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "consensus_adj",
+          "params": [
+            "min_seeds",
+            "seeds"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "topology",
+          "params": [
+            "name",
+            "seed",
+            "rand_seed",
+            "k"
+          ],
+          "returnType": "np.ndarray",
+          "exported": true,
+          "lineCount": 51
+        },
+        {
+          "name": "n_samples",
+          "params": [],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "build_input",
+          "params": [
+            "sample_idx",
+            "forecast_seed",
+            "mode",
+            "comm_adj",
+            "forecaster"
+          ],
+          "returnType": "PipelineInput",
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "select_scenarios",
+          "params": [
+            "n_per_regime",
+            "stride",
+            "seed"
+          ],
+          "returnType": "List[Scenario]",
+          "exported": true,
+          "lineCount": 39
+        }
+      ],
+      "classes": [
+        {
+          "name": "Scenario",
+          "methods": [],
+          "properties": [
+            "sample_idx",
+            "t0",
+            "timestamp",
+            "regime"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "pickle",
+          "specifiers": [
+            "pickle"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "functools",
+          "specifiers": [
+            "lru_cache"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "List",
+            "Optional"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pandas",
+          "specifiers": [
+            "pd"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        }
+      ],
+      "exports": [
+        "load_test",
+        "load_stations",
+        "load_distance_adj",
+        "load_forecasts",
+        "learned_adj",
+        "_knn_geo",
+        "_distance_topk",
+        "_rewire",
+        "consensus_adj",
+        "topology",
+        "Scenario",
+        "n_samples",
+        "build_input",
+        "select_scenarios"
+      ],
+      "totalLines": 268,
+      "hasStructuralAnalysis": true
+    },
+    "generate/__init__.py": {
+      "filePath": "generate/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "generate/advisory_dq_agent.py": {
+      "filePath": "generate/advisory_dq_agent.py",
+      "contentHash": "758075e68e5c33611059e6e1114dba54e7d9c470da800f93015b16d2d8de3163",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AdvisoryQualityAgent",
+          "methods": [
+            "__init__",
+            "check"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.graph.zone_state",
+          "specifiers": [
+            "EnrichedZoneState"
+          ]
+        },
+        {
+          "source": "pipeline.llm_client",
+          "specifiers": [
+            "LLMClient",
+            "LLMError"
+          ]
+        }
+      ],
+      "exports": [
+        "AdvisoryQualityAgent"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "generate/det_guards.py": {
+      "filePath": "generate/det_guards.py",
+      "contentHash": "14c1d5520d6657afb0c702e2f36457a9ab1ea7efc58092839c09bdb80f5cd104",
+      "functions": [
+        {
+          "name": "congested_roads",
+          "params": [
+            "states"
+          ],
+          "returnType": "set",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "semantic_retry_errors",
+          "params": [
+            "adv",
+            "state",
+            "blocked_roads"
+          ],
+          "returnType": "List[str]",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [
+        {
+          "name": "DeterministicGuards",
+          "methods": [
+            "apply"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.graph.zone_state",
+          "specifiers": [
+            "EnrichedZoneState"
+          ]
+        },
+        {
+          "source": "pipeline.parse",
+          "specifiers": [
+            "ParsedData"
+          ]
+        }
+      ],
+      "exports": [
+        "congested_roads",
+        "semantic_retry_errors",
+        "DeterministicGuards"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "generate/rules.py": {
+      "filePath": "generate/rules.py",
+      "contentHash": "36a12e4c3c3d25bb962486f4107c1bcd46d3912ab7a4e9fd7a09968889a96a35",
+      "functions": [
+        {
+          "name": "pick_target",
+          "params": [
+            "candidates",
+            "exclude"
+          ],
+          "returnType": "Optional[str]",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "rule_advisory",
+          "params": [
+            "state",
+            "candidates",
+            "blocked",
+            "sev30",
+            "sev60"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "List",
+            "Optional",
+            "Set"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.graph.zone_state",
+          "specifiers": [
+            "EnrichedZoneState"
+          ]
+        }
+      ],
+      "exports": [
+        "pick_target",
+        "rule_advisory"
+      ],
+      "totalLines": 42,
+      "hasStructuralAnalysis": true
+    },
+    "generate/schema.py": {
+      "filePath": "generate/schema.py",
+      "contentHash": "51bee14b7aa834c02c812b881bb6cedea3d2639a40cd0357ee58f6fea5404729",
+      "functions": [
+        {
+          "name": "structural_errors",
+          "params": [
+            "adv",
+            "zone_id",
+            "zone_roads",
+            "valid_targets"
+          ],
+          "returnType": "List[str]",
+          "exported": true,
+          "lineCount": 37
+        },
+        {
+          "name": "hallucinated_routes",
+          "params": [
+            "adv",
+            "valid_roads"
+          ],
+          "returnType": "Tuple[int, int]",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "List",
+            "Tuple"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        }
+      ],
+      "exports": [
+        "structural_errors",
+        "hallucinated_routes"
+      ],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "generate/supervisor_agent.py": {
+      "filePath": "generate/supervisor_agent.py",
+      "contentHash": "77a5210b756aa9544cd6bef1a3bdd00f9689723e3097de6786e52b481a6549c5",
+      "functions": [
+        {
+          "name": "build_prompt",
+          "params": [
+            "proposals",
+            "ctxs"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [
+        {
+          "name": "NetworkSupervisorAgent",
+          "methods": [
+            "__init__",
+            "integrate"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "Optional"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.llm_client",
+          "specifiers": [
+            "LLMClient"
+          ]
+        }
+      ],
+      "exports": [
+        "build_prompt",
+        "NetworkSupervisorAgent"
+      ],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "generate/zone_worker.py": {
+      "filePath": "generate/zone_worker.py",
+      "contentHash": "19daeb4168630eff83ac22d0421931873efa7f803db98b898b269f7d4f5a6189",
+      "functions": [
+        {
+          "name": "zone_forecast_at",
+          "params": [
+            "inp",
+            "idx",
+            "step"
+          ],
+          "returnType": "float",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "build_prompt",
+          "params": [
+            "ctx"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "describe_conflict",
+          "params": [
+            "c",
+            "me"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "revision_block",
+          "params": [
+            "ctx",
+            "own",
+            "inbox",
+            "conflicts",
+            "rnd"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [
+        {
+          "name": "ZoneWorkerAgent",
+          "methods": [
+            "__init__",
+            "_call_with_retry",
+            "generate",
+            "revise"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "List",
+            "Optional"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.generate.det_guards",
+          "specifiers": [
+            "semantic_retry_errors"
+          ]
+        },
+        {
+          "source": "pipeline.generate.schema",
+          "specifiers": [
+            "ADVISORY_FIELDS",
+            "structural_errors"
+          ]
+        },
+        {
+          "source": "pipeline.llm_client",
+          "specifiers": [
+            "LLMClient"
+          ]
+        }
+      ],
+      "exports": [
+        "zone_forecast_at",
+        "build_prompt",
+        "describe_conflict",
+        "revision_block",
+        "ZoneWorkerAgent"
+      ],
+      "totalLines": 147,
+      "hasStructuralAnalysis": true
+    },
+    "graph/__init__.py": {
+      "filePath": "graph/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "graph/message_passing.py": {
+      "filePath": "graph/message_passing.py",
+      "contentHash": "6df8937c155b86af81f143f579bfdd0f9a17a3aea802221e3e26a7c3bee2bdee",
+      "functions": [
+        {
+          "name": "no_communication",
+          "params": [
+            "zones"
+          ],
+          "returnType": "List[EnrichedZoneState]",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [
+        {
+          "name": "GraphMessagePassingLayer",
+          "methods": [
+            "__init__",
+            "run"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 75
+        }
+      ],
+      "imports": [
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        },
+        {
+          "source": "pipeline.zone_detection",
+          "specifiers": [
+            "CongestionZone"
+          ]
+        },
+        {
+          "source": "pipeline.graph.zone_state",
+          "specifiers": [
+            "ZoneMessage",
+            "EnrichedZoneState"
+          ]
+        }
+      ],
+      "exports": [
+        "GraphMessagePassingLayer",
+        "no_communication"
+      ],
+      "totalLines": 96,
+      "hasStructuralAnalysis": true
+    },
+    "graph/zone_state.py": {
+      "filePath": "graph/zone_state.py",
+      "contentHash": "7506f1b564d779cceab4a64c7287c53381ec33bbdfb5065177eb090b3b2166d1",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ZoneMessage",
+          "methods": [],
+          "properties": [
+            "zone_id",
+            "severity",
+            "severity_score",
+            "avg_speed_60min",
+            "trend",
+            "cascade_prob_raw"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "EnrichedZoneState",
+          "methods": [],
+          "properties": [
+            "zone",
+            "neighbor_messages",
+            "updated_cascade_risk",
+            "network_pressure",
+            "neighbor_context_text",
+            "neighbor_weights"
+          ],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "pipeline.zone_detection",
+          "specifiers": [
+            "CongestionZone"
+          ]
+        }
+      ],
+      "exports": [
+        "ZoneMessage",
+        "EnrichedZoneState"
+      ],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "inputs.py": {
+      "filePath": "inputs.py",
+      "contentHash": "e5e526a0a9a8405546eec8839674d662b782a39b05485071b1ae3fd30dfb5ce0",
+      "functions": [],
+      "classes": [
+        {
+          "name": "LineageTracker",
+          "methods": [],
+          "properties": [
+            "source_model",
+            "run_timestamp",
+            "scenario_id"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "PipelineInput",
+          "methods": [],
+          "properties": [
+            "pred_speed",
+            "actual_speed",
+            "adj_mx",
+            "station_ids",
+            "lats",
+            "lngs",
+            "hist_means",
+            "hist_stds",
+            "day_of_week",
+            "hour",
+            "timestamp_idx"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "PipelineResult",
+          "methods": [],
+          "properties": [
+            "status",
+            "run_id",
+            "lineage",
+            "outputs",
+            "evals",
+            "gt_result",
+            "integrated_plan",
+            "network_avg"
+          ],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "List",
+            "Dict",
+            "Any",
+            "Optional"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        }
+      ],
+      "exports": [
+        "LineageTracker",
+        "PipelineInput",
+        "PipelineResult"
+      ],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "llm_client.py": {
+      "filePath": "llm_client.py",
+      "contentHash": "9fa22a4c0d38377511eab6aed1ceada68421ae9a3afbe3835b019d13229a55a2",
+      "functions": [
+        {
+          "name": "_error_body",
+          "params": [
+            "e"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "is_json_validate_failure",
+          "params": [
+            "e"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "failed_generation",
+          "params": [
+            "e"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [
+        {
+          "name": "LLMError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "LLMClient",
+          "methods": [
+            "__init__",
+            "_log",
+            "_count",
+            "snapshot",
+            "chat_json"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 98
+        }
+      ],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "threading",
+          "specifiers": [
+            "threading"
+          ]
+        },
+        {
+          "source": "time",
+          "specifiers": [
+            "time"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Callable",
+            "Optional"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        }
+      ],
+      "exports": [
+        "LLMError",
+        "LLMClient",
+        "_error_body",
+        "is_json_validate_failure",
+        "failed_generation"
+      ],
+      "totalLines": 142,
+      "hasStructuralAnalysis": true
+    },
+    "orchestrator.py": {
+      "filePath": "orchestrator.py",
+      "contentHash": "ce775e84168da48fc18462f6b2c95675a1b975c8c1f4403b54e34fbdc5eb72d4",
+      "functions": [
+        {
+          "name": "_usage_delta",
+          "params": [
+            "llm",
+            "before"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_reroutes",
+          "params": [
+            "p"
+          ],
+          "returnType": "list",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "run_scenario",
+          "params": [
+            "inp",
+            "variant",
+            "llm",
+            "meta",
+            "dry_run",
+            "log_dir"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 101
+        },
+        {
+          "name": "_single_agent",
+          "params": [
+            "llm",
+            "ctxs",
+            "meta",
+            "use_retry"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [
+        {
+          "name": "Variant",
+          "methods": [
+            "__post_init__",
+            "needs_llm"
+          ],
+          "properties": [
+            "name",
+            "agent",
+            "coordination",
+            "topology",
+            "gmp",
+            "rounds",
+            "fallback",
+            "gates",
+            "dq",
+            "forecast_mode",
+            "gmp_weight_agg",
+            "gmp_pressure",
+            "radius_km",
+            "dbscan_eps",
+            "neighbor_threshold",
+            "conflict_level",
+            "neighbor_rule"
+          ],
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "MASTraPipeline",
+          "methods": [
+            "run"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "imports": [
+        {
+          "source": "copy",
+          "specifiers": [
+            "copy"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "asdict"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Dict",
+            "Optional"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.agents",
+          "specifiers": [
+            "RuleAgent",
+            "ZoneContext",
+            "make_agent"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.common",
+          "specifiers": [
+            "candidate_corridors",
+            "corridor_neighbors",
+            "link_density",
+            "neighbors",
+            "zone_footprints"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.coordinators",
+          "specifiers": [
+            "coordinate"
+          ]
+        },
+        {
+          "source": "pipeline.coordination.negotiation",
+          "specifiers": [
+            "negotiate",
+            "plan_conflicts"
+          ]
+        },
+        {
+          "source": "pipeline.generate.advisory_dq_agent",
+          "specifiers": [
+            "AdvisoryQualityAgent"
+          ]
+        },
+        {
+          "source": "pipeline.generate.det_guards",
+          "specifiers": [
+            "DeterministicGuards",
+            "congested_roads"
+          ]
+        },
+        {
+          "source": "pipeline.generate.schema",
+          "specifiers": [
+            "structural_errors"
+          ]
+        },
+        {
+          "source": "pipeline.generate.zone_worker",
+          "specifiers": [
+            "WORKER_SYSTEM",
+            "worker_prompt"
+          ]
+        },
+        {
+          "source": "pipeline.graph.message_passing",
+          "specifiers": [
+            "GraphMessagePassingLayer",
+            "no_communication"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        },
+        {
+          "source": "pipeline.llm_client",
+          "specifiers": [
+            "LLMClient"
+          ]
+        },
+        {
+          "source": "pipeline.parse",
+          "specifiers": [
+            "Parser"
+          ]
+        },
+        {
+          "source": "pipeline.validate.forecast_gate",
+          "specifiers": [
+            "ForecastIntegrityGate"
+          ]
+        },
+        {
+          "source": "pipeline.zone_detection",
+          "specifiers": [
+            "ZoneDetector"
+          ]
+        }
+      ],
+      "exports": [
+        "Variant",
+        "_usage_delta",
+        "_reroutes",
+        "run_scenario",
+        "_single_agent",
+        "MASTraPipeline"
+      ],
+      "totalLines": 246,
+      "hasStructuralAnalysis": true
+    },
+    "outputs/__init__.py": {
+      "filePath": "outputs/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "outputs/writer.py": {
+      "filePath": "outputs/writer.py",
+      "contentHash": "c40b15a00b819ccf5918526bfdaeb6b289c8d92a911c2afb4de5a9849c93efaf",
+      "functions": [],
+      "classes": [
+        {
+          "name": "OutputWriter",
+          "methods": [
+            "write"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        }
+      ],
+      "exports": [
+        "OutputWriter"
+      ],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "parse.py": {
+      "filePath": "parse.py",
+      "contentHash": "746d688919769a5f1b61a52a81b66d9969cbe3d0f528e92d9581121b309045d8",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ParsedData",
+          "methods": [],
+          "properties": [
+            "z_scores",
+            "speed_levels",
+            "speed_trends",
+            "faulty",
+            "is_rush_hour",
+            "network_avg",
+            "num_severe",
+            "num_heavy"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Parser",
+          "methods": [
+            "parse"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 33
+        }
+      ],
+      "imports": [
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        }
+      ],
+      "exports": [
+        "ParsedData",
+        "Parser"
+      ],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "validate/__init__.py": {
+      "filePath": "validate/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "validate/forecast_gate.py": {
+      "filePath": "validate/forecast_gate.py",
+      "contentHash": "15246685a924311403f7582b12e711719062a8809ec6b4f63abee62e82108b9b",
+      "functions": [],
+      "classes": [
+        {
+          "name": "GateResult",
+          "methods": [],
+          "properties": [
+            "passed",
+            "reason"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "ForecastIntegrityGate",
+          "methods": [
+            "check"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        },
+        {
+          "source": "pipeline.parse",
+          "specifiers": [
+            "ParsedData"
+          ]
+        }
+      ],
+      "exports": [
+        "GateResult",
+        "ForecastIntegrityGate"
+      ],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "zone_detection.py": {
+      "filePath": "zone_detection.py",
+      "contentHash": "683d3b1ae03978dc948fbbb90d6d1e1ad1e78bda6c668cd476d360800f643ccc",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CongestionZone",
+          "methods": [],
+          "properties": [
+            "zone_id",
+            "sensor_indices",
+            "center_lat",
+            "center_lng",
+            "avg_speed_60min",
+            "min_speed_60min",
+            "severity",
+            "trend",
+            "cascade_risk_raw",
+            "anomaly_score",
+            "roads",
+            "n_faulty"
+          ],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "ZoneDetector",
+          "methods": [
+            "__init__",
+            "detect",
+            "_bfs"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 63
+        }
+      ],
+      "imports": [
+        {
+          "source": "hashlib",
+          "specifiers": [
+            "hashlib"
+          ]
+        },
+        {
+          "source": "numpy",
+          "specifiers": [
+            "np"
+          ]
+        },
+        {
+          "source": "collections",
+          "specifiers": [
+            "deque"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass",
+            "field"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "sklearn.cluster",
+          "specifiers": [
+            "DBSCAN"
+          ]
+        },
+        {
+          "source": "pipeline",
+          "specifiers": [
+            "C"
+          ]
+        },
+        {
+          "source": "pipeline.inputs",
+          "specifiers": [
+            "PipelineInput"
+          ]
+        },
+        {
+          "source": "pipeline.parse",
+          "specifiers": [
+            "ParsedData"
+          ]
+        }
+      ],
+      "exports": [
+        "CongestionZone",
+        "ZoneDetector"
+      ],
+      "totalLines": 93,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

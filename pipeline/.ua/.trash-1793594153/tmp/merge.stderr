@@ -1,0 +1,15 @@
+Found 5 batch files (4 logical batches, 1 multi-part):
+  batch-1-part-1.json: 11 nodes, 22 edges
+  batch-1-part-2.json: 22 nodes, 101 edges
+  batch-2.json: 33 nodes, 99 edges
+  batch-3.json: 31 nodes, 69 edges
+  batch-4.json: 10 nodes, 21 edges
+
+Input: 107 nodes, 312 edges
+
+Output: 107 nodes, 312 edges
+
+Imports edge recovery:
+  Recovered 0 `imports` edges from importMap (28 entries scanned)
+
+Written to D:\Deep Traffic Brain\PART_1\New_ipynb_file\pipeline\.ua\intermediate\assembled-graph.json (115 KB)

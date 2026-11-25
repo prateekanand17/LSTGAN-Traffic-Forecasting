@@ -1,0 +1,34 @@
+{
+ "learned_vs_random": {
+  "n_scenario_seeds": 206,
+  "n_scenarios": 74,
+  "density_learned": 0.5330138023027801,
+  "density_random": 0.4720611322810066,
+  "b_density": -1.6851665404595877,
+  "b_density_ci": [
+   -2.3545600973187693,
+   -1.3439101972774767
+  ],
+  "c_learned": -0.31670207565578845,
+  "c_learned_ci": [
+   -0.4762167436494247,
+   -0.16119844720887375
+  ]
+ },
+ "consensus_vs_random_consensus": {
+  "n_scenario_seeds": 206,
+  "n_scenarios": 74,
+  "density_learned": 0.4526179084574287,
+  "density_random": 0.3405023661534227,
+  "b_density": -2.6236395314479584,
+  "b_density_ci": [
+   -3.6181978119934888,
+   -2.0973939964447483
+  ],
+  "c_learned": -0.5272084544224543,
+  "c_learned_ci": [
+   -0.7853717882879848,
+   -0.24709276100601274
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "sha1": "5a45623513fb351a97850b220ea600f32d1c5ab5",
+ "scenarios": [
+  {
+   "sample_idx": 7482,
+   "t0": 9498,
+   "timestamp": "2017-06-27 18:45:00",
+   "regime": "HIGH"
+  },
+  {
+   "sample_idx": 5370,
+   "t0": 7386,
+   "timestamp": "2017-06-20 10:45:00",
+   "regime": "MODERATE"
+  },
+  {
+   "sample_idx": 3960,
+   "t0": 5976,
+   "timestamp": "2017-06-15 13:15:00",
+   "regime": "CASCADE"
+  },
+  {
+   "sample_idx": 2124,
+   "t0": 4140,
+   "timestamp": "2017-06-09 04:15:00",
+   "regime": "NORMAL"
+  }
+ ]
+}

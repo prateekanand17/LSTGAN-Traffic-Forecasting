@@ -1,0 +1,1562 @@
+[
+ {
+  "source": "file:config.py",
+  "target": "function:config.py:speed_to_severity",
+  "type": "contains"
+ },
+ {
+  "source": "file:config.py",
+  "target": "function:config.py:speed_to_severity",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/advisory_dq_agent.py",
+  "target": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/advisory_dq_agent.py",
+  "target": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/advisory_dq_agent.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/advisory_dq_agent.py",
+  "target": "file:graph/zone_state.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/advisory_dq_agent.py",
+  "target": "file:llm_client.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "function:generate/det_guards.py:congested_roads",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "function:generate/det_guards.py:congested_roads",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "function:generate/det_guards.py:semantic_retry_errors",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "function:generate/det_guards.py:semantic_retry_errors",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "class:generate/det_guards.py:DeterministicGuards",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "class:generate/det_guards.py:DeterministicGuards",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "file:graph/zone_state.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/det_guards.py",
+  "target": "file:parse.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/schema.py",
+  "target": "function:generate/schema.py:structural_errors",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/schema.py",
+  "target": "function:generate/schema.py:structural_errors",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/schema.py",
+  "target": "function:generate/schema.py:hallucinated_routes",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/schema.py",
+  "target": "function:generate/schema.py:hallucinated_routes",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/schema.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+  "target": "class:llm_client.py:LLMClient",
+  "type": "calls"
+ },
+ {
+  "source": "file:generate/supervisor_agent.py",
+  "target": "function:generate/supervisor_agent.py:build_prompt",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/supervisor_agent.py",
+  "target": "function:generate/supervisor_agent.py:build_prompt",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/supervisor_agent.py",
+  "target": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/supervisor_agent.py",
+  "target": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/supervisor_agent.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/supervisor_agent.py",
+  "target": "file:llm_client.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:zone_forecast_at",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:zone_forecast_at",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:build_prompt",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:build_prompt",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:describe_conflict",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:describe_conflict",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:revision_block",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "function:generate/zone_worker.py:revision_block",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "file:coordination/common.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "file:generate/det_guards.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "file:generate/schema.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/zone_worker.py",
+  "target": "file:llm_client.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "function:llm_client.py:_error_body",
+  "type": "contains"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "function:llm_client.py:_error_body",
+  "type": "exports"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "function:llm_client.py:is_json_validate_failure",
+  "type": "contains"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "function:llm_client.py:is_json_validate_failure",
+  "type": "exports"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "function:llm_client.py:failed_generation",
+  "type": "contains"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "function:llm_client.py:failed_generation",
+  "type": "exports"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "class:llm_client.py:LLMError",
+  "type": "contains"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "class:llm_client.py:LLMError",
+  "type": "exports"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "class:llm_client.py:LLMClient",
+  "type": "contains"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "class:llm_client.py:LLMClient",
+  "type": "exports"
+ },
+ {
+  "source": "file:llm_client.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:_usage_delta",
+  "type": "contains"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:_usage_delta",
+  "type": "exports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:_reroutes",
+  "type": "contains"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:_reroutes",
+  "type": "exports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:run_scenario",
+  "type": "contains"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:run_scenario",
+  "type": "exports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:_single_agent",
+  "type": "contains"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "function:orchestrator.py:_single_agent",
+  "type": "exports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "class:orchestrator.py:Variant",
+  "type": "contains"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "class:orchestrator.py:Variant",
+  "type": "exports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "class:orchestrator.py:MASTraPipeline",
+  "type": "contains"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "class:orchestrator.py:MASTraPipeline",
+  "type": "exports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:coordination/agents.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:coordination/common.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:coordination/coordinators.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:coordination/negotiation.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:data_source.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:generate/advisory_dq_agent.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:generate/det_guards.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:generate/schema.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:generate/zone_worker.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:graph/message_passing.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:llm_client.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:parse.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:validate/forecast_gate.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:orchestrator.py",
+  "target": "file:zone_detection.py",
+  "type": "imports"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:parse.py:Parser",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:zone_detection.py:ZoneDetector",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:graph/message_passing.py:no_communication",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:generate/det_guards.py:congested_roads",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/common.py:candidate_corridors",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/common.py:zone_footprints",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/common.py:corridor_neighbors",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/common.py:neighbors",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/common.py:link_density",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/agents.py:make_agent",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/negotiation.py:negotiate",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/negotiation.py:plan_conflicts",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:coordination/coordinators.py:coordinate",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:generate/det_guards.py:DeterministicGuards",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "class:llm_client.py:LLMClient",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:orchestrator.py:_single_agent",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:orchestrator.py:_reroutes",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:run_scenario",
+  "target": "function:orchestrator.py:_usage_delta",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:_single_agent",
+  "target": "function:generate/zone_worker.py:build_prompt",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:_single_agent",
+  "target": "function:generate/schema.py:structural_errors",
+  "type": "calls"
+ },
+ {
+  "source": "function:orchestrator.py:_single_agent",
+  "target": "class:coordination/agents.py:RuleAgent",
+  "type": "calls"
+ },
+ {
+  "source": "class:orchestrator.py:MASTraPipeline",
+  "target": "function:orchestrator.py:run_scenario",
+  "type": "calls"
+ },
+ {
+  "source": "class:orchestrator.py:MASTraPipeline",
+  "target": "function:data_source.py:learned_adj",
+  "type": "calls"
+ },
+ {
+  "source": "class:orchestrator.py:MASTraPipeline",
+  "target": "function:data_source.py:load_stations",
+  "type": "calls"
+ },
+ {
+  "source": "function:generate/zone_worker.py:build_prompt",
+  "target": "function:generate/zone_worker.py:zone_forecast_at",
+  "type": "calls"
+ },
+ {
+  "source": "function:generate/zone_worker.py:revision_block",
+  "target": "function:coordination/common.py:priority",
+  "type": "calls"
+ },
+ {
+  "source": "function:generate/zone_worker.py:revision_block",
+  "target": "function:generate/zone_worker.py:describe_conflict",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "target": "function:generate/zone_worker.py:build_prompt",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "target": "function:generate/zone_worker.py:revision_block",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "target": "function:generate/schema.py:structural_errors",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "target": "function:generate/det_guards.py:semantic_retry_errors",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "target": "class:llm_client.py:LLMClient",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+  "target": "function:generate/supervisor_agent.py:build_prompt",
+  "type": "calls"
+ },
+ {
+  "source": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+  "target": "class:llm_client.py:LLMClient",
+  "type": "calls"
+ },
+ {
+  "source": "class:llm_client.py:LLMClient",
+  "target": "function:llm_client.py:is_json_validate_failure",
+  "type": "calls"
+ },
+ {
+  "source": "class:llm_client.py:LLMClient",
+  "target": "function:llm_client.py:failed_generation",
+  "type": "calls"
+ },
+ {
+  "source": "function:llm_client.py:is_json_validate_failure",
+  "target": "function:llm_client.py:_error_body",
+  "type": "calls"
+ },
+ {
+  "source": "function:llm_client.py:failed_generation",
+  "target": "function:llm_client.py:_error_body",
+  "type": "calls"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "file:coordination/common.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "file:generate/rules.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "file:generate/zone_worker.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "file:graph/zone_state.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "file:graph/zone_state.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "file:coordination/agents.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "file:coordination/common.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "file:generate/rules.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "file:generate/supervisor_agent.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/negotiation.py",
+  "target": "file:coordination/agents.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/negotiation.py",
+  "target": "file:coordination/common.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/rules.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:generate/rules.py",
+  "target": "file:graph/zone_state.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:graph/zone_state.py",
+  "target": "file:zone_detection.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:ZoneContext",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:ZoneContext",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:NeighborMsg",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:NeighborMsg",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:message_from",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:message_from",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:yield_targets",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:yield_targets",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:rule_severities",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:rule_severities",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:RuleAgent",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:RuleAgent",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:LLMAgent",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "class:coordination/agents.py:LLMAgent",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:make_agent",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/agents.py",
+  "target": "function:coordination/agents.py:make_agent",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:candidate_corridors",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:candidate_corridors",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:priority",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:priority",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:zone_link",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:zone_link",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:neighbors",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:neighbors",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:link_density",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:link_density",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:targets_of",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:targets_of",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:zone_footprints",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:zone_footprints",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:detect_conflicts",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:detect_conflicts",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:corridor_neighbors",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:corridor_neighbors",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:conflicts_visible_to",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/common.py",
+  "target": "function:coordination/common.py:conflicts_visible_to",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "function:coordination/coordinators.py:central_rule",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "function:coordination/coordinators.py:central_rule",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "function:coordination/coordinators.py:central_llm",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "function:coordination/coordinators.py:central_llm",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "function:coordination/coordinators.py:coordinate",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/coordinators.py",
+  "target": "function:coordination/coordinators.py:coordinate",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/negotiation.py",
+  "target": "function:coordination/negotiation.py:plan_conflicts",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/negotiation.py",
+  "target": "function:coordination/negotiation.py:plan_conflicts",
+  "type": "exports"
+ },
+ {
+  "source": "file:coordination/negotiation.py",
+  "target": "function:coordination/negotiation.py:negotiate",
+  "type": "contains"
+ },
+ {
+  "source": "file:coordination/negotiation.py",
+  "target": "function:coordination/negotiation.py:negotiate",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/rules.py",
+  "target": "function:generate/rules.py:pick_target",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/rules.py",
+  "target": "function:generate/rules.py:pick_target",
+  "type": "exports"
+ },
+ {
+  "source": "file:generate/rules.py",
+  "target": "function:generate/rules.py:rule_advisory",
+  "type": "contains"
+ },
+ {
+  "source": "file:generate/rules.py",
+  "target": "function:generate/rules.py:rule_advisory",
+  "type": "exports"
+ },
+ {
+  "source": "file:graph/zone_state.py",
+  "target": "class:graph/zone_state.py:ZoneMessage",
+  "type": "contains"
+ },
+ {
+  "source": "file:graph/zone_state.py",
+  "target": "class:graph/zone_state.py:ZoneMessage",
+  "type": "exports"
+ },
+ {
+  "source": "file:graph/zone_state.py",
+  "target": "class:graph/zone_state.py:EnrichedZoneState",
+  "type": "contains"
+ },
+ {
+  "source": "file:graph/zone_state.py",
+  "target": "class:graph/zone_state.py:EnrichedZoneState",
+  "type": "exports"
+ },
+ {
+  "source": "function:coordination/agents.py:message_from",
+  "target": "function:coordination/common.py:priority",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/agents.py:yield_targets",
+  "target": "function:coordination/common.py:priority",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/agents.py:yield_targets",
+  "target": "function:coordination/common.py:targets_of",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/agents.py:rule_severities",
+  "target": "function:config.py:speed_to_severity",
+  "type": "calls"
+ },
+ {
+  "source": "class:coordination/agents.py:RuleAgent",
+  "target": "function:coordination/agents.py:rule_severities",
+  "type": "calls"
+ },
+ {
+  "source": "class:coordination/agents.py:RuleAgent",
+  "target": "function:generate/rules.py:rule_advisory",
+  "type": "calls"
+ },
+ {
+  "source": "class:coordination/agents.py:RuleAgent",
+  "target": "function:coordination/agents.py:yield_targets",
+  "type": "calls"
+ },
+ {
+  "source": "class:coordination/agents.py:RuleAgent",
+  "target": "function:generate/rules.py:pick_target",
+  "type": "calls"
+ },
+ {
+  "source": "class:coordination/agents.py:LLMAgent",
+  "target": "class:coordination/agents.py:RuleAgent",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/agents.py:make_agent",
+  "target": "class:coordination/agents.py:RuleAgent",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/agents.py:make_agent",
+  "target": "class:coordination/agents.py:LLMAgent",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/agents.py:make_agent",
+  "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/common.py:neighbors",
+  "target": "function:coordination/common.py:zone_link",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/common.py:detect_conflicts",
+  "target": "function:coordination/common.py:targets_of",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/coordinators.py:central_rule",
+  "target": "function:coordination/common.py:priority",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/coordinators.py:central_rule",
+  "target": "function:generate/rules.py:pick_target",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/coordinators.py:central_llm",
+  "target": "function:coordination/coordinators.py:central_rule",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/coordinators.py:central_llm",
+  "target": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/coordinators.py:coordinate",
+  "target": "function:coordination/coordinators.py:central_rule",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/coordinators.py:coordinate",
+  "target": "function:coordination/coordinators.py:central_llm",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/negotiation.py:plan_conflicts",
+  "target": "function:coordination/common.py:detect_conflicts",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/negotiation.py:negotiate",
+  "target": "function:coordination/negotiation.py:plan_conflicts",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/negotiation.py:negotiate",
+  "target": "function:coordination/common.py:conflicts_visible_to",
+  "type": "calls"
+ },
+ {
+  "source": "function:coordination/negotiation.py:negotiate",
+  "target": "function:coordination/agents.py:message_from",
+  "type": "calls"
+ },
+ {
+  "source": "function:generate/rules.py:rule_advisory",
+  "target": "function:generate/rules.py:pick_target",
+  "type": "calls"
+ },
+ {
+  "source": "class:coordination/agents.py:LLMAgent",
+  "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+  "type": "related"
+ },
+ {
+  "source": "class:graph/zone_state.py:EnrichedZoneState",
+  "target": "class:zone_detection.py:CongestionZone",
+  "type": "related"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_test",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_test",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_stations",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_stations",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_distance_adj",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_distance_adj",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_forecasts",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:load_forecasts",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:learned_adj",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:learned_adj",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:_knn_geo",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:_knn_geo",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:_distance_topk",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:_distance_topk",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:_rewire",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:_rewire",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:consensus_adj",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:consensus_adj",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:topology",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:topology",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "class:data_source.py:Scenario",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "class:data_source.py:Scenario",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:n_samples",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:n_samples",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:build_input",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:build_input",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:select_scenarios",
+  "type": "contains"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "function:data_source.py:select_scenarios",
+  "type": "exports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:data_source.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+  "type": "contains"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+  "type": "exports"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "function:graph/message_passing.py:no_communication",
+  "type": "contains"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "function:graph/message_passing.py:no_communication",
+  "type": "exports"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "file:graph/zone_state.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:graph/message_passing.py",
+  "target": "file:zone_detection.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:inputs.py",
+  "target": "class:inputs.py:LineageTracker",
+  "type": "contains"
+ },
+ {
+  "source": "file:inputs.py",
+  "target": "class:inputs.py:LineageTracker",
+  "type": "exports"
+ },
+ {
+  "source": "file:inputs.py",
+  "target": "class:inputs.py:PipelineInput",
+  "type": "contains"
+ },
+ {
+  "source": "file:inputs.py",
+  "target": "class:inputs.py:PipelineInput",
+  "type": "exports"
+ },
+ {
+  "source": "file:inputs.py",
+  "target": "class:inputs.py:PipelineResult",
+  "type": "contains"
+ },
+ {
+  "source": "file:inputs.py",
+  "target": "class:inputs.py:PipelineResult",
+  "type": "exports"
+ },
+ {
+  "source": "file:parse.py",
+  "target": "class:parse.py:ParsedData",
+  "type": "contains"
+ },
+ {
+  "source": "file:parse.py",
+  "target": "class:parse.py:ParsedData",
+  "type": "exports"
+ },
+ {
+  "source": "file:parse.py",
+  "target": "class:parse.py:Parser",
+  "type": "contains"
+ },
+ {
+  "source": "file:parse.py",
+  "target": "class:parse.py:Parser",
+  "type": "exports"
+ },
+ {
+  "source": "file:parse.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:parse.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:validate/forecast_gate.py",
+  "target": "class:validate/forecast_gate.py:GateResult",
+  "type": "contains"
+ },
+ {
+  "source": "file:validate/forecast_gate.py",
+  "target": "class:validate/forecast_gate.py:GateResult",
+  "type": "exports"
+ },
+ {
+  "source": "file:validate/forecast_gate.py",
+  "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+  "type": "contains"
+ },
+ {
+  "source": "file:validate/forecast_gate.py",
+  "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+  "type": "exports"
+ },
+ {
+  "source": "file:validate/forecast_gate.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:validate/forecast_gate.py",
+  "target": "file:parse.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "class:zone_detection.py:CongestionZone",
+  "type": "contains"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "class:zone_detection.py:CongestionZone",
+  "type": "exports"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "class:zone_detection.py:ZoneDetector",
+  "type": "contains"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "class:zone_detection.py:ZoneDetector",
+  "type": "exports"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "file:config.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "file:inputs.py",
+  "type": "imports"
+ },
+ {
+  "source": "file:zone_detection.py",
+  "target": "file:parse.py",
+  "type": "imports"
+ },
+ {
+  "source": "function:data_source.py:build_input",
+  "target": "class:inputs.py:PipelineInput",
+  "type": "calls"
+ },
+ {
+  "source": "class:parse.py:Parser",
+  "target": "function:config.py:speed_to_severity",
+  "type": "calls"
+ },
+ {
+  "source": "class:zone_detection.py:ZoneDetector",
+  "target": "function:config.py:speed_to_severity",
+  "type": "calls"
+ },
+ {
+  "source": "class:graph/message_passing.py:GraphMessagePassingLayer",
+  "target": "class:graph/zone_state.py:ZoneMessage",
+  "type": "calls"
+ },
+ {
+  "source": "class:graph/message_passing.py:GraphMessagePassingLayer",
+  "target": "class:graph/zone_state.py:EnrichedZoneState",
+  "type": "calls"
+ },
+ {
+  "source": "function:graph/message_passing.py:no_communication",
+  "target": "class:graph/zone_state.py:EnrichedZoneState",
+  "type": "calls"
+ },
+ {
+  "source": "file:outputs/writer.py",
+  "target": "class:outputs/writer.py:OutputWriter",
+  "type": "contains"
+ },
+ {
+  "source": "file:outputs/writer.py",
+  "target": "function:outputs/writer.py:write",
+  "type": "contains"
+ },
+ {
+  "source": "file:outputs/writer.py",
+  "target": "class:outputs/writer.py:OutputWriter",
+  "type": "exports"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:orchestrator.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:data_source.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:inputs.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:config.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:parse.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:validate/forecast_gate.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:zone_detection.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:graph/message_passing.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:graph/zone_state.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:coordination/common.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:coordination/agents.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:coordination/negotiation.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:coordination/coordinators.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:generate/zone_worker.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:generate/rules.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:generate/schema.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:generate/det_guards.py",
+  "type": "documents"
+ },
+ {
+  "source": "document:FLOW.md",
+  "target": "file:llm_client.py",
+  "type": "documents"
+ }
+]

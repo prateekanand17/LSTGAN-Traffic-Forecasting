@@ -1,0 +1,113 @@
+{
+ "k": 10,
+ "gwnet": {
+  "42": {
+   "checkpoint": "Kaggle_P1_Experiments/output/gwnet_s42/pems-bay_p1_pems_gwnet_s42.pt",
+   "checkpoint_sha1": "cd1e0a24fe56efebb25943444b9f4bc15a1dc91a",
+   "status": "not usable: node embeddings collapsed, adaptive adjacency uniform",
+   "max_abs_nodevec1": 6.303040492533027e-41,
+   "max_abs_nodevec2": 6.93390506117206e-41
+  },
+  "123": {
+   "checkpoint": "Kaggle_P1_Experiments/output/gwnet_s123/pems-bay_p1_pems_gwnet_s123.pt",
+   "checkpoint_sha1": "a4525e17bb2d711887490ced4f3d32fde89b89cc",
+   "status": "not usable: node embeddings collapsed, adaptive adjacency uniform",
+   "max_abs_nodevec1": 6.304722050690217e-41,
+   "max_abs_nodevec2": 6.30262010299373e-41
+  },
+  "456": {
+   "checkpoint": "Kaggle_P1_Experiments/output/gwnet_s456/pems-bay_p1_pems_gwnet_s456.pt",
+   "checkpoint_sha1": "e190a5ebd0fc303e67d1eb3c598fc259abc06c2b",
+   "status": "not usable: node embeddings collapsed, adaptive adjacency uniform",
+   "max_abs_nodevec1": 6.301218804529405e-41,
+   "max_abs_nodevec2": 6.303601011918757e-41
+  }
+ },
+ "alpha1": {
+  "42": {
+   "source": "Kaggle_P1_Experiments/output/alpha1_s42/learned_graph_pems-bay_p1_pems_alpha1_s42.npy",
+   "source_sha1": "c4b179f69733f92134480c85fc33e42b4ea7eb41",
+   "shape": [
+    325,
+    325
+   ],
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "123": {
+   "source": "Kaggle_P1_Experiments/output/alpha1_s123/learned_graph_pems-bay_p1_pems_alpha1_s123.npy",
+   "source_sha1": "c7e3e553538d67b9f3b8b0846fdc2b4e7f8c053e",
+   "shape": [
+    325,
+    325
+   ],
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "456": {
+   "source": "Kaggle_P1_Experiments/output/alpha1_s456/learned_graph_pems-bay_p1_pems_alpha1_s456.npy",
+   "source_sha1": "388505a4586db9cb0c892a60f40ffdb0876b1236",
+   "shape": [
+    325,
+    325
+   ],
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "789": {
+   "source": "Kaggle_P1_Experiments/output/alpha1_s789/learned_graph_pems-bay_p1_pems_alpha1_s789.npy",
+   "source_sha1": "cf583a7d06185cd9d58d33b827b98b83ca83ebc9",
+   "shape": [
+    325,
+    325
+   ],
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  },
+  "1024": {
+   "source": "Kaggle_P1_Experiments/output/alpha1_s1024/learned_graph_pems-bay_p1_pems_alpha1_s1024.npy",
+   "source_sha1": "b6a4410fc923ebf3533c4f30a54792939fcbdf0e",
+   "shape": [
+    325,
+    325
+   ],
+   "nonzeros_per_row_min_max": [
+    9,
+    10
+   ],
+   "row_sum_min_max": [
+    0.9999998807907104,
+    1.0000001192092896
+   ],
+   "diag_max": 0.0
+  }
+ }
+}

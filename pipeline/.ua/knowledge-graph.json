@@ -1,0 +1,4156 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "pipeline",
+    "languages": [
+      "markdown",
+      "python"
+    ],
+    "frameworks": [],
+    "description": "Python implementation of the MASTRA multi-agent traffic-advisory system: it turns speed forecasts into congested zones, has a rule-based or LLM agent write a JSON advisory with reroutes for each zone, coordinates the agents through negotiation so zones do not overload the same road, and applies deterministic safety gates to the final records.",
+    "analyzedAt": "2026-11-02T04:35:41.955100+00:00",
+    "gitCommitHash": "3f83b073bef6fcb8aa0c217a12f7902bc2447acf"
+  },
+  "nodes": [
+    {
+      "id": "file:config.py",
+      "type": "file",
+      "name": "config.py",
+      "filePath": "config.py",
+      "summary": "Single source of truth for MASTRA constants: data and forecast file paths, the speed-based severity scale, zone detection and message-passing settings, negotiation limits, safety-gate thresholds, and pinned LLM providers and model IDs.",
+      "tags": [
+        "configuration",
+        "constants",
+        "llm-settings",
+        "thresholds"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Model IDs and the provider can be overridden through MASTRA_* environment variables read at import time, so the effective configuration is fixed when the module is first imported."
+    },
+    {
+      "id": "function:config.py:speed_to_severity",
+      "type": "function",
+      "name": "speed_to_severity",
+      "filePath": "config.py",
+      "lineRange": [
+        46,
+        51
+      ],
+      "summary": "Maps a mean speed in mph to HIGH, MEDIUM or LOW using the shared severity thresholds.",
+      "tags": [
+        "utility",
+        "severity-scale",
+        "classification"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:generate/advisory_dq_agent.py",
+      "type": "file",
+      "name": "advisory_dq_agent.py",
+      "filePath": "generate/advisory_dq_agent.py",
+      "summary": "Evaluation-only LLM plausibility check that compares one final advisory with its zone state; the verdict is recorded and never changes the output, and API failures are recorded as ERROR rather than PASS.",
+      "tags": [
+        "service",
+        "llm-agent",
+        "evaluation",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+      "type": "class",
+      "name": "AdvisoryQualityAgent",
+      "filePath": "generate/advisory_dq_agent.py",
+      "lineRange": [
+        16,
+        34
+      ],
+      "summary": "Asks an LLM whether an advisory contradicts its zone state and returns a PASS, FAIL, INVALID or ERROR status with a reason.",
+      "tags": [
+        "llm-agent",
+        "evaluation",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:generate/det_guards.py",
+      "type": "file",
+      "name": "det_guards.py",
+      "filePath": "generate/det_guards.py",
+      "summary": "Deterministic safety gates for zone advisories: finds roads of zones forecast HIGH, produces the CONGESTED_TARGET retry errors, and applies the sensor-fault, severe-speed, cascade-risk and rush-hour overrides.",
+      "tags": [
+        "validation",
+        "safety-gates",
+        "deterministic",
+        "rule-based"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:generate/det_guards.py:congested_roads",
+      "type": "function",
+      "name": "congested_roads",
+      "filePath": "generate/det_guards.py",
+      "lineRange": [
+        20,
+        21
+      ],
+      "summary": "Collects the set of roads covered by zones whose detector severity is HIGH.",
+      "tags": [
+        "utility",
+        "traffic-zones",
+        "safety-gates"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:generate/det_guards.py:semantic_retry_errors",
+      "type": "function",
+      "name": "semantic_retry_errors",
+      "filePath": "generate/det_guards.py",
+      "lineRange": [
+        24,
+        30
+      ],
+      "summary": "Lists reroutes that send traffic onto a blocked road outside the zone, producing error text that goes back to the agent for a retry.",
+      "tags": [
+        "validation",
+        "retry-gate",
+        "reroutes"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:generate/det_guards.py:DeterministicGuards",
+      "type": "class",
+      "name": "DeterministicGuards",
+      "filePath": "generate/det_guards.py",
+      "lineRange": [
+        33,
+        57
+      ],
+      "summary": "Applies the override gates to an advisory and records each trigger: suppression on sensor faults, forced HIGH severity, upstream alerts on cascade risk, and a filled PREVENT tier at rush hour.",
+      "tags": [
+        "safety-gates",
+        "deterministic",
+        "validation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:generate/schema.py",
+      "type": "file",
+      "name": "schema.py",
+      "filePath": "generate/schema.py",
+      "summary": "Defines the advisory JSON field specification shown to agents and the structural gate that checks fields, severity enums and reroute road validity; also counts invalid road references for metrics.",
+      "tags": [
+        "validation",
+        "schema-definition",
+        "data-model",
+        "llm-output"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:generate/schema.py:structural_errors",
+      "type": "function",
+      "name": "structural_errors",
+      "filePath": "generate/schema.py",
+      "lineRange": [
+        18,
+        54
+      ],
+      "summary": "Returns human-readable violations of the advisory schema, covering parse errors, missing fields, zone ID, severity enums, advisory tiers and reroute road validity; an empty list means the advisory passes.",
+      "tags": [
+        "validation",
+        "structural-gate",
+        "llm-output"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:generate/schema.py:hallucinated_routes",
+      "type": "function",
+      "name": "hallucinated_routes",
+      "filePath": "generate/schema.py",
+      "lineRange": [
+        57,
+        66
+      ],
+      "summary": "Counts invalid and total road references in an advisory's reroutes for reporting.",
+      "tags": [
+        "metrics",
+        "validation",
+        "reroutes"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:generate/supervisor_agent.py",
+      "type": "file",
+      "name": "supervisor_agent.py",
+      "filePath": "generate/supervisor_agent.py",
+      "summary": "Central LLM coordinator that sees every zone's proposal, detects routing conflicts itself and rewrites reroutes; its output is validated per zone, and invalid entries fall back to the zone's own proposal.",
+      "tags": [
+        "service",
+        "llm-agent",
+        "coordination",
+        "conflict-resolution"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:generate/supervisor_agent.py:build_prompt",
+      "type": "function",
+      "name": "build_prompt",
+      "filePath": "generate/supervisor_agent.py",
+      "lineRange": [
+        27,
+        41
+      ],
+      "summary": "Builds the supervisor prompt from each zone's roads, severity, cascade risk, candidate corridors and reroutes, plus the blocked roads and required output fields.",
+      "tags": [
+        "prompt-building",
+        "coordination",
+        "llm-agent"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+      "type": "class",
+      "name": "NetworkSupervisorAgent",
+      "filePath": "generate/supervisor_agent.py",
+      "lineRange": [
+        44,
+        68
+      ],
+      "summary": "Calls the supervisor LLM and validates its final reroutes per zone, keeping the zone's own reroutes and recording a fallback when an entry is invalid.",
+      "tags": [
+        "llm-agent",
+        "coordination",
+        "conflict-resolution"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:generate/zone_worker.py",
+      "type": "file",
+      "name": "zone_worker.py",
+      "filePath": "generate/zone_worker.py",
+      "summary": "LLM zone agent that builds propose and negotiation-revise prompts from zone state and runs the validate-and-retry loop; a revision that still fails the gates is discarded in favour of the previous proposal.",
+      "tags": [
+        "service",
+        "llm-agent",
+        "prompt-building",
+        "retry-loop",
+        "negotiation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:generate/zone_worker.py:zone_forecast_at",
+      "type": "function",
+      "name": "zone_forecast_at",
+      "filePath": "generate/zone_worker.py",
+      "lineRange": [
+        43,
+        44
+      ],
+      "summary": "Returns the mean forecast speed over a zone's sensors at a given forecast step.",
+      "tags": [
+        "utility",
+        "forecast",
+        "traffic-zones"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:generate/zone_worker.py:build_prompt",
+      "type": "function",
+      "name": "build_prompt",
+      "filePath": "generate/zone_worker.py",
+      "lineRange": [
+        47,
+        76
+      ],
+      "summary": "Builds the propose prompt from zone state, optional neighbour context, candidate corridors, blocked roads, required fields and format examples.",
+      "tags": [
+        "prompt-building",
+        "llm-agent",
+        "traffic-zones"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:generate/zone_worker.py:describe_conflict",
+      "type": "function",
+      "name": "describe_conflict",
+      "filePath": "generate/zone_worker.py",
+      "lineRange": [
+        79,
+        86
+      ],
+      "summary": "Turns a conflict tuple into a sentence written from the perspective of the given zone.",
+      "tags": [
+        "utility",
+        "negotiation",
+        "prompt-building"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:generate/zone_worker.py:revision_block",
+      "type": "function",
+      "name": "revision_block",
+      "filePath": "generate/zone_worker.py",
+      "lineRange": [
+        89,
+        107
+      ],
+      "summary": "Builds the negotiation section of the revise prompt with the agent's current proposal, neighbour proposals with relative priority, visible conflicts and the conflict rule.",
+      "tags": [
+        "prompt-building",
+        "negotiation",
+        "llm-agent"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "type": "class",
+      "name": "ZoneWorkerAgent",
+      "filePath": "generate/zone_worker.py",
+      "lineRange": [
+        110,
+        146
+      ],
+      "summary": "Wraps LLM propose and revise calls with structural and semantic gate retries, and keeps the previous proposal when a revision fails.",
+      "tags": [
+        "llm-agent",
+        "retry-loop",
+        "negotiation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:llm_client.py",
+      "type": "file",
+      "name": "llm_client.py",
+      "filePath": "llm_client.py",
+      "summary": "Provider-agnostic client for OpenAI-compatible chat endpoints that logs every call to calls.jsonl, tracks running usage totals, and raises on a missing key or transport failure instead of silently mocking; dry runs must be requested explicitly.",
+      "tags": [
+        "service",
+        "llm-client",
+        "logging",
+        "error-handling"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "A threading.Lock guards the usage counters and the log file, so one client can be shared safely across threads."
+    },
+    {
+      "id": "function:llm_client.py:_error_body",
+      "type": "function",
+      "name": "_error_body",
+      "filePath": "llm_client.py",
+      "lineRange": [
+        126,
+        130
+      ],
+      "summary": "Extracts the error dictionary from an API exception's body, or returns an empty dictionary.",
+      "tags": [
+        "utility",
+        "error-handling",
+        "llm-client"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:llm_client.py:is_json_validate_failure",
+      "type": "function",
+      "name": "is_json_validate_failure",
+      "filePath": "llm_client.py",
+      "lineRange": [
+        133,
+        137
+      ],
+      "summary": "Detects the provider-side json_validate_failed error so it can be handled as a parse error rather than an abort.",
+      "tags": [
+        "error-handling",
+        "llm-client",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:llm_client.py:failed_generation",
+      "type": "function",
+      "name": "failed_generation",
+      "filePath": "llm_client.py",
+      "lineRange": [
+        140,
+        141
+      ],
+      "summary": "Returns up to 300 characters of the failed generation text reported by the provider.",
+      "tags": [
+        "utility",
+        "error-handling",
+        "llm-client"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:llm_client.py:LLMError",
+      "type": "class",
+      "name": "LLMError",
+      "filePath": "llm_client.py",
+      "lineRange": [
+        22,
+        23
+      ],
+      "summary": "RuntimeError subclass raised when a key is missing, a call fails, or a dry run has no stand-in output.",
+      "tags": [
+        "error-handling",
+        "exception",
+        "llm-client"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:llm_client.py:LLMClient",
+      "type": "class",
+      "name": "LLMClient",
+      "filePath": "llm_client.py",
+      "lineRange": [
+        26,
+        123
+      ],
+      "summary": "Chat client whose chat_json method returns parsed JSON, reports malformed output as _parse_error for retry gates, logs each call, and keeps usage totals.",
+      "tags": [
+        "llm-client",
+        "logging",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:orchestrator.py",
+      "type": "file",
+      "name": "orchestrator.py",
+      "filePath": "orchestrator.py",
+      "summary": "Main MASTRA pipeline and the single code path used by the evaluation runner and dashboard: parses inputs, detects zones, gathers proposals from zone agents, coordinates them, and applies override gates to produce the final per-zone records.",
+      "tags": [
+        "entry-point",
+        "orchestration",
+        "pipeline",
+        "coordination",
+        "experiment-variants"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:orchestrator.py:_usage_delta",
+      "type": "function",
+      "name": "_usage_delta",
+      "filePath": "orchestrator.py",
+      "lineRange": [
+        78,
+        82
+      ],
+      "summary": "Computes the change in LLM usage counters since an earlier snapshot, for per-scenario cost reporting.",
+      "tags": [
+        "utility",
+        "llm-usage",
+        "metrics"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:orchestrator.py:_reroutes",
+      "type": "function",
+      "name": "_reroutes",
+      "filePath": "orchestrator.py",
+      "lineRange": [
+        85,
+        86
+      ],
+      "summary": "Returns a proposal's reroutes when it is valid and not suppressed, otherwise an empty list.",
+      "tags": [
+        "utility",
+        "reroutes",
+        "coordination"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:orchestrator.py:run_scenario",
+      "type": "function",
+      "name": "run_scenario",
+      "filePath": "orchestrator.py",
+      "lineRange": [
+        89,
+        189
+      ],
+      "summary": "Runs one scenario end to end under a Variant: parsing, forecast gate, zone detection, message passing, proposals, the chosen coordination mode, override gates and the optional DQ record.",
+      "tags": [
+        "entry-point",
+        "orchestration",
+        "pipeline",
+        "coordination"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:orchestrator.py:_single_agent",
+      "type": "function",
+      "name": "_single_agent",
+      "filePath": "orchestrator.py",
+      "lineRange": [
+        192,
+        228
+      ],
+      "summary": "Single-LLM baseline in which one call sees every zone and returns all advisories, with retries on missing zones or structural errors.",
+      "tags": [
+        "baseline",
+        "llm-agent",
+        "retry-loop"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:orchestrator.py:Variant",
+      "type": "class",
+      "name": "Variant",
+      "filePath": "orchestrator.py",
+      "lineRange": [
+        43,
+        75
+      ],
+      "summary": "Dataclass of experiment switches for agent type, coordination mode, topology, message passing, gates and robustness settings; validates combinations and reports whether an LLM is needed.",
+      "tags": [
+        "data-model",
+        "configuration",
+        "experiment-variants"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:orchestrator.py:MASTraPipeline",
+      "type": "class",
+      "name": "MASTraPipeline",
+      "filePath": "orchestrator.py",
+      "lineRange": [
+        231,
+        245
+      ],
+      "summary": "Compatibility wrapper for the dashboard that fills in missing graph and road inputs and calls run_scenario with live LLM agents and negotiation.",
+      "tags": [
+        "compatibility-wrapper",
+        "dashboard",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:coordination/agents.py",
+      "type": "file",
+      "name": "agents.py",
+      "filePath": "coordination/agents.py",
+      "summary": "Defines the shared zone-agent interface (propose and revise) so deterministic rule agents and LLM-backed agents run inside the same coordination protocols, along with the local context and neighbour messages they exchange.",
+      "tags": [
+        "agent",
+        "coordination",
+        "factory",
+        "multi-agent",
+        "strategy-pattern"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:coordination/common.py",
+      "type": "file",
+      "name": "common.py",
+      "filePath": "coordination/common.py",
+      "summary": "Provides the deterministic coordination primitives shared by agents, coordinators and evaluation metrics: candidate corridor ranking, the priority order, communication topologies, and the single definition of reroute conflicts.",
+      "tags": [
+        "coordination",
+        "utility",
+        "conflict-detection",
+        "graph-topology",
+        "geospatial"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:coordination/coordinators.py",
+      "type": "file",
+      "name": "coordinators.py",
+      "filePath": "coordination/coordinators.py",
+      "summary": "Implements the centralized coordinators used in the centralized design cells and as the fallback after negotiation: a greedy priority-based rule coordinator and an LLM Global Supervisor, both with a global view of every zone.",
+      "tags": [
+        "coordination",
+        "centralized",
+        "orchestration",
+        "fallback",
+        "greedy-algorithm"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:coordination/negotiation.py",
+      "type": "file",
+      "name": "negotiation.py",
+      "filePath": "coordination/negotiation.py",
+      "summary": "Runs the round-based negotiation loop in which zone agents exchange proposals only with topology neighbours, see only conflicts with those neighbours, and revise until no conflict is visible, nothing changes, or the round limit is reached.",
+      "tags": [
+        "coordination",
+        "negotiation",
+        "multi-agent",
+        "protocol",
+        "decentralized"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "The negotiation loop uses Python's for-else: the else branch runs only when all rounds complete without a break, which is where the final conflict re-check happens."
+    },
+    {
+      "id": "file:generate/rules.py",
+      "type": "file",
+      "name": "rules.py",
+      "filePath": "generate/rules.py",
+      "summary": "Generates deterministic advisory content without an LLM, used by RuleAgent and the dry-run stand-in: severities from the detector or the per-horizon forecast, plus one reroute to the fastest free candidate corridor for HIGH or MEDIUM zones.",
+      "tags": [
+        "rule-based",
+        "advisory",
+        "deterministic",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:graph/zone_state.py",
+      "type": "file",
+      "name": "zone_state.py",
+      "filePath": "graph/zone_state.py",
+      "summary": "Declares the dataclasses for messages passed between zones and for a zone's state after graph message passing, including its updated cascade risk and neighbour context.",
+      "tags": [
+        "data-model",
+        "type-definition",
+        "dataclass",
+        "graph-message-passing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:coordination/agents.py:ZoneContext",
+      "type": "class",
+      "name": "ZoneContext",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        24,
+        36
+      ],
+      "summary": "Holds the local view passed to a zone agent: its enriched state, pipeline input, ranked candidate corridors with forecast speeds, and globally blocked roads.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "agent-context"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:coordination/agents.py:NeighborMsg",
+      "type": "class",
+      "name": "NeighborMsg",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        40,
+        46
+      ],
+      "summary": "Carries the data one zone shares with its neighbours during negotiation: roads, severity, cascade risk, priority and current reroutes.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "message"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/agents.py:message_from",
+      "type": "function",
+      "name": "message_from",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        49,
+        53
+      ],
+      "summary": "Builds a NeighborMsg from a zone's context and its current proposal.",
+      "tags": [
+        "message",
+        "factory",
+        "coordination"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/agents.py:yield_targets",
+      "type": "function",
+      "name": "yield_targets",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        56,
+        65
+      ],
+      "summary": "Computes the roads a zone must avoid: blocked roads, its own roads, neighbouring zones' roads, and targets held by higher-priority neighbours.",
+      "tags": [
+        "conflict-resolution",
+        "coordination",
+        "priority"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/agents.py:rule_severities",
+      "type": "function",
+      "name": "rule_severities",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        68,
+        73
+      ],
+      "summary": "Returns the zone's +30 and +60 minute severities from its mean forecast speed, or None for both when per-horizon mode is off.",
+      "tags": [
+        "severity",
+        "forecast",
+        "rule-based"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:coordination/agents.py:RuleAgent",
+      "type": "class",
+      "name": "RuleAgent",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        76,
+        100
+      ],
+      "summary": "Deterministic zone agent that proposes a rule-based advisory and, when revising, moves contested reroutes to free candidates or drops them.",
+      "tags": [
+        "agent",
+        "rule-based",
+        "deterministic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:coordination/agents.py:LLMAgent",
+      "type": "class",
+      "name": "LLMAgent",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        103,
+        122
+      ],
+      "summary": "Wraps a ZoneWorkerAgent behind the propose and revise interface, supplying RuleAgent output as the dry-run value so the protocol can be tested without a model.",
+      "tags": [
+        "agent",
+        "llm",
+        "adapter",
+        "dry-run"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:coordination/agents.py:make_agent",
+      "type": "function",
+      "name": "make_agent",
+      "filePath": "coordination/agents.py",
+      "lineRange": [
+        125,
+        133
+      ],
+      "summary": "Creates a zone agent for the kind 'rules', 'rules_h' or 'llm', lazily importing the LLM worker and raising on unknown kinds.",
+      "tags": [
+        "factory",
+        "agent",
+        "lazy-import"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/common.py:candidate_corridors",
+      "type": "function",
+      "name": "candidate_corridors",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        36,
+        51
+      ],
+      "summary": "Ranks other freeways within the reroute radius by forecast speed at +30 minutes, fastest first, excluding every direction of the zone's own freeways.",
+      "tags": [
+        "corridor-ranking",
+        "geospatial",
+        "forecast"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:coordination/common.py:priority",
+      "type": "function",
+      "name": "priority",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        54,
+        56
+      ],
+      "summary": "Returns the tuple of severity rank, cascade risk and zone id that gives a total order for settling conflicts.",
+      "tags": [
+        "priority",
+        "conflict-resolution",
+        "ordering"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/common.py:zone_link",
+      "type": "function",
+      "name": "zone_link",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        59,
+        63
+      ],
+      "summary": "Computes undirected link strength between two zones as the larger of the mean adjacency in either direction.",
+      "tags": [
+        "graph-topology",
+        "adjacency",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/common.py:neighbors",
+      "type": "function",
+      "name": "neighbors",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        66,
+        72
+      ],
+      "summary": "Builds the communication topology by linking zone pairs whose adjacency-based link strength exceeds a threshold.",
+      "tags": [
+        "graph-topology",
+        "communication",
+        "adjacency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/common.py:link_density",
+      "type": "function",
+      "name": "link_density",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        75,
+        80
+      ],
+      "summary": "Reports the share of zone pairs that are neighbours in a topology, returning NaN for fewer than two zones.",
+      "tags": [
+        "metric",
+        "graph-topology",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/common.py:targets_of",
+      "type": "function",
+      "name": "targets_of",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        83,
+        84
+      ],
+      "summary": "Extracts the set of target roads from a list of reroutes, ignoring malformed entries.",
+      "tags": [
+        "utility",
+        "reroute",
+        "parsing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/common.py:zone_footprints",
+      "type": "function",
+      "name": "zone_footprints",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        87,
+        100
+      ],
+      "summary": "Maps each zone and road to the sensors involved: the zone's own sensors on its roads, and candidate-road sensors within the reroute radius.",
+      "tags": [
+        "geospatial",
+        "segment-level",
+        "robustness"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:coordination/common.py:detect_conflicts",
+      "type": "function",
+      "name": "detect_conflicts",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        109,
+        125
+      ],
+      "summary": "Finds shared-target and into-zone reroute conflicts across all zones, optionally counting them only where zone footprints overlap on the road.",
+      "tags": [
+        "conflict-detection",
+        "coordination",
+        "core-logic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:coordination/common.py:corridor_neighbors",
+      "type": "function",
+      "name": "corridor_neighbors",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        128,
+        141
+      ],
+      "summary": "Builds an alternative topology in which two zones are neighbours if some choice of candidate targets could make them conflict.",
+      "tags": [
+        "graph-topology",
+        "conflict-detection",
+        "robustness"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:coordination/common.py:conflicts_visible_to",
+      "type": "function",
+      "name": "conflicts_visible_to",
+      "filePath": "coordination/common.py",
+      "lineRange": [
+        144,
+        152
+      ],
+      "summary": "Filters the global conflict set to those between a zone and its topology neighbours, so conflicts with other zones stay hidden from it.",
+      "tags": [
+        "conflict-detection",
+        "visibility",
+        "communication"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/coordinators.py:central_rule",
+      "type": "function",
+      "name": "central_rule",
+      "filePath": "coordination/coordinators.py",
+      "lineRange": [
+        17,
+        38
+      ],
+      "summary": "Greedily resolves reroutes from highest to lowest priority, keeping free targets and otherwise reassigning to the fastest free candidate or dropping the reroute.",
+      "tags": [
+        "coordinator",
+        "greedy-algorithm",
+        "rule-based"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:coordination/coordinators.py:central_llm",
+      "type": "function",
+      "name": "central_llm",
+      "filePath": "coordination/coordinators.py",
+      "lineRange": [
+        41,
+        49
+      ],
+      "summary": "Runs the LLM NetworkSupervisorAgent over all proposals, using central_rule output as the dry-run value, and records which zones changed.",
+      "tags": [
+        "coordinator",
+        "llm",
+        "supervisor"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/coordinators.py:coordinate",
+      "type": "function",
+      "name": "coordinate",
+      "filePath": "coordination/coordinators.py",
+      "lineRange": [
+        52,
+        57
+      ],
+      "summary": "Dispatches to the rule or LLM coordinator by kind and raises on unknown kinds.",
+      "tags": [
+        "dispatcher",
+        "coordinator",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/negotiation.py:plan_conflicts",
+      "type": "function",
+      "name": "plan_conflicts",
+      "filePath": "coordination/negotiation.py",
+      "lineRange": [
+        24,
+        25
+      ],
+      "summary": "Detects conflicts among the reroutes of proposals that are valid and not suppressed.",
+      "tags": [
+        "conflict-detection",
+        "coordination",
+        "wrapper"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:coordination/negotiation.py:negotiate",
+      "type": "function",
+      "name": "negotiate",
+      "filePath": "coordination/negotiation.py",
+      "lineRange": [
+        32,
+        75
+      ],
+      "summary": "Runs up to K negotiation rounds of message exchange, conflict detection and revision, and returns the final proposals, stop reason, message count and a per-round transcript.",
+      "tags": [
+        "negotiation",
+        "protocol",
+        "core-logic",
+        "multi-agent"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:generate/rules.py:pick_target",
+      "type": "function",
+      "name": "pick_target",
+      "filePath": "generate/rules.py",
+      "lineRange": [
+        13,
+        17
+      ],
+      "summary": "Returns the first ranked candidate road not in the exclusion set, or None when none is free.",
+      "tags": [
+        "utility",
+        "reroute",
+        "selection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:generate/rules.py:rule_advisory",
+      "type": "function",
+      "name": "rule_advisory",
+      "filePath": "generate/rules.py",
+      "lineRange": [
+        20,
+        41
+      ],
+      "summary": "Assembles a complete advisory record from a zone's state, covering severities, templated actions, an optional reroute and the upstream alert flag.",
+      "tags": [
+        "advisory",
+        "rule-based",
+        "template"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:graph/zone_state.py:ZoneMessage",
+      "type": "class",
+      "name": "ZoneMessage",
+      "filePath": "graph/zone_state.py",
+      "lineRange": [
+        7,
+        13
+      ],
+      "summary": "Dataclass for the summary a zone sends to neighbours: severity, score, speed forecast, trend and raw cascade probability.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "message"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "class",
+      "name": "EnrichedZoneState",
+      "filePath": "graph/zone_state.py",
+      "lineRange": [
+        17,
+        23
+      ],
+      "summary": "Dataclass wrapping a CongestionZone with received neighbour messages, updated cascade risk, network pressure, neighbour context text and weights.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "zone-state"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:data_source.py",
+      "type": "file",
+      "name": "data_source.py",
+      "filePath": "data_source.py",
+      "summary": "Loads the real PEMS-BAY test data, Adaptive-LSTGAN forecasts and adjacency matrices, builds the agent communication topologies, and assembles per-sample PipelineInput objects plus stratified evaluation scenarios.",
+      "tags": [
+        "data-loading",
+        "graph-topology",
+        "scenario-sampling",
+        "factory",
+        "service"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Uses functools.lru_cache on loaders so the test DataFrame, station table and forecast arrays are read from disk only once per process."
+    },
+    {
+      "id": "function:data_source.py:load_test",
+      "type": "function",
+      "name": "load_test",
+      "filePath": "data_source.py",
+      "lineRange": [
+        22,
+        23
+      ],
+      "summary": "Reads and caches the test-split speed DataFrame from the configured pickle.",
+      "tags": [
+        "data-loading",
+        "cache",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:load_stations",
+      "type": "function",
+      "name": "load_stations",
+      "filePath": "data_source.py",
+      "lineRange": [
+        27,
+        32
+      ],
+      "summary": "Loads station metadata and reorders it to match the test DataFrame's sensor columns.",
+      "tags": [
+        "data-loading",
+        "cache",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:load_distance_adj",
+      "type": "function",
+      "name": "load_distance_adj",
+      "filePath": "data_source.py",
+      "lineRange": [
+        36,
+        42
+      ],
+      "summary": "Loads the distance-kernel adjacency matrix and raises an error if its sensor order differs from the test columns.",
+      "tags": [
+        "data-loading",
+        "adjacency",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:load_forecasts",
+      "type": "function",
+      "name": "load_forecasts",
+      "filePath": "data_source.py",
+      "lineRange": [
+        46,
+        52
+      ],
+      "summary": "Loads and shape-checks test-set forecasts for a given seed from either the adaptive or the static forecaster.",
+      "tags": [
+        "data-loading",
+        "forecasts",
+        "cache"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:learned_adj",
+      "type": "function",
+      "name": "learned_adj",
+      "filePath": "data_source.py",
+      "lineRange": [
+        55,
+        60
+      ],
+      "summary": "Loads a saved learned adjacency matrix by seed, form and optional graph name, failing with a pointer to the extraction script if it is missing.",
+      "tags": [
+        "data-loading",
+        "adjacency",
+        "learned-graph"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:_knn_geo",
+      "type": "function",
+      "name": "_knn_geo",
+      "filePath": "data_source.py",
+      "lineRange": [
+        64,
+        73
+      ],
+      "summary": "Builds a uniform-weight k-nearest-neighbour graph from approximate geographic distances between stations.",
+      "tags": [
+        "graph-topology",
+        "knn",
+        "geospatial"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:_distance_topk",
+      "type": "function",
+      "name": "_distance_topk",
+      "filePath": "data_source.py",
+      "lineRange": [
+        76,
+        85
+      ],
+      "summary": "Keeps the k strongest edges per row of the distance graph and row-normalizes their weights.",
+      "tags": [
+        "graph-topology",
+        "top-k",
+        "adjacency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:_rewire",
+      "type": "function",
+      "name": "_rewire",
+      "filePath": "data_source.py",
+      "lineRange": [
+        88,
+        107
+      ],
+      "summary": "Performs degree-preserving random edge swaps on a directed weighted graph and row-normalizes the result, serving as a density-matched control.",
+      "tags": [
+        "graph-topology",
+        "random-control",
+        "rewiring"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:data_source.py:consensus_adj",
+      "type": "function",
+      "name": "consensus_adj",
+      "filePath": "data_source.py",
+      "lineRange": [
+        110,
+        121
+      ],
+      "summary": "Builds a seed-consensus graph from top-k learned edges found in at least a minimum number of forecaster seeds, using mean weights and row normalization.",
+      "tags": [
+        "graph-topology",
+        "consensus",
+        "learned-graph"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:topology",
+      "type": "function",
+      "name": "topology",
+      "filePath": "data_source.py",
+      "lineRange": [
+        124,
+        174
+      ],
+      "summary": "Dispatches a topology name such as learned, distance, knn, full, random, consensus or none to the matching communication adjacency matrix.",
+      "tags": [
+        "graph-topology",
+        "factory",
+        "dispatcher"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:data_source.py:Scenario",
+      "type": "class",
+      "name": "Scenario",
+      "filePath": "data_source.py",
+      "lineRange": [
+        179,
+        183
+      ],
+      "summary": "Dataclass describing one evaluation scenario: forecast sample index, test-set row, origin timestamp and traffic regime.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "scenario-sampling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:n_samples",
+      "type": "function",
+      "name": "n_samples",
+      "filePath": "data_source.py",
+      "lineRange": [
+        186,
+        187
+      ],
+      "summary": "Computes how many forecast samples the test split can provide after the weekly window and horizon.",
+      "tags": [
+        "utility",
+        "scenario-sampling",
+        "data-loading"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:build_input",
+      "type": "function",
+      "name": "build_input",
+      "filePath": "data_source.py",
+      "lineRange": [
+        190,
+        226
+      ],
+      "summary": "Assembles a PipelineInput for one sample using forecast, reactive persistence or oracle speeds, along with historical statistics, station data and the communication graph.",
+      "tags": [
+        "factory",
+        "input-assembly",
+        "forecast-modes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:data_source.py:select_scenarios",
+      "type": "function",
+      "name": "select_scenarios",
+      "filePath": "data_source.py",
+      "lineRange": [
+        229,
+        267
+      ],
+      "summary": "Draws a reproducible stratified scenario sample across HIGH, MODERATE, CASCADE and NORMAL regimes, labelled from observed speeds with ground truth used only for the cascade label.",
+      "tags": [
+        "scenario-sampling",
+        "stratification",
+        "evaluation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:graph/message_passing.py",
+      "type": "file",
+      "name": "message_passing.py",
+      "filePath": "graph/message_passing.py",
+      "summary": "Stage 4 of the pipeline: runs two-round deterministic message passing between congestion zones over a communication topology, producing enriched zone states with network pressure and updated cascade risk.",
+      "tags": [
+        "message-passing",
+        "graph-communication",
+        "service",
+        "congestion-zones"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "class",
+      "name": "GraphMessagePassingLayer",
+      "filePath": "graph/message_passing.py",
+      "lineRange": [
+        12,
+        86
+      ],
+      "summary": "Broadcasts a message from each zone, aggregates sensor-level adjacency into zone-to-zone weights, computes network pressure in normalized or additive form, and updates cascade risk with neighbour context text for the agents.",
+      "tags": [
+        "message-passing",
+        "graph-communication",
+        "cascade-risk",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:graph/message_passing.py:no_communication",
+      "type": "function",
+      "name": "no_communication",
+      "filePath": "graph/message_passing.py",
+      "lineRange": [
+        89,
+        95
+      ],
+      "summary": "Baseline variant that wraps zones as enriched states with no neighbour messages, zero pressure and unchanged cascade risk.",
+      "tags": [
+        "baseline",
+        "ablation-variant",
+        "congestion-zones"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:inputs.py",
+      "type": "file",
+      "name": "inputs.py",
+      "filePath": "inputs.py",
+      "summary": "Defines the dataclasses that form the pipeline's data contract: the standardized forecast input, the run result, and run lineage metadata.",
+      "tags": [
+        "data-model",
+        "type-definition",
+        "dataclass",
+        "pipeline-contract"
+      ],
+      "complexity": "simple",
+      "languageNotes": "data_source.build_input attaches comm_adj, observed_speed, timestamp and roads as dynamic attributes that are not declared on the PipelineInput dataclass, so consumers read them with getattr."
+    },
+    {
+      "id": "class:inputs.py:LineageTracker",
+      "type": "class",
+      "name": "LineageTracker",
+      "filePath": "inputs.py",
+      "lineRange": [
+        6,
+        9
+      ],
+      "summary": "Records the source model, run timestamp and scenario ID for a pipeline run.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "lineage"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:inputs.py:PipelineInput",
+      "type": "class",
+      "name": "PipelineInput",
+      "filePath": "inputs.py",
+      "lineRange": [
+        12,
+        24
+      ],
+      "summary": "Standardized pipeline input holding predicted and actual speeds, the adjacency matrix, station locations, historical statistics and time context.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "pipeline-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:inputs.py:PipelineResult",
+      "type": "class",
+      "name": "PipelineResult",
+      "filePath": "inputs.py",
+      "lineRange": [
+        27,
+        36
+      ],
+      "summary": "Pipeline output holding run status, run ID, lineage and optional outputs, evaluations, ground-truth result, integrated plan and network average.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "pipeline-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:parse.py",
+      "type": "file",
+      "name": "parse.py",
+      "filePath": "parse.py",
+      "summary": "Stage 1 of the pipeline: converts the forecast tensor into per-sensor severity levels, trends, z-scores and fault flags, plus network-level summary values.",
+      "tags": [
+        "parser",
+        "forecast-processing",
+        "severity-classification",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:parse.py:ParsedData",
+      "type": "class",
+      "name": "ParsedData",
+      "filePath": "parse.py",
+      "lineRange": [
+        8,
+        16
+      ],
+      "summary": "Dataclass of per-sensor z-scores, severity levels, trends and fault flags, plus rush-hour status, network average speed and severity counts.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "forecast-processing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:parse.py:Parser",
+      "type": "class",
+      "name": "Parser",
+      "filePath": "parse.py",
+      "lineRange": [
+        19,
+        51
+      ],
+      "summary": "Computes severity from mean forecast speed, trend from the last versus first three forecast steps, z-scores from historical statistics, and fault flags from observed readings.",
+      "tags": [
+        "parser",
+        "severity-classification",
+        "trend-detection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:validate/forecast_gate.py",
+      "type": "file",
+      "name": "forecast_gate.py",
+      "filePath": "validate/forecast_gate.py",
+      "summary": "Stage 2 of the pipeline: applies plausibility checks to the forecast tensor and records a pass or fail result without stopping the run.",
+      "tags": [
+        "validation",
+        "safety-gate",
+        "forecast-integrity",
+        "data-quality"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:validate/forecast_gate.py:GateResult",
+      "type": "class",
+      "name": "GateResult",
+      "filePath": "validate/forecast_gate.py",
+      "lineRange": [
+        10,
+        12
+      ],
+      "summary": "Dataclass carrying a gate's pass or fail flag and its reason text.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "class",
+      "name": "ForecastIntegrityGate",
+      "filePath": "validate/forecast_gate.py",
+      "lineRange": [
+        15,
+        33
+      ],
+      "summary": "Fails a forecast that contains non-finite values, has too many sensors at HIGH severity, or jumps too far from the last observed speed.",
+      "tags": [
+        "validation",
+        "safety-gate",
+        "forecast-integrity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:zone_detection.py",
+      "type": "file",
+      "name": "zone_detection.py",
+      "filePath": "zone_detection.py",
+      "summary": "Stage 3 of the pipeline: clusters sensors with low forecast speed into congestion zones using DBSCAN and computes each zone's severity, trend, deterministic ID and downstream cascade risk.",
+      "tags": [
+        "clustering",
+        "congestion-zones",
+        "dbscan",
+        "service",
+        "data-model"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Zone IDs are a truncated SHA-1 of the sorted member station IDs, so the same sensor set always yields the same ID across runs."
+    },
+    {
+      "id": "class:zone_detection.py:CongestionZone",
+      "type": "class",
+      "name": "CongestionZone",
+      "filePath": "zone_detection.py",
+      "lineRange": [
+        15,
+        27
+      ],
+      "summary": "Dataclass describing a detected zone: member sensors, center coordinates, speed statistics, severity, trend, cascade-risk sensors, anomaly score, roads and faulty-sensor count.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "congestion-zones"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:zone_detection.py:ZoneDetector",
+      "type": "class",
+      "name": "ZoneDetector",
+      "filePath": "zone_detection.py",
+      "lineRange": [
+        30,
+        92
+      ],
+      "summary": "Runs DBSCAN on the coordinates of sensors below the speed threshold, builds a CongestionZone for each cluster, and finds downstream at-risk sensors by breadth-first search on the distance graph.",
+      "tags": [
+        "clustering",
+        "dbscan",
+        "cascade-risk",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:FLOW.md",
+      "type": "document",
+      "name": "FLOW.md",
+      "filePath": "FLOW.md",
+      "summary": "Study and debugging guide to the MASTRA pipeline that walks the eight stages of run_scenario from parsing to override gates, and documents the data objects, index conventions, invariants, and 14 symptom-to-cause debugging drills.",
+      "tags": [
+        "documentation",
+        "architecture-overview",
+        "debugging-guide",
+        "execution-flow",
+        "invariants"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "__init__.py",
+      "summary": "Root package marker for the MASTRA pipeline that holds the package docstring naming the architecture and sets __version__ to 1.0.0.",
+      "tags": [
+        "python-package",
+        "package-metadata",
+        "versioning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:coordination/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "coordination/__init__.py",
+      "summary": "Empty package marker that makes the coordination directory, which holds the agent, negotiation, and coordinator modules, importable as a Python package.",
+      "tags": [
+        "python-package",
+        "package-marker",
+        "coordination"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:generate/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "generate/__init__.py",
+      "summary": "Empty package marker that makes the generate directory, which holds the advisory rules, schema, zone worker, and deterministic guard modules, importable as a Python package.",
+      "tags": [
+        "python-package",
+        "package-marker",
+        "advisory-generation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:graph/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "graph/__init__.py",
+      "summary": "Empty package marker that makes the graph directory, which holds the message passing and zone state modules, importable as a Python package.",
+      "tags": [
+        "python-package",
+        "package-marker",
+        "graph"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:outputs/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "outputs/__init__.py",
+      "summary": "Empty package marker that makes the outputs directory, which holds the run output writer, importable as a Python package.",
+      "tags": [
+        "python-package",
+        "package-marker",
+        "outputs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:outputs/writer.py",
+      "type": "file",
+      "name": "writer.py",
+      "filePath": "outputs/writer.py",
+      "summary": "Persists the artifacts of a pipeline run by writing the integrated plan and evaluation results as JSON files in a per-run output directory.",
+      "tags": [
+        "serialization",
+        "file-io",
+        "outputs",
+        "json"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:outputs/writer.py:OutputWriter",
+      "type": "class",
+      "name": "OutputWriter",
+      "filePath": "outputs/writer.py",
+      "lineRange": [
+        4,
+        15
+      ],
+      "summary": "Stateless writer class whose single write method saves a run's integrated plan and evaluations to disk under a directory named after the run id.",
+      "tags": [
+        "serialization",
+        "file-io",
+        "outputs"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:outputs/writer.py:write",
+      "type": "function",
+      "name": "write",
+      "filePath": "outputs/writer.py",
+      "lineRange": [
+        5,
+        15
+      ],
+      "summary": "Creates <base_dir>/<run_id> if needed, dumps integrated_plan.json and evals.json into it with two-space indentation, and prints the output location.",
+      "tags": [
+        "serialization",
+        "file-io",
+        "json"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:validate/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "validate/__init__.py",
+      "summary": "Empty package marker that makes the validate directory, which holds the forecast integrity gate, importable as a Python package.",
+      "tags": [
+        "python-package",
+        "package-marker",
+        "validation"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:config.py",
+      "target": "function:config.py:speed_to_severity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:config.py",
+      "target": "function:config.py:speed_to_severity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/advisory_dq_agent.py",
+      "target": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/advisory_dq_agent.py",
+      "target": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/advisory_dq_agent.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/advisory_dq_agent.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/advisory_dq_agent.py",
+      "target": "file:llm_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "function:generate/det_guards.py:congested_roads",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "function:generate/det_guards.py:congested_roads",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "function:generate/det_guards.py:semantic_retry_errors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "function:generate/det_guards.py:semantic_retry_errors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "class:generate/det_guards.py:DeterministicGuards",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "class:generate/det_guards.py:DeterministicGuards",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/det_guards.py",
+      "target": "file:parse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/schema.py",
+      "target": "function:generate/schema.py:structural_errors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/schema.py",
+      "target": "function:generate/schema.py:structural_errors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/schema.py",
+      "target": "function:generate/schema.py:hallucinated_routes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/schema.py",
+      "target": "function:generate/schema.py:hallucinated_routes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/schema.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+      "target": "class:llm_client.py:LLMClient",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/supervisor_agent.py",
+      "target": "function:generate/supervisor_agent.py:build_prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/supervisor_agent.py",
+      "target": "function:generate/supervisor_agent.py:build_prompt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/supervisor_agent.py",
+      "target": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/supervisor_agent.py",
+      "target": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/supervisor_agent.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/supervisor_agent.py",
+      "target": "file:llm_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:zone_forecast_at",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:zone_forecast_at",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:build_prompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:build_prompt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:describe_conflict",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:describe_conflict",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:revision_block",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "function:generate/zone_worker.py:revision_block",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "file:coordination/common.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "file:generate/det_guards.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "file:generate/schema.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/zone_worker.py",
+      "target": "file:llm_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "function:llm_client.py:_error_body",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "function:llm_client.py:_error_body",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "function:llm_client.py:is_json_validate_failure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "function:llm_client.py:is_json_validate_failure",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "function:llm_client.py:failed_generation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "function:llm_client.py:failed_generation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "class:llm_client.py:LLMError",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "class:llm_client.py:LLMError",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "class:llm_client.py:LLMClient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "class:llm_client.py:LLMClient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:llm_client.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:_usage_delta",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:_usage_delta",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:_reroutes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:_reroutes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:run_scenario",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:run_scenario",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:_single_agent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "function:orchestrator.py:_single_agent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "class:orchestrator.py:Variant",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "class:orchestrator.py:Variant",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "class:orchestrator.py:MASTraPipeline",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "class:orchestrator.py:MASTraPipeline",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:coordination/agents.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:coordination/common.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:coordination/coordinators.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:coordination/negotiation.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:data_source.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:generate/advisory_dq_agent.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:generate/det_guards.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:generate/schema.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:generate/zone_worker.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:graph/message_passing.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:llm_client.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:parse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:validate/forecast_gate.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:orchestrator.py",
+      "target": "file:zone_detection.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:parse.py:Parser",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:zone_detection.py:ZoneDetector",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:graph/message_passing.py:no_communication",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:generate/det_guards.py:congested_roads",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/common.py:candidate_corridors",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/common.py:zone_footprints",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/common.py:corridor_neighbors",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/common.py:neighbors",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/common.py:link_density",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/agents.py:make_agent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/negotiation.py:negotiate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/negotiation.py:plan_conflicts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:coordination/coordinators.py:coordinate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:generate/det_guards.py:DeterministicGuards",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:generate/advisory_dq_agent.py:AdvisoryQualityAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "class:llm_client.py:LLMClient",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:orchestrator.py:_single_agent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:orchestrator.py:_reroutes",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:run_scenario",
+      "target": "function:orchestrator.py:_usage_delta",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:_single_agent",
+      "target": "function:generate/zone_worker.py:build_prompt",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:_single_agent",
+      "target": "function:generate/schema.py:structural_errors",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:orchestrator.py:_single_agent",
+      "target": "class:coordination/agents.py:RuleAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:orchestrator.py:MASTraPipeline",
+      "target": "function:orchestrator.py:run_scenario",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:orchestrator.py:MASTraPipeline",
+      "target": "function:data_source.py:learned_adj",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:orchestrator.py:MASTraPipeline",
+      "target": "function:data_source.py:load_stations",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:generate/zone_worker.py:build_prompt",
+      "target": "function:generate/zone_worker.py:zone_forecast_at",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:generate/zone_worker.py:revision_block",
+      "target": "function:coordination/common.py:priority",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:generate/zone_worker.py:revision_block",
+      "target": "function:generate/zone_worker.py:describe_conflict",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "target": "function:generate/zone_worker.py:build_prompt",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "target": "function:generate/zone_worker.py:revision_block",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "target": "function:generate/schema.py:structural_errors",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "target": "function:generate/det_guards.py:semantic_retry_errors",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "target": "class:llm_client.py:LLMClient",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+      "target": "function:generate/supervisor_agent.py:build_prompt",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+      "target": "class:llm_client.py:LLMClient",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:llm_client.py:LLMClient",
+      "target": "function:llm_client.py:is_json_validate_failure",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:llm_client.py:LLMClient",
+      "target": "function:llm_client.py:failed_generation",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:llm_client.py:is_json_validate_failure",
+      "target": "function:llm_client.py:_error_body",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:llm_client.py:failed_generation",
+      "target": "function:llm_client.py:_error_body",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "file:coordination/common.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "file:generate/rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "file:generate/zone_worker.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "file:coordination/agents.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "file:coordination/common.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "file:generate/rules.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "file:generate/supervisor_agent.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/negotiation.py",
+      "target": "file:coordination/agents.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/negotiation.py",
+      "target": "file:coordination/common.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/rules.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:generate/rules.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/zone_state.py",
+      "target": "file:zone_detection.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:ZoneContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:ZoneContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:NeighborMsg",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:NeighborMsg",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:message_from",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:message_from",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:yield_targets",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:yield_targets",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:rule_severities",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:rule_severities",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:RuleAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:RuleAgent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:LLMAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "class:coordination/agents.py:LLMAgent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:make_agent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/agents.py",
+      "target": "function:coordination/agents.py:make_agent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:candidate_corridors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:candidate_corridors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:priority",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:priority",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:zone_link",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:zone_link",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:neighbors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:neighbors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:link_density",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:link_density",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:targets_of",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:targets_of",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:zone_footprints",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:zone_footprints",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:detect_conflicts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:detect_conflicts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:corridor_neighbors",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:corridor_neighbors",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:conflicts_visible_to",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/common.py",
+      "target": "function:coordination/common.py:conflicts_visible_to",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "function:coordination/coordinators.py:central_rule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "function:coordination/coordinators.py:central_rule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "function:coordination/coordinators.py:central_llm",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "function:coordination/coordinators.py:central_llm",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "function:coordination/coordinators.py:coordinate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/coordinators.py",
+      "target": "function:coordination/coordinators.py:coordinate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/negotiation.py",
+      "target": "function:coordination/negotiation.py:plan_conflicts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/negotiation.py",
+      "target": "function:coordination/negotiation.py:plan_conflicts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:coordination/negotiation.py",
+      "target": "function:coordination/negotiation.py:negotiate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:coordination/negotiation.py",
+      "target": "function:coordination/negotiation.py:negotiate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/rules.py",
+      "target": "function:generate/rules.py:pick_target",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/rules.py",
+      "target": "function:generate/rules.py:pick_target",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:generate/rules.py",
+      "target": "function:generate/rules.py:rule_advisory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:generate/rules.py",
+      "target": "function:generate/rules.py:rule_advisory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:graph/zone_state.py",
+      "target": "class:graph/zone_state.py:ZoneMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:graph/zone_state.py",
+      "target": "class:graph/zone_state.py:ZoneMessage",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:graph/zone_state.py",
+      "target": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:graph/zone_state.py",
+      "target": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:message_from",
+      "target": "function:coordination/common.py:priority",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:yield_targets",
+      "target": "function:coordination/common.py:priority",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:yield_targets",
+      "target": "function:coordination/common.py:targets_of",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:rule_severities",
+      "target": "function:config.py:speed_to_severity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:coordination/agents.py:RuleAgent",
+      "target": "function:coordination/agents.py:rule_severities",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:coordination/agents.py:RuleAgent",
+      "target": "function:generate/rules.py:rule_advisory",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:coordination/agents.py:RuleAgent",
+      "target": "function:coordination/agents.py:yield_targets",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:coordination/agents.py:RuleAgent",
+      "target": "function:generate/rules.py:pick_target",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:coordination/agents.py:LLMAgent",
+      "target": "class:coordination/agents.py:RuleAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:make_agent",
+      "target": "class:coordination/agents.py:RuleAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:make_agent",
+      "target": "class:coordination/agents.py:LLMAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/agents.py:make_agent",
+      "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/common.py:neighbors",
+      "target": "function:coordination/common.py:zone_link",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/common.py:detect_conflicts",
+      "target": "function:coordination/common.py:targets_of",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/coordinators.py:central_rule",
+      "target": "function:coordination/common.py:priority",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/coordinators.py:central_rule",
+      "target": "function:generate/rules.py:pick_target",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/coordinators.py:central_llm",
+      "target": "function:coordination/coordinators.py:central_rule",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/coordinators.py:central_llm",
+      "target": "class:generate/supervisor_agent.py:NetworkSupervisorAgent",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/coordinators.py:coordinate",
+      "target": "function:coordination/coordinators.py:central_rule",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/coordinators.py:coordinate",
+      "target": "function:coordination/coordinators.py:central_llm",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/negotiation.py:plan_conflicts",
+      "target": "function:coordination/common.py:detect_conflicts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/negotiation.py:negotiate",
+      "target": "function:coordination/negotiation.py:plan_conflicts",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/negotiation.py:negotiate",
+      "target": "function:coordination/common.py:conflicts_visible_to",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:coordination/negotiation.py:negotiate",
+      "target": "function:coordination/agents.py:message_from",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:generate/rules.py:rule_advisory",
+      "target": "function:generate/rules.py:pick_target",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:coordination/agents.py:LLMAgent",
+      "target": "class:generate/zone_worker.py:ZoneWorkerAgent",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "class:graph/zone_state.py:EnrichedZoneState",
+      "target": "class:zone_detection.py:CongestionZone",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_test",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_stations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_stations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_distance_adj",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_distance_adj",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_forecasts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_forecasts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:learned_adj",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:learned_adj",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_knn_geo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_knn_geo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_distance_topk",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_distance_topk",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_rewire",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_rewire",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:consensus_adj",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:consensus_adj",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:topology",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:topology",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "class:data_source.py:Scenario",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "class:data_source.py:Scenario",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:n_samples",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:n_samples",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:build_input",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:build_input",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:select_scenarios",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:select_scenarios",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "function:graph/message_passing.py:no_communication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "function:graph/message_passing.py:no_communication",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:zone_detection.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:LineageTracker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:LineageTracker",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:ParsedData",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:ParsedData",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:Parser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:Parser",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:parse.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:parse.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:GateResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:GateResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "file:parse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:CongestionZone",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:CongestionZone",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:ZoneDetector",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:ZoneDetector",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "file:parse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:data_source.py:build_input",
+      "target": "class:inputs.py:PipelineInput",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:parse.py:Parser",
+      "target": "function:config.py:speed_to_severity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:zone_detection.py:ZoneDetector",
+      "target": "function:config.py:speed_to_severity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "target": "class:graph/zone_state.py:ZoneMessage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "target": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:graph/message_passing.py:no_communication",
+      "target": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:outputs/writer.py",
+      "target": "class:outputs/writer.py:OutputWriter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:outputs/writer.py",
+      "target": "function:outputs/writer.py:write",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:outputs/writer.py",
+      "target": "class:outputs/writer.py:OutputWriter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:orchestrator.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:data_source.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:inputs.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:config.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:parse.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:validate/forecast_gate.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:zone_detection.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:graph/message_passing.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:graph/zone_state.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:coordination/common.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:coordination/agents.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:coordination/negotiation.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:coordination/coordinators.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:generate/zone_worker.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:generate/rules.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:generate/schema.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:generate/det_guards.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:FLOW.md",
+      "target": "file:llm_client.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:orchestration",
+      "name": "Pipeline Orchestration",
+      "description": "The run_scenario entry path that sequences the MASTRA stages from parsing to override gates for the evaluation runner and dashboard, with the package root and the FLOW.md guide that walks those stages.",
+      "nodeIds": [
+        "file:orchestrator.py",
+        "file:__init__.py",
+        "document:FLOW.md"
+      ]
+    },
+    {
+      "id": "layer:coordination",
+      "name": "Agent Coordination",
+      "description": "The shared zone-agent interface, conflict definition, round-based negotiation among topology neighbours, and centralized coordinators that keep zones from rerouting onto the same road.",
+      "nodeIds": [
+        "file:coordination/__init__.py",
+        "file:coordination/agents.py",
+        "file:coordination/common.py",
+        "file:coordination/coordinators.py",
+        "file:coordination/negotiation.py"
+      ]
+    },
+    {
+      "id": "layer:advisory-generation",
+      "name": "Advisory Generation",
+      "description": "Producers of per-zone JSON advisories and reroutes: the deterministic rule generator, the LLM zone worker with its retry loop, the LLM Global Supervisor, and the evaluation-only LLM plausibility check.",
+      "nodeIds": [
+        "file:generate/__init__.py",
+        "file:generate/rules.py",
+        "file:generate/zone_worker.py",
+        "file:generate/supervisor_agent.py",
+        "file:generate/advisory_dq_agent.py"
+      ]
+    },
+    {
+      "id": "layer:validation-gates",
+      "name": "Validation and Safety Gates",
+      "description": "Deterministic checks around the LLM and rule outputs: forecast plausibility, the advisory schema and reroute road validity, CONGESTED_TARGET retry errors, and the sensor-fault, severe-speed, cascade-risk and rush-hour overrides.",
+      "nodeIds": [
+        "file:validate/__init__.py",
+        "file:validate/forecast_gate.py",
+        "file:generate/schema.py",
+        "file:generate/det_guards.py"
+      ]
+    },
+    {
+      "id": "layer:forecast-zone-analysis",
+      "name": "Forecast and Zone Analysis",
+      "description": "Turns PEMS-BAY data and Adaptive-LSTGAN forecasts into enriched zone states by loading scenarios, deriving per-sensor severity, clustering congested sensors with DBSCAN, and running two-round message passing between zones.",
+      "nodeIds": [
+        "file:data_source.py",
+        "file:parse.py",
+        "file:zone_detection.py",
+        "file:graph/__init__.py",
+        "file:graph/zone_state.py",
+        "file:graph/message_passing.py"
+      ]
+    },
+    {
+      "id": "layer:foundation",
+      "name": "Configuration and Shared Contracts",
+      "description": "The most widely imported modules: pinned constants and model IDs in config.py, the PipelineInput and run-result dataclasses in inputs.py, and the logging LLM client that raises rather than silently mocking.",
+      "nodeIds": [
+        "file:config.py",
+        "file:inputs.py",
+        "file:llm_client.py"
+      ]
+    },
+    {
+      "id": "layer:outputs",
+      "name": "Run Outputs",
+      "description": "Writes the integrated plan and evaluation results as JSON into a per-run directory; no other module in this package imports it, so it is called from outside the pipeline package if at all.",
+      "nodeIds": [
+        "file:outputs/__init__.py",
+        "file:outputs/writer.py"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Project Overview",
+      "description": "This package is the Python implementation of MASTRA, a multi-agent traffic-advisory system that turns speed forecasts into congested zones and per-zone JSON advisories with reroutes. There is no README here, so FLOW.md is the place to start: it walks the eight stages of run_scenario from parsing to override gates and documents the data objects, index conventions and invariants. Keep its 14 symptom-to-cause debugging drills in mind as a reference for later.",
+      "nodeIds": [
+        "document:FLOW.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "The Pipeline Entry Point",
+      "description": "orchestrator.py holds the main pipeline and is the single code path used by both the evaluation runner and the dashboard, so every result passes through the same sequence. It parses inputs, detects zones, gathers proposals from zone agents, coordinates them and applies override gates to produce the final per-zone records. It connects to nearly every other module, which makes it the map for the rest of this tour: each following step opens one part of the sequence it runs.",
+      "nodeIds": [
+        "file:orchestrator.py"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Constants and Data Contracts",
+      "description": "Before following the stages, learn the two modules everything else leans on, since they are the most depended-upon in the package. config.py is the single source of truth for file paths, the speed-based severity scale, negotiation limits, safety-gate thresholds and pinned LLM model IDs. inputs.py defines the contract the orchestrator works with: the standardized forecast input, the run result and the run lineage metadata.",
+      "nodeIds": [
+        "file:config.py",
+        "file:inputs.py"
+      ],
+      "languageLesson": "Python dataclasses generate boilerplate such as __init__ from annotated class fields, which suits modules like inputs.py: the data shape shared between stages is declared in one readable place."
+    },
+    {
+      "order": 4,
+      "title": "Loading Real Scenarios",
+      "description": "data_source.py produces what the contract from Step 3 describes. It loads the real PEMS-BAY test data, the Adaptive-LSTGAN forecasts and the adjacency matrices, builds the agent communication topologies, and assembles per-sample PipelineInput objects plus stratified evaluation scenarios. Note that the topologies created here are used again later, when zones pass messages and negotiate.",
+      "nodeIds": [
+        "file:data_source.py"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Reading the Forecast",
+      "description": "The first two pipeline stages interpret the forecast tensor from Step 4. parse.py (Stage 1) converts it into per-sensor severity levels, trends, z-scores and fault flags, plus network-level summary values. forecast_gate.py (Stage 2) applies plausibility checks and records a pass or fail result without stopping the run, so a suspicious forecast is documented rather than aborting the scenario.",
+      "nodeIds": [
+        "file:parse.py",
+        "file:validate/forecast_gate.py"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Clustering Congested Zones",
+      "description": "Stage 3 moves from individual sensors to the unit the rest of the system reasons about: the congestion zone. zone_detection.py uses DBSCAN to cluster sensors with low forecast speed, building on the per-sensor view from Step 5. It then computes each zone's severity, trend, deterministic ID and downstream cascade risk.",
+      "nodeIds": [
+        "file:zone_detection.py"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "Zones Share Context",
+      "description": "Zones from Step 6 do not stay isolated. In Stage 4, message_passing.py runs two rounds of deterministic message passing over a communication topology, producing enriched zone states with network pressure and updated cascade risk. zone_state.py declares the dataclasses for those messages and states, and it is among the most widely used modules because these enriched states are what later agents and gates consume.",
+      "nodeIds": [
+        "file:graph/message_passing.py",
+        "file:graph/zone_state.py"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "The Zone-Agent Interface",
+      "description": "With zone states ready, agents can write advisories. agents.py defines the shared propose-and-revise interface, so deterministic rule agents and LLM-backed agents run inside the same coordination protocols. rules.py supplies the deterministic content, used by RuleAgent and the dry-run stand-in: severities from the detector or per-horizon forecast, plus one reroute to the fastest free candidate corridor for HIGH or MEDIUM zones.",
+      "nodeIds": [
+        "file:coordination/agents.py",
+        "file:generate/rules.py"
+      ],
+      "languageLesson": "This is the strategy pattern: callers depend on a common interface (propose and revise), not on a concrete agent, so an implementation can be swapped without changing the protocol code that uses it."
+    },
+    {
+      "order": 9,
+      "title": "The LLM Zone Agent",
+      "description": "This step covers the LLM-backed side of the interface from Step 8. zone_worker.py builds propose and negotiation-revise prompts from zone state and runs a validate-and-retry loop; a revision that still fails the gates is discarded in favour of the previous proposal. llm_client.py talks to OpenAI-compatible endpoints, logs every call to calls.jsonl and raises on a missing key or transport failure instead of silently mocking, so dry runs must be requested explicitly.",
+      "nodeIds": [
+        "file:generate/zone_worker.py",
+        "file:llm_client.py"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Checking Each Advisory",
+      "description": "The retry loop in Step 9 needs something to validate against, and these deterministic modules provide it. schema.py defines the advisory JSON field specification shown to agents and the structural gate that checks fields, severity enums and reroute road validity. det_guards.py finds the roads of zones forecast HIGH and produces the CONGESTED_TARGET retry errors, so an agent is told when a reroute points into a road the forecast marks as congested.",
+      "nodeIds": [
+        "file:generate/schema.py",
+        "file:generate/det_guards.py"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "Negotiating Reroute Conflicts",
+      "description": "Valid advisories can still collide, because each zone's reroute may be fine on its own while several zones overload one road. common.py holds the single definition of a reroute conflict, shared by agents, coordinators and evaluation metrics, along with candidate corridor ranking, the priority order and the communication topologies. negotiation.py then runs rounds in which agents exchange proposals only with topology neighbours and revise until no conflict is visible, nothing changes or the round limit is reached.",
+      "nodeIds": [
+        "file:coordination/common.py",
+        "file:coordination/negotiation.py"
+      ]
+    },
+    {
+      "order": 12,
+      "title": "Centralized Coordination",
+      "description": "Negotiation in Step 11 relies on local views, so some conflicts may stay invisible to it; these modules take the opposite approach with a global view of every zone. coordinators.py implements a greedy priority-based rule coordinator and an LLM Global Supervisor, used in the centralized design cells and as the fallback after negotiation. supervisor_agent.py is that LLM coordinator: it detects routing conflicts itself and rewrites reroutes, its output is validated per zone, and invalid entries fall back to the zone's own proposal.",
+      "nodeIds": [
+        "file:coordination/coordinators.py",
+        "file:generate/supervisor_agent.py"
+      ]
+    },
+    {
+      "order": 13,
+      "title": "Final Override Gates",
+      "description": "The sequence from Step 2 closes with deterministic safety. Besides the retry errors from Step 10, det_guards.py applies the sensor-fault, severe-speed, cascade-risk and rush-hour overrides, and orchestrator.py applies these gates to produce the final per-zone records. The overall design is worth noticing here: whichever agent or coordinator wrote an advisory, deterministic rules have the last word on the record.",
+      "nodeIds": [
+        "file:generate/det_guards.py",
+        "file:orchestrator.py"
+      ]
+    },
+    {
+      "order": 14,
+      "title": "Evaluation and Run Outputs",
+      "description": "Two modules sit beside the main path once final records exist. advisory_dq_agent.py is an evaluation-only LLM plausibility check: its verdict is recorded and never changes the output, and API failures are recorded as ERROR rather than PASS. writer.py persists the integrated plan and evaluation results as JSON in a per-run directory, though no other module in this package imports it, so any use of it comes from outside the pipeline package. From here, FLOW.md's debugging drills are a good way to test what you have learned.",
+      "nodeIds": [
+        "file:generate/advisory_dq_agent.py",
+        "file:outputs/writer.py"
+      ]
+    }
+  ]
+}

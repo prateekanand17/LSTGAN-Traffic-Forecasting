@@ -1,0 +1,1005 @@
+{
+  "nodes": [
+    {
+      "id": "file:data_source.py",
+      "type": "file",
+      "name": "data_source.py",
+      "filePath": "data_source.py",
+      "summary": "Loads the real PEMS-BAY test data, Adaptive-LSTGAN forecasts and adjacency matrices, builds the agent communication topologies, and assembles per-sample PipelineInput objects plus stratified evaluation scenarios.",
+      "tags": [
+        "data-loading",
+        "graph-topology",
+        "scenario-sampling",
+        "factory",
+        "service"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Uses functools.lru_cache on loaders so the test DataFrame, station table and forecast arrays are read from disk only once per process."
+    },
+    {
+      "id": "function:data_source.py:load_test",
+      "type": "function",
+      "name": "load_test",
+      "filePath": "data_source.py",
+      "lineRange": [
+        22,
+        23
+      ],
+      "summary": "Reads and caches the test-split speed DataFrame from the configured pickle.",
+      "tags": [
+        "data-loading",
+        "cache",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:load_stations",
+      "type": "function",
+      "name": "load_stations",
+      "filePath": "data_source.py",
+      "lineRange": [
+        27,
+        32
+      ],
+      "summary": "Loads station metadata and reorders it to match the test DataFrame's sensor columns.",
+      "tags": [
+        "data-loading",
+        "cache",
+        "metadata"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:load_distance_adj",
+      "type": "function",
+      "name": "load_distance_adj",
+      "filePath": "data_source.py",
+      "lineRange": [
+        36,
+        42
+      ],
+      "summary": "Loads the distance-kernel adjacency matrix and raises an error if its sensor order differs from the test columns.",
+      "tags": [
+        "data-loading",
+        "adjacency",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:load_forecasts",
+      "type": "function",
+      "name": "load_forecasts",
+      "filePath": "data_source.py",
+      "lineRange": [
+        46,
+        52
+      ],
+      "summary": "Loads and shape-checks test-set forecasts for a given seed from either the adaptive or the static forecaster.",
+      "tags": [
+        "data-loading",
+        "forecasts",
+        "cache"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:learned_adj",
+      "type": "function",
+      "name": "learned_adj",
+      "filePath": "data_source.py",
+      "lineRange": [
+        55,
+        60
+      ],
+      "summary": "Loads a saved learned adjacency matrix by seed, form and optional graph name, failing with a pointer to the extraction script if it is missing.",
+      "tags": [
+        "data-loading",
+        "adjacency",
+        "learned-graph"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:_knn_geo",
+      "type": "function",
+      "name": "_knn_geo",
+      "filePath": "data_source.py",
+      "lineRange": [
+        64,
+        73
+      ],
+      "summary": "Builds a uniform-weight k-nearest-neighbour graph from approximate geographic distances between stations.",
+      "tags": [
+        "graph-topology",
+        "knn",
+        "geospatial"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:_distance_topk",
+      "type": "function",
+      "name": "_distance_topk",
+      "filePath": "data_source.py",
+      "lineRange": [
+        76,
+        85
+      ],
+      "summary": "Keeps the k strongest edges per row of the distance graph and row-normalizes their weights.",
+      "tags": [
+        "graph-topology",
+        "top-k",
+        "adjacency"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:_rewire",
+      "type": "function",
+      "name": "_rewire",
+      "filePath": "data_source.py",
+      "lineRange": [
+        88,
+        107
+      ],
+      "summary": "Performs degree-preserving random edge swaps on a directed weighted graph and row-normalizes the result, serving as a density-matched control.",
+      "tags": [
+        "graph-topology",
+        "random-control",
+        "rewiring"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:data_source.py:consensus_adj",
+      "type": "function",
+      "name": "consensus_adj",
+      "filePath": "data_source.py",
+      "lineRange": [
+        110,
+        121
+      ],
+      "summary": "Builds a seed-consensus graph from top-k learned edges found in at least a minimum number of forecaster seeds, using mean weights and row normalization.",
+      "tags": [
+        "graph-topology",
+        "consensus",
+        "learned-graph"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:topology",
+      "type": "function",
+      "name": "topology",
+      "filePath": "data_source.py",
+      "lineRange": [
+        124,
+        174
+      ],
+      "summary": "Dispatches a topology name such as learned, distance, knn, full, random, consensus or none to the matching communication adjacency matrix.",
+      "tags": [
+        "graph-topology",
+        "factory",
+        "dispatcher"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:data_source.py:Scenario",
+      "type": "class",
+      "name": "Scenario",
+      "filePath": "data_source.py",
+      "lineRange": [
+        179,
+        183
+      ],
+      "summary": "Dataclass describing one evaluation scenario: forecast sample index, test-set row, origin timestamp and traffic regime.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "scenario-sampling"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:n_samples",
+      "type": "function",
+      "name": "n_samples",
+      "filePath": "data_source.py",
+      "lineRange": [
+        186,
+        187
+      ],
+      "summary": "Computes how many forecast samples the test split can provide after the weekly window and horizon.",
+      "tags": [
+        "utility",
+        "scenario-sampling",
+        "data-loading"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:data_source.py:build_input",
+      "type": "function",
+      "name": "build_input",
+      "filePath": "data_source.py",
+      "lineRange": [
+        190,
+        226
+      ],
+      "summary": "Assembles a PipelineInput for one sample using forecast, reactive persistence or oracle speeds, along with historical statistics, station data and the communication graph.",
+      "tags": [
+        "factory",
+        "input-assembly",
+        "forecast-modes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:data_source.py:select_scenarios",
+      "type": "function",
+      "name": "select_scenarios",
+      "filePath": "data_source.py",
+      "lineRange": [
+        229,
+        267
+      ],
+      "summary": "Draws a reproducible stratified scenario sample across HIGH, MODERATE, CASCADE and NORMAL regimes, labelled from observed speeds with ground truth used only for the cascade label.",
+      "tags": [
+        "scenario-sampling",
+        "stratification",
+        "evaluation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:graph/message_passing.py",
+      "type": "file",
+      "name": "message_passing.py",
+      "filePath": "graph/message_passing.py",
+      "summary": "Stage 4 of the pipeline: runs two-round deterministic message passing between congestion zones over a communication topology, producing enriched zone states with network pressure and updated cascade risk.",
+      "tags": [
+        "message-passing",
+        "graph-communication",
+        "service",
+        "congestion-zones"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "class",
+      "name": "GraphMessagePassingLayer",
+      "filePath": "graph/message_passing.py",
+      "lineRange": [
+        12,
+        86
+      ],
+      "summary": "Broadcasts a message from each zone, aggregates sensor-level adjacency into zone-to-zone weights, computes network pressure in normalized or additive form, and updates cascade risk with neighbour context text for the agents.",
+      "tags": [
+        "message-passing",
+        "graph-communication",
+        "cascade-risk",
+        "service"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:graph/message_passing.py:no_communication",
+      "type": "function",
+      "name": "no_communication",
+      "filePath": "graph/message_passing.py",
+      "lineRange": [
+        89,
+        95
+      ],
+      "summary": "Baseline variant that wraps zones as enriched states with no neighbour messages, zero pressure and unchanged cascade risk.",
+      "tags": [
+        "baseline",
+        "ablation-variant",
+        "congestion-zones"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:inputs.py",
+      "type": "file",
+      "name": "inputs.py",
+      "filePath": "inputs.py",
+      "summary": "Defines the dataclasses that form the pipeline's data contract: the standardized forecast input, the run result, and run lineage metadata.",
+      "tags": [
+        "data-model",
+        "type-definition",
+        "dataclass",
+        "pipeline-contract"
+      ],
+      "complexity": "simple",
+      "languageNotes": "data_source.build_input attaches comm_adj, observed_speed, timestamp and roads as dynamic attributes that are not declared on the PipelineInput dataclass, so consumers read them with getattr."
+    },
+    {
+      "id": "class:inputs.py:LineageTracker",
+      "type": "class",
+      "name": "LineageTracker",
+      "filePath": "inputs.py",
+      "lineRange": [
+        6,
+        9
+      ],
+      "summary": "Records the source model, run timestamp and scenario ID for a pipeline run.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "lineage"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:inputs.py:PipelineInput",
+      "type": "class",
+      "name": "PipelineInput",
+      "filePath": "inputs.py",
+      "lineRange": [
+        12,
+        24
+      ],
+      "summary": "Standardized pipeline input holding predicted and actual speeds, the adjacency matrix, station locations, historical statistics and time context.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "pipeline-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:inputs.py:PipelineResult",
+      "type": "class",
+      "name": "PipelineResult",
+      "filePath": "inputs.py",
+      "lineRange": [
+        27,
+        36
+      ],
+      "summary": "Pipeline output holding run status, run ID, lineage and optional outputs, evaluations, ground-truth result, integrated plan and network average.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "pipeline-contract"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:parse.py",
+      "type": "file",
+      "name": "parse.py",
+      "filePath": "parse.py",
+      "summary": "Stage 1 of the pipeline: converts the forecast tensor into per-sensor severity levels, trends, z-scores and fault flags, plus network-level summary values.",
+      "tags": [
+        "parser",
+        "forecast-processing",
+        "severity-classification",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:parse.py:ParsedData",
+      "type": "class",
+      "name": "ParsedData",
+      "filePath": "parse.py",
+      "lineRange": [
+        8,
+        16
+      ],
+      "summary": "Dataclass of per-sensor z-scores, severity levels, trends and fault flags, plus rush-hour status, network average speed and severity counts.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "forecast-processing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:parse.py:Parser",
+      "type": "class",
+      "name": "Parser",
+      "filePath": "parse.py",
+      "lineRange": [
+        19,
+        51
+      ],
+      "summary": "Computes severity from mean forecast speed, trend from the last versus first three forecast steps, z-scores from historical statistics, and fault flags from observed readings.",
+      "tags": [
+        "parser",
+        "severity-classification",
+        "trend-detection"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:validate/forecast_gate.py",
+      "type": "file",
+      "name": "forecast_gate.py",
+      "filePath": "validate/forecast_gate.py",
+      "summary": "Stage 2 of the pipeline: applies plausibility checks to the forecast tensor and records a pass or fail result without stopping the run.",
+      "tags": [
+        "validation",
+        "safety-gate",
+        "forecast-integrity",
+        "data-quality"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:validate/forecast_gate.py:GateResult",
+      "type": "class",
+      "name": "GateResult",
+      "filePath": "validate/forecast_gate.py",
+      "lineRange": [
+        10,
+        12
+      ],
+      "summary": "Dataclass carrying a gate's pass or fail flag and its reason text.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "validation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "class",
+      "name": "ForecastIntegrityGate",
+      "filePath": "validate/forecast_gate.py",
+      "lineRange": [
+        15,
+        33
+      ],
+      "summary": "Fails a forecast that contains non-finite values, has too many sensors at HIGH severity, or jumps too far from the last observed speed.",
+      "tags": [
+        "validation",
+        "safety-gate",
+        "forecast-integrity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:zone_detection.py",
+      "type": "file",
+      "name": "zone_detection.py",
+      "filePath": "zone_detection.py",
+      "summary": "Stage 3 of the pipeline: clusters sensors with low forecast speed into congestion zones using DBSCAN and computes each zone's severity, trend, deterministic ID and downstream cascade risk.",
+      "tags": [
+        "clustering",
+        "congestion-zones",
+        "dbscan",
+        "service",
+        "data-model"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Zone IDs are a truncated SHA-1 of the sorted member station IDs, so the same sensor set always yields the same ID across runs."
+    },
+    {
+      "id": "class:zone_detection.py:CongestionZone",
+      "type": "class",
+      "name": "CongestionZone",
+      "filePath": "zone_detection.py",
+      "lineRange": [
+        15,
+        27
+      ],
+      "summary": "Dataclass describing a detected zone: member sensors, center coordinates, speed statistics, severity, trend, cascade-risk sensors, anomaly score, roads and faulty-sensor count.",
+      "tags": [
+        "data-model",
+        "dataclass",
+        "congestion-zones"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:zone_detection.py:ZoneDetector",
+      "type": "class",
+      "name": "ZoneDetector",
+      "filePath": "zone_detection.py",
+      "lineRange": [
+        30,
+        92
+      ],
+      "summary": "Runs DBSCAN on the coordinates of sensors below the speed threshold, builds a CongestionZone for each cluster, and finds downstream at-risk sensors by breadth-first search on the distance graph.",
+      "tags": [
+        "clustering",
+        "dbscan",
+        "cascade-risk",
+        "service"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_test",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_stations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_stations",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_distance_adj",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_distance_adj",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_forecasts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:load_forecasts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:learned_adj",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:learned_adj",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_knn_geo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_knn_geo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_distance_topk",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_distance_topk",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_rewire",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:_rewire",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:consensus_adj",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:consensus_adj",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:topology",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:topology",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "class:data_source.py:Scenario",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "class:data_source.py:Scenario",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:n_samples",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:n_samples",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:build_input",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:build_input",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:select_scenarios",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "function:data_source.py:select_scenarios",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:data_source.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "function:graph/message_passing.py:no_communication",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "function:graph/message_passing.py:no_communication",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:graph/zone_state.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:graph/message_passing.py",
+      "target": "file:zone_detection.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:LineageTracker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:LineageTracker",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineInput",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:inputs.py",
+      "target": "class:inputs.py:PipelineResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:ParsedData",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:ParsedData",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:Parser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:parse.py",
+      "target": "class:parse.py:Parser",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:parse.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:parse.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:GateResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:GateResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "class:validate/forecast_gate.py:ForecastIntegrityGate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:validate/forecast_gate.py",
+      "target": "file:parse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:CongestionZone",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:CongestionZone",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:ZoneDetector",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "class:zone_detection.py:ZoneDetector",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "file:config.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "file:inputs.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:zone_detection.py",
+      "target": "file:parse.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "function:data_source.py:build_input",
+      "target": "class:inputs.py:PipelineInput",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:parse.py:Parser",
+      "target": "function:config.py:speed_to_severity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:zone_detection.py:ZoneDetector",
+      "target": "function:config.py:speed_to_severity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "target": "class:graph/zone_state.py:ZoneMessage",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:graph/message_passing.py:GraphMessagePassingLayer",
+      "target": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:graph/message_passing.py:no_communication",
+      "target": "class:graph/zone_state.py:EnrichedZoneState",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

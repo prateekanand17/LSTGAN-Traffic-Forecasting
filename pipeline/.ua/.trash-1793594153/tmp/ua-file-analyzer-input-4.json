@@ -1,0 +1,14 @@
+{
+  "projectRoot": "D:/Deep Traffic Brain/PART_1/New_ipynb_file/pipeline",
+  "batchFiles": [
+    {"path": "FLOW.md", "language": "markdown", "sizeLines": 158, "fileCategory": "docs"},
+    {"path": "__init__.py", "language": "python", "sizeLines": 4, "fileCategory": "code"},
+    {"path": "coordination/__init__.py", "language": "python", "sizeLines": 0, "fileCategory": "code"},
+    {"path": "generate/__init__.py", "language": "python", "sizeLines": 0, "fileCategory": "code"},
+    {"path": "graph/__init__.py", "language": "python", "sizeLines": 0, "fileCategory": "code"},
+    {"path": "outputs/__init__.py", "language": "python", "sizeLines": 0, "fileCategory": "code"},
+    {"path": "outputs/writer.py", "language": "python", "sizeLines": 15, "fileCategory": "code"},
+    {"path": "validate/__init__.py", "language": "python", "sizeLines": 0, "fileCategory": "code"}
+  ],
+  "batchImportData": {"FLOW.md":[],"__init__.py":[],"coordination/__init__.py":[],"generate/__init__.py":[],"graph/__init__.py":[],"outputs/__init__.py":[],"outputs/writer.py":[],"validate/__init__.py":[]}
+}

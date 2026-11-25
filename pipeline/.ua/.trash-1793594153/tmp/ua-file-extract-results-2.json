@@ -1,0 +1,1636 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "coordination/agents.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 133,
+      "nonEmptyLines": 105,
+      "functions": [
+        {
+          "name": "message_from",
+          "startLine": 49,
+          "endLine": 53,
+          "params": [
+            "ctx",
+            "proposal"
+          ]
+        },
+        {
+          "name": "yield_targets",
+          "startLine": 56,
+          "endLine": 65,
+          "params": [
+            "ctx",
+            "inbox"
+          ]
+        },
+        {
+          "name": "rule_severities",
+          "startLine": 68,
+          "endLine": 73,
+          "params": [
+            "ctx",
+            "per_horizon"
+          ]
+        },
+        {
+          "name": "make_agent",
+          "startLine": 125,
+          "endLine": 133,
+          "params": [
+            "kind",
+            "llm",
+            "use_retry"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ZoneContext",
+          "startLine": 24,
+          "endLine": 36,
+          "methods": [
+            "zone_id"
+          ],
+          "properties": [
+            "state",
+            "inp",
+            "is_rush",
+            "candidates",
+            "candidate_speeds",
+            "blocked",
+            "include_neighbors",
+            "meta"
+          ]
+        },
+        {
+          "name": "NeighborMsg",
+          "startLine": 40,
+          "endLine": 46,
+          "methods": [],
+          "properties": [
+            "zone_id",
+            "roads",
+            "severity",
+            "cascade_risk",
+            "priority",
+            "reroutes"
+          ]
+        },
+        {
+          "name": "RuleAgent",
+          "startLine": 76,
+          "endLine": 100,
+          "methods": [
+            "__init__",
+            "propose",
+            "revise"
+          ],
+          "properties": []
+        },
+        {
+          "name": "LLMAgent",
+          "startLine": 103,
+          "endLine": 122,
+          "methods": [
+            "__init__",
+            "_dry",
+            "propose",
+            "revise"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ZoneContext",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "NeighborMsg",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "message_from",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "yield_targets",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "rule_severities",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "RuleAgent",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "LLMAgent",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "make_agent",
+          "line": 125,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "message_from",
+          "callee": "NeighborMsg",
+          "lineNumber": 51
+        },
+        {
+          "caller": "message_from",
+          "callee": "list",
+          "lineNumber": 51
+        },
+        {
+          "caller": "message_from",
+          "callee": "float",
+          "lineNumber": 52
+        },
+        {
+          "caller": "message_from",
+          "callee": "priority",
+          "lineNumber": 52
+        },
+        {
+          "caller": "message_from",
+          "callee": "list",
+          "lineNumber": 53
+        },
+        {
+          "caller": "message_from",
+          "callee": "proposal.get",
+          "lineNumber": 53
+        },
+        {
+          "caller": "yield_targets",
+          "callee": "priority",
+          "lineNumber": 59
+        },
+        {
+          "caller": "yield_targets",
+          "callee": "set",
+          "lineNumber": 60
+        },
+        {
+          "caller": "yield_targets",
+          "callee": "set",
+          "lineNumber": 60
+        },
+        {
+          "caller": "yield_targets",
+          "callee": "set",
+          "lineNumber": 62
+        },
+        {
+          "caller": "yield_targets",
+          "callee": "targets_of",
+          "lineNumber": 64
+        },
+        {
+          "caller": "rule_severities",
+          "callee": "C.speed_to_severity",
+          "lineNumber": 72
+        },
+        {
+          "caller": "rule_severities",
+          "callee": "float",
+          "lineNumber": 72
+        },
+        {
+          "caller": "rule_severities",
+          "callee": "np.mean",
+          "lineNumber": 72
+        },
+        {
+          "caller": "rule_severities",
+          "callee": "C.speed_to_severity",
+          "lineNumber": 73
+        },
+        {
+          "caller": "rule_severities",
+          "callee": "float",
+          "lineNumber": 73
+        },
+        {
+          "caller": "rule_severities",
+          "callee": "np.mean",
+          "lineNumber": 73
+        },
+        {
+          "caller": "propose",
+          "callee": "rule_severities",
+          "lineNumber": 85
+        },
+        {
+          "caller": "propose",
+          "callee": "rule_advisory",
+          "lineNumber": 86
+        },
+        {
+          "caller": "revise",
+          "callee": "yield_targets",
+          "lineNumber": 90
+        },
+        {
+          "caller": "revise",
+          "callee": "set",
+          "lineNumber": 91
+        },
+        {
+          "caller": "revise",
+          "callee": "own.get",
+          "lineNumber": 92
+        },
+        {
+          "caller": "revise",
+          "callee": "r.get",
+          "lineNumber": 93
+        },
+        {
+          "caller": "revise",
+          "callee": "pick_target",
+          "lineNumber": 95
+        },
+        {
+          "caller": "revise",
+          "callee": "used.add",
+          "lineNumber": 97
+        },
+        {
+          "caller": "revise",
+          "callee": "new_rr.append",
+          "lineNumber": 98
+        },
+        {
+          "caller": "revise",
+          "callee": "r.get",
+          "lineNumber": 98
+        },
+        {
+          "caller": "revise",
+          "callee": "r.get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "revise",
+          "callee": "r.get",
+          "lineNumber": 99
+        },
+        {
+          "caller": "__init__",
+          "callee": "RuleAgent",
+          "lineNumber": 111
+        },
+        {
+          "caller": "_dry",
+          "callee": "bool",
+          "lineNumber": 114
+        },
+        {
+          "caller": "_dry",
+          "callee": "getattr",
+          "lineNumber": 114
+        },
+        {
+          "caller": "propose",
+          "callee": "self._stand_in.propose",
+          "lineNumber": 117
+        },
+        {
+          "caller": "propose",
+          "callee": "self._dry",
+          "lineNumber": 117
+        },
+        {
+          "caller": "propose",
+          "callee": "self.worker.generate",
+          "lineNumber": 118
+        },
+        {
+          "caller": "revise",
+          "callee": "self._stand_in.revise",
+          "lineNumber": 121
+        },
+        {
+          "caller": "revise",
+          "callee": "self._dry",
+          "lineNumber": 121
+        },
+        {
+          "caller": "revise",
+          "callee": "self.worker.revise",
+          "lineNumber": 122
+        },
+        {
+          "caller": "make_agent",
+          "callee": "RuleAgent",
+          "lineNumber": 127
+        },
+        {
+          "caller": "make_agent",
+          "callee": "RuleAgent",
+          "lineNumber": 129
+        },
+        {
+          "caller": "make_agent",
+          "callee": "LLMAgent",
+          "lineNumber": 132
+        },
+        {
+          "caller": "make_agent",
+          "callee": "ZoneWorkerAgent",
+          "lineNumber": 132
+        },
+        {
+          "caller": "make_agent",
+          "callee": "ValueError",
+          "lineNumber": 133
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 8,
+        "functionCount": 4,
+        "classCount": 4
+      }
+    },
+    {
+      "path": "coordination/common.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 152,
+      "nonEmptyLines": 124,
+      "functions": [
+        {
+          "name": "_haversine_km",
+          "startLine": 30,
+          "endLine": 33,
+          "params": [
+            "lat1",
+            "lng1",
+            "lat2",
+            "lng2"
+          ]
+        },
+        {
+          "name": "candidate_corridors",
+          "startLine": 36,
+          "endLine": 51,
+          "params": [
+            "state",
+            "inp",
+            "radius_km"
+          ]
+        },
+        {
+          "name": "priority",
+          "startLine": 54,
+          "endLine": 56,
+          "params": [
+            "state"
+          ]
+        },
+        {
+          "name": "zone_link",
+          "startLine": 59,
+          "endLine": 63,
+          "params": [
+            "A",
+            "a",
+            "b"
+          ]
+        },
+        {
+          "name": "neighbors",
+          "startLine": 66,
+          "endLine": 72,
+          "params": [
+            "states",
+            "A",
+            "thr"
+          ]
+        },
+        {
+          "name": "link_density",
+          "startLine": 75,
+          "endLine": 80,
+          "params": [
+            "nb"
+          ]
+        },
+        {
+          "name": "targets_of",
+          "startLine": 83,
+          "endLine": 84,
+          "params": [
+            "reroutes"
+          ]
+        },
+        {
+          "name": "zone_footprints",
+          "startLine": 87,
+          "endLine": 100,
+          "params": [
+            "states",
+            "inp",
+            "candidates",
+            "radius_km"
+          ]
+        },
+        {
+          "name": "_overlap",
+          "startLine": 103,
+          "endLine": 106,
+          "params": [
+            "footprints",
+            "a",
+            "b",
+            "road"
+          ]
+        },
+        {
+          "name": "detect_conflicts",
+          "startLine": 109,
+          "endLine": 125,
+          "params": [
+            "reroutes",
+            "zone_roads",
+            "footprints"
+          ]
+        },
+        {
+          "name": "corridor_neighbors",
+          "startLine": 128,
+          "endLine": 141,
+          "params": [
+            "states",
+            "candidates",
+            "footprints"
+          ]
+        },
+        {
+          "name": "conflicts_visible_to",
+          "startLine": 144,
+          "endLine": 152,
+          "params": [
+            "zid",
+            "conflicts",
+            "nbrs"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_haversine_km",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "candidate_corridors",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "priority",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "zone_link",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "neighbors",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "link_density",
+          "line": 75,
+          "isDefault": false
+        },
+        {
+          "name": "targets_of",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "zone_footprints",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "_overlap",
+          "line": 103,
+          "isDefault": false
+        },
+        {
+          "name": "detect_conflicts",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "corridor_neighbors",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "conflicts_visible_to",
+          "line": 144,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_haversine_km",
+          "callee": "np.sin",
+          "lineNumber": 32
+        },
+        {
+          "caller": "_haversine_km",
+          "callee": "np.cos",
+          "lineNumber": 32
+        },
+        {
+          "caller": "_haversine_km",
+          "callee": "np.cos",
+          "lineNumber": 32
+        },
+        {
+          "caller": "_haversine_km",
+          "callee": "np.sin",
+          "lineNumber": 32
+        },
+        {
+          "caller": "_haversine_km",
+          "callee": "np.arcsin",
+          "lineNumber": 33
+        },
+        {
+          "caller": "_haversine_km",
+          "callee": "np.sqrt",
+          "lineNumber": 33
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "np.asarray",
+          "lineNumber": 40
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "r.split",
+          "lineNumber": 41
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "_haversine_km",
+          "lineNumber": 42
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "inp.lats.astype",
+          "lineNumber": 42
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "inp.lngs.astype",
+          "lineNumber": 42
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "np.where",
+          "lineNumber": 43
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "r.split",
+          "lineNumber": 47
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "out.setdefault(r, []).append",
+          "lineNumber": 49
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "out.setdefault",
+          "lineNumber": 49
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "float",
+          "lineNumber": 49
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "sorted",
+          "lineNumber": 50
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "float",
+          "lineNumber": 50
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "np.mean",
+          "lineNumber": 50
+        },
+        {
+          "caller": "candidate_corridors",
+          "callee": "out.items",
+          "lineNumber": 50
+        },
+        {
+          "caller": "priority",
+          "callee": "round",
+          "lineNumber": 56
+        },
+        {
+          "caller": "zone_link",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "zone_link",
+          "callee": "len",
+          "lineNumber": 61
+        },
+        {
+          "caller": "zone_link",
+          "callee": "float",
+          "lineNumber": 63
+        },
+        {
+          "caller": "zone_link",
+          "callee": "max",
+          "lineNumber": 63
+        },
+        {
+          "caller": "zone_link",
+          "callee": "A[np.ix_(a, b)].mean",
+          "lineNumber": 63
+        },
+        {
+          "caller": "zone_link",
+          "callee": "np.ix_",
+          "lineNumber": 63
+        },
+        {
+          "caller": "zone_link",
+          "callee": "A[np.ix_(b, a)].mean",
+          "lineNumber": 63
+        },
+        {
+          "caller": "zone_link",
+          "callee": "np.ix_",
+          "lineNumber": 63
+        },
+        {
+          "caller": "neighbors",
+          "callee": "set",
+          "lineNumber": 67
+        },
+        {
+          "caller": "neighbors",
+          "callee": "combinations",
+          "lineNumber": 68
+        },
+        {
+          "caller": "neighbors",
+          "callee": "zone_link",
+          "lineNumber": 69
+        },
+        {
+          "caller": "neighbors",
+          "callee": "nb[s.zone.zone_id].add",
+          "lineNumber": 70
+        },
+        {
+          "caller": "neighbors",
+          "callee": "nb[t.zone.zone_id].add",
+          "lineNumber": 71
+        },
+        {
+          "caller": "link_density",
+          "callee": "len",
+          "lineNumber": 77
+        },
+        {
+          "caller": "link_density",
+          "callee": "float",
+          "lineNumber": 79
+        },
+        {
+          "caller": "link_density",
+          "callee": "sum",
+          "lineNumber": 80
+        },
+        {
+          "caller": "link_density",
+          "callee": "len",
+          "lineNumber": 80
+        },
+        {
+          "caller": "link_density",
+          "callee": "nb.values",
+          "lineNumber": 80
+        },
+        {
+          "caller": "targets_of",
+          "callee": "r.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "targets_of",
+          "callee": "isinstance",
+          "lineNumber": 84
+        },
+        {
+          "caller": "targets_of",
+          "callee": "r.get",
+          "lineNumber": 84
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "np.asarray",
+          "lineNumber": 91
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "_haversine_km",
+          "lineNumber": 95
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "inp.lats.astype",
+          "lineNumber": 95
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "inp.lngs.astype",
+          "lineNumber": 95
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "frozenset",
+          "lineNumber": 96
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "candidates.get",
+          "lineNumber": 97
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "frozenset",
+          "lineNumber": 98
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "np.where((roads == r) & (d <= radius_km))[0].tolist",
+          "lineNumber": 98
+        },
+        {
+          "caller": "zone_footprints",
+          "callee": "np.where",
+          "lineNumber": 98
+        },
+        {
+          "caller": "_overlap",
+          "callee": "bool",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_overlap",
+          "callee": "footprints.get(a, {}).get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_overlap",
+          "callee": "footprints.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_overlap",
+          "callee": "frozenset",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_overlap",
+          "callee": "footprints.get(b, {}).get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_overlap",
+          "callee": "footprints.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "_overlap",
+          "callee": "frozenset",
+          "lineNumber": 106
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "set",
+          "lineNumber": 113
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "targets_of",
+          "lineNumber": 114
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "reroutes.items",
+          "lineNumber": 114
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "combinations",
+          "lineNumber": 115
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "sorted",
+          "lineNumber": 115
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "_overlap",
+          "lineNumber": 117
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "out.add",
+          "lineNumber": 118
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "targets.items",
+          "lineNumber": 119
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "zone_roads.items",
+          "lineNumber": 120
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "set",
+          "lineNumber": 122
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "_overlap",
+          "lineNumber": 123
+        },
+        {
+          "caller": "detect_conflicts",
+          "callee": "out.add",
+          "lineNumber": 124
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "set",
+          "lineNumber": 132
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "combinations",
+          "lineNumber": 133
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "set",
+          "lineNumber": 135
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "candidates.get",
+          "lineNumber": 135
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "set",
+          "lineNumber": 135
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "candidates.get",
+          "lineNumber": 135
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "set",
+          "lineNumber": 136
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "set",
+          "lineNumber": 137
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "any",
+          "lineNumber": 138
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "_overlap",
+          "lineNumber": 138
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "nb[a].add",
+          "lineNumber": 139
+        },
+        {
+          "caller": "corridor_neighbors",
+          "callee": "nb[b].add",
+          "lineNumber": 140
+        },
+        {
+          "caller": "conflicts_visible_to",
+          "callee": "out.append",
+          "lineNumber": 151
+        },
+        {
+          "caller": "conflicts_visible_to",
+          "callee": "sorted",
+          "lineNumber": 152
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 12,
+        "functionCount": 12,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "coordination/coordinators.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 57,
+      "nonEmptyLines": 49,
+      "functions": [
+        {
+          "name": "central_rule",
+          "startLine": 17,
+          "endLine": 38,
+          "params": [
+            "proposals",
+            "ctxs",
+            "zone_roads"
+          ]
+        },
+        {
+          "name": "central_llm",
+          "startLine": 41,
+          "endLine": 49,
+          "params": [
+            "llm",
+            "proposals",
+            "ctxs",
+            "zone_roads",
+            "meta"
+          ]
+        },
+        {
+          "name": "coordinate",
+          "startLine": 52,
+          "endLine": 57,
+          "params": [
+            "kind",
+            "llm",
+            "proposals",
+            "ctxs",
+            "zone_roads",
+            "meta"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "central_rule",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "central_llm",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "coordinate",
+          "line": 52,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "central_rule",
+          "callee": "sorted",
+          "lineNumber": 18
+        },
+        {
+          "caller": "central_rule",
+          "callee": "priority",
+          "lineNumber": 18
+        },
+        {
+          "caller": "central_rule",
+          "callee": "set",
+          "lineNumber": 19
+        },
+        {
+          "caller": "central_rule",
+          "callee": "list",
+          "lineNumber": 22
+        },
+        {
+          "caller": "central_rule",
+          "callee": "p.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "central_rule",
+          "callee": "p.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "central_rule",
+          "callee": "p.get",
+          "lineNumber": 22
+        },
+        {
+          "caller": "central_rule",
+          "callee": "zone_roads.items",
+          "lineNumber": 23
+        },
+        {
+          "caller": "central_rule",
+          "callee": "set",
+          "lineNumber": 24
+        },
+        {
+          "caller": "central_rule",
+          "callee": "set",
+          "lineNumber": 24
+        },
+        {
+          "caller": "central_rule",
+          "callee": "r.get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "central_rule",
+          "callee": "pick_target",
+          "lineNumber": 29
+        },
+        {
+          "caller": "central_rule",
+          "callee": "used.add",
+          "lineNumber": 31
+        },
+        {
+          "caller": "central_rule",
+          "callee": "avoid.add",
+          "lineNumber": 32
+        },
+        {
+          "caller": "central_rule",
+          "callee": "out.append",
+          "lineNumber": 33
+        },
+        {
+          "caller": "central_rule",
+          "callee": "r.get",
+          "lineNumber": 33
+        },
+        {
+          "caller": "central_rule",
+          "callee": "r.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "central_rule",
+          "callee": "r.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "central_rule",
+          "callee": "changed.append",
+          "lineNumber": 37
+        },
+        {
+          "caller": "central_llm",
+          "callee": "central_rule",
+          "lineNumber": 44
+        },
+        {
+          "caller": "central_llm",
+          "callee": "getattr",
+          "lineNumber": 44
+        },
+        {
+          "caller": "central_llm",
+          "callee": "NetworkSupervisorAgent(llm).integrate",
+          "lineNumber": 45
+        },
+        {
+          "caller": "central_llm",
+          "callee": "NetworkSupervisorAgent",
+          "lineNumber": 45
+        },
+        {
+          "caller": "central_llm",
+          "callee": "list",
+          "lineNumber": 48
+        },
+        {
+          "caller": "central_llm",
+          "callee": "proposals[z].get",
+          "lineNumber": 48
+        },
+        {
+          "caller": "coordinate",
+          "callee": "central_rule",
+          "lineNumber": 54
+        },
+        {
+          "caller": "coordinate",
+          "callee": "central_llm",
+          "lineNumber": 56
+        },
+        {
+          "caller": "coordinate",
+          "callee": "ValueError",
+          "lineNumber": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 3,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "coordination/negotiation.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 75,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "_rr",
+          "startLine": 20,
+          "endLine": 21,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "plan_conflicts",
+          "startLine": 24,
+          "endLine": 25,
+          "params": [
+            "proposals",
+            "zone_roads",
+            "footprints"
+          ]
+        },
+        {
+          "name": "_snapshot",
+          "startLine": 28,
+          "endLine": 29,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "negotiate",
+          "startLine": 32,
+          "endLine": 75,
+          "params": [
+            "agents",
+            "ctxs",
+            "proposals",
+            "nb",
+            "zone_roads",
+            "max_rounds",
+            "footprints"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "_rr",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "plan_conflicts",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "_snapshot",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "negotiate",
+          "line": 32,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "_rr",
+          "callee": "list",
+          "lineNumber": 21
+        },
+        {
+          "caller": "_rr",
+          "callee": "p.get",
+          "lineNumber": 21
+        },
+        {
+          "caller": "_rr",
+          "callee": "p.get",
+          "lineNumber": 21
+        },
+        {
+          "caller": "_rr",
+          "callee": "p.get",
+          "lineNumber": 21
+        },
+        {
+          "caller": "plan_conflicts",
+          "callee": "detect_conflicts",
+          "lineNumber": 25
+        },
+        {
+          "caller": "plan_conflicts",
+          "callee": "_rr",
+          "lineNumber": 25
+        },
+        {
+          "caller": "plan_conflicts",
+          "callee": "proposals.items",
+          "lineNumber": 25
+        },
+        {
+          "caller": "_snapshot",
+          "callee": "json.dumps",
+          "lineNumber": 29
+        },
+        {
+          "caller": "_snapshot",
+          "callee": "p.get",
+          "lineNumber": 29
+        },
+        {
+          "caller": "negotiate",
+          "callee": "dict",
+          "lineNumber": 35
+        },
+        {
+          "caller": "negotiate",
+          "callee": "range",
+          "lineNumber": 39
+        },
+        {
+          "caller": "negotiate",
+          "callee": "plan_conflicts",
+          "lineNumber": 40
+        },
+        {
+          "caller": "negotiate",
+          "callee": "conflicts_visible_to",
+          "lineNumber": 41
+        },
+        {
+          "caller": "negotiate",
+          "callee": "any",
+          "lineNumber": 42
+        },
+        {
+          "caller": "negotiate",
+          "callee": "visible.values",
+          "lineNumber": 42
+        },
+        {
+          "caller": "negotiate",
+          "callee": "message_from",
+          "lineNumber": 46
+        },
+        {
+          "caller": "negotiate",
+          "callee": "sorted",
+          "lineNumber": 46
+        },
+        {
+          "caller": "negotiate",
+          "callee": "props[j].get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "negotiate",
+          "callee": "sum",
+          "lineNumber": 48
+        },
+        {
+          "caller": "negotiate",
+          "callee": "len",
+          "lineNumber": 48
+        },
+        {
+          "caller": "negotiate",
+          "callee": "inboxes.values",
+          "lineNumber": 48
+        },
+        {
+          "caller": "negotiate",
+          "callee": "dict",
+          "lineNumber": 50
+        },
+        {
+          "caller": "negotiate",
+          "callee": "sorted",
+          "lineNumber": 51
+        },
+        {
+          "caller": "negotiate",
+          "callee": "props[zid].get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "negotiate",
+          "callee": "props[zid].get",
+          "lineNumber": 52
+        },
+        {
+          "caller": "negotiate",
+          "callee": "agents[zid].revise",
+          "lineNumber": 54
+        },
+        {
+          "caller": "negotiate",
+          "callee": "revised.append",
+          "lineNumber": 55
+        },
+        {
+          "caller": "negotiate",
+          "callee": "_snapshot",
+          "lineNumber": 56
+        },
+        {
+          "caller": "negotiate",
+          "callee": "_snapshot",
+          "lineNumber": 56
+        },
+        {
+          "caller": "negotiate",
+          "callee": "changed.append",
+          "lineNumber": 57
+        },
+        {
+          "caller": "negotiate",
+          "callee": "transcript.append",
+          "lineNumber": 60
+        },
+        {
+          "caller": "negotiate",
+          "callee": "sorted",
+          "lineNumber": 62
+        },
+        {
+          "caller": "negotiate",
+          "callee": "list",
+          "lineNumber": 62
+        },
+        {
+          "caller": "negotiate",
+          "callee": "list",
+          "lineNumber": 63
+        },
+        {
+          "caller": "negotiate",
+          "callee": "visible.items",
+          "lineNumber": 63
+        },
+        {
+          "caller": "negotiate",
+          "callee": "sum",
+          "lineNumber": 64
+        },
+        {
+          "caller": "negotiate",
+          "callee": "len",
+          "lineNumber": 64
+        },
+        {
+          "caller": "negotiate",
+          "callee": "inboxes.values",
+          "lineNumber": 64
+        },
+        {
+          "caller": "negotiate",
+          "callee": "_rr",
+          "lineNumber": 66
+        },
+        {
+          "caller": "negotiate",
+          "callee": "props.items",
+          "lineNumber": 66
+        },
+        {
+          "caller": "negotiate",
+          "callee": "any",
+          "lineNumber": 72
+        },
+        {
+          "caller": "negotiate",
+          "callee": "conflicts_visible_to",
+          "lineNumber": 72
+        },
+        {
+          "caller": "negotiate",
+          "callee": "plan_conflicts",
+          "lineNumber": 72
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "generate/rules.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "pick_target",
+          "startLine": 13,
+          "endLine": 17,
+          "params": [
+            "candidates",
+            "exclude"
+          ]
+        },
+        {
+          "name": "rule_advisory",
+          "startLine": 20,
+          "endLine": 41,
+          "params": [
+            "state",
+            "candidates",
+            "blocked",
+            "sev30",
+            "sev60"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "pick_target",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "rule_advisory",
+          "line": 20,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "rule_advisory",
+          "callee": "pick_target",
+          "lineNumber": 27
+        },
+        {
+          "caller": "rule_advisory",
+          "callee": "set",
+          "lineNumber": 27
+        },
+        {
+          "caller": "rule_advisory",
+          "callee": "set",
+          "lineNumber": 27
+        },
+        {
+          "caller": "rule_advisory",
+          "callee": "reroutes.append",
+          "lineNumber": 29
+        },
+        {
+          "caller": "rule_advisory",
+          "callee": "bool",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "graph/zone_state.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 23,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "ZoneMessage",
+          "startLine": 7,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "zone_id",
+            "severity",
+            "severity_score",
+            "avg_speed_60min",
+            "trend",
+            "cascade_prob_raw"
+          ]
+        },
+        {
+          "name": "EnrichedZoneState",
+          "startLine": 17,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "zone",
+            "neighbor_messages",
+            "updated_cascade_risk",
+            "network_pressure",
+            "neighbor_context_text",
+            "neighbor_weights"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ZoneMessage",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "EnrichedZoneState",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 2
+      }
+    }
+  ]
+}

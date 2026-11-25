@@ -1,0 +1,17 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "The merge report has no Fixed or Could not fix entries. Input and output counts match at 107 nodes and 312 edges, and batch node IDs and edge keys are identical to the assembled graph.",
+    "All 62 edges in the AST-rebuilt import map exist as file-to-file imports edges, and the graph has 62 imports edges with none outside the map. The 0 recovered in the merge report is consistent with this, because the batches already supplied them.",
+    "Node types are all valid (53 function, 27 file, 26 class, 1 document). Complexity values are all valid (68 simple, 35 moderate, 4 complex).",
+    "No missing IDs, duplicate IDs, dangling edges, duplicate edges, self-loops, ID-prefix/type mismatches, placeholder summaries or untagged nodes.",
+    "Every node filePath exists on disk, and every project file has a node, excluding .ua, __pycache__, .git, .pytest_cache and .pyc files. Every function and class has a contains edge from a file node with the same filePath.",
+    "There are 53 function nodes but 52 file-to-function exports edges, so one function has no exports edge. This was not investigated and may be a private helper. No change made because the import map does not cover exports.",
+    "The review checked graph structure and import edges only. Calls and related edges and the accuracy of summaries were not checked against source."
+  ]
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "layer:orchestration",
+    "name": "Pipeline Orchestration",
+    "description": "The run_scenario entry path that sequences the MASTRA stages from parsing to override gates for the evaluation runner and dashboard, with the package root and the FLOW.md guide that walks those stages.",
+    "nodeIds": [
+      "file:orchestrator.py",
+      "file:__init__.py",
+      "document:FLOW.md"
+    ]
+  },
+  {
+    "id": "layer:coordination",
+    "name": "Agent Coordination",
+    "description": "The shared zone-agent interface, conflict definition, round-based negotiation among topology neighbours, and centralized coordinators that keep zones from rerouting onto the same road.",
+    "nodeIds": [
+      "file:coordination/__init__.py",
+      "file:coordination/agents.py",
+      "file:coordination/common.py",
+      "file:coordination/coordinators.py",
+      "file:coordination/negotiation.py"
+    ]
+  },
+  {
+    "id": "layer:advisory-generation",
+    "name": "Advisory Generation",
+    "description": "Producers of per-zone JSON advisories and reroutes: the deterministic rule generator, the LLM zone worker with its retry loop, the LLM Global Supervisor, and the evaluation-only LLM plausibility check.",
+    "nodeIds": [
+      "file:generate/__init__.py",
+      "file:generate/rules.py",
+      "file:generate/zone_worker.py",
+      "file:generate/supervisor_agent.py",
+      "file:generate/advisory_dq_agent.py"
+    ]
+  },
+  {
+    "id": "layer:validation-gates",
+    "name": "Validation and Safety Gates",
+    "description": "Deterministic checks around the LLM and rule outputs: forecast plausibility, the advisory schema and reroute road validity, CONGESTED_TARGET retry errors, and the sensor-fault, severe-speed, cascade-risk and rush-hour overrides.",
+    "nodeIds": [
+      "file:validate/__init__.py",
+      "file:validate/forecast_gate.py",
+      "file:generate/schema.py",
+      "file:generate/det_guards.py"
+    ]
+  },
+  {
+    "id": "layer:forecast-zone-analysis",
+    "name": "Forecast and Zone Analysis",
+    "description": "Turns PEMS-BAY data and Adaptive-LSTGAN forecasts into enriched zone states by loading scenarios, deriving per-sensor severity, clustering congested sensors with DBSCAN, and running two-round message passing between zones.",
+    "nodeIds": [
+      "file:data_source.py",
+      "file:parse.py",
+      "file:zone_detection.py",
+      "file:graph/__init__.py",
+      "file:graph/zone_state.py",
+      "file:graph/message_passing.py"
+    ]
+  },
+  {
+    "id": "layer:foundation",
+    "name": "Configuration and Shared Contracts",
+    "description": "The most widely imported modules: pinned constants and model IDs in config.py, the PipelineInput and run-result dataclasses in inputs.py, and the logging LLM client that raises rather than silently mocking.",
+    "nodeIds": [
+      "file:config.py",
+      "file:inputs.py",
+      "file:llm_client.py"
+    ]
+  },
+  {
+    "id": "layer:outputs",
+    "name": "Run Outputs",
+    "description": "Writes the integrated plan and evaluation results as JSON into a per-run directory; no other module in this package imports it, so it is called from outside the pipeline package if at all.",
+    "nodeIds": [
+      "file:outputs/__init__.py",
+      "file:outputs/writer.py"
+    ]
+  }
+]

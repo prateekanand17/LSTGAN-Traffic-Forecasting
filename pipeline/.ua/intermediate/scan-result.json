@@ -1,0 +1,293 @@
+{
+  "name": "pipeline",
+  "description": "Python implementation of the MASTRA multi-agent traffic-advisory system: it turns speed forecasts into congested zones, has a rule-based or LLM agent write a JSON advisory with reroutes for each zone, coordinates the agents through negotiation so zones do not overload the same road, and applies deterministic safety gates to the final records.",
+  "languages": [
+    "json",
+    "markdown",
+    "python"
+  ],
+  "frameworks": [],
+  "files": [
+    {
+      "path": "FLOW.md",
+      "language": "markdown",
+      "sizeLines": 158,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "__init__.py",
+      "language": "python",
+      "sizeLines": 4,
+      "fileCategory": "code"
+    },
+    {
+      "path": "config.py",
+      "language": "python",
+      "sizeLines": 109,
+      "fileCategory": "code"
+    },
+    {
+      "path": "coordination/__init__.py",
+      "language": "python",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "coordination/agents.py",
+      "language": "python",
+      "sizeLines": 133,
+      "fileCategory": "code"
+    },
+    {
+      "path": "coordination/common.py",
+      "language": "python",
+      "sizeLines": 152,
+      "fileCategory": "code"
+    },
+    {
+      "path": "coordination/coordinators.py",
+      "language": "python",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "coordination/negotiation.py",
+      "language": "python",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "data_source.py",
+      "language": "python",
+      "sizeLines": 267,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/__init__.py",
+      "language": "python",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/advisory_dq_agent.py",
+      "language": "python",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/det_guards.py",
+      "language": "python",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/rules.py",
+      "language": "python",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/schema.py",
+      "language": "python",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/supervisor_agent.py",
+      "language": "python",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "generate/zone_worker.py",
+      "language": "python",
+      "sizeLines": 146,
+      "fileCategory": "code"
+    },
+    {
+      "path": "graph/__init__.py",
+      "language": "python",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "graph/message_passing.py",
+      "language": "python",
+      "sizeLines": 95,
+      "fileCategory": "code"
+    },
+    {
+      "path": "graph/zone_state.py",
+      "language": "python",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "inputs.py",
+      "language": "python",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "llm_client.py",
+      "language": "python",
+      "sizeLines": 141,
+      "fileCategory": "code"
+    },
+    {
+      "path": "orchestrator.py",
+      "language": "python",
+      "sizeLines": 245,
+      "fileCategory": "code"
+    },
+    {
+      "path": "outputs/__init__.py",
+      "language": "python",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "outputs/writer.py",
+      "language": "python",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "parse.py",
+      "language": "python",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "validate/__init__.py",
+      "language": "python",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "validate/forecast_gate.py",
+      "language": "python",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "zone_detection.py",
+      "language": "python",
+      "sizeLines": 92,
+      "fileCategory": "code"
+    }
+  ],
+  "totalFiles": 28,
+  "filteredByIgnore": 0,
+  "estimatedComplexity": "small",
+  "importMap": {
+    "FLOW.md": [],
+    "__init__.py": [],
+    "config.py": [],
+    "coordination/__init__.py": [],
+    "coordination/agents.py": [
+      "config.py",
+      "coordination/common.py",
+      "generate/rules.py",
+      "generate/zone_worker.py",
+      "graph/zone_state.py",
+      "inputs.py"
+    ],
+    "coordination/common.py": [
+      "config.py",
+      "graph/zone_state.py",
+      "inputs.py"
+    ],
+    "coordination/coordinators.py": [
+      "coordination/agents.py",
+      "coordination/common.py",
+      "generate/rules.py",
+      "generate/supervisor_agent.py"
+    ],
+    "coordination/negotiation.py": [
+      "coordination/agents.py",
+      "coordination/common.py"
+    ],
+    "data_source.py": [
+      "config.py",
+      "inputs.py"
+    ],
+    "generate/__init__.py": [],
+    "generate/advisory_dq_agent.py": [
+      "config.py",
+      "graph/zone_state.py",
+      "llm_client.py"
+    ],
+    "generate/det_guards.py": [
+      "config.py",
+      "graph/zone_state.py",
+      "parse.py"
+    ],
+    "generate/rules.py": [
+      "config.py",
+      "graph/zone_state.py"
+    ],
+    "generate/schema.py": [
+      "config.py"
+    ],
+    "generate/supervisor_agent.py": [
+      "config.py",
+      "llm_client.py"
+    ],
+    "generate/zone_worker.py": [
+      "config.py",
+      "coordination/common.py",
+      "generate/det_guards.py",
+      "generate/schema.py",
+      "llm_client.py"
+    ],
+    "graph/__init__.py": [],
+    "graph/message_passing.py": [
+      "config.py",
+      "graph/zone_state.py",
+      "inputs.py",
+      "zone_detection.py"
+    ],
+    "graph/zone_state.py": [
+      "zone_detection.py"
+    ],
+    "inputs.py": [],
+    "llm_client.py": [
+      "config.py"
+    ],
+    "orchestrator.py": [
+      "config.py",
+      "coordination/agents.py",
+      "coordination/common.py",
+      "coordination/coordinators.py",
+      "coordination/negotiation.py",
+      "data_source.py",
+      "generate/advisory_dq_agent.py",
+      "generate/det_guards.py",
+      "generate/schema.py",
+      "generate/zone_worker.py",
+      "graph/message_passing.py",
+      "inputs.py",
+      "llm_client.py",
+      "parse.py",
+      "validate/forecast_gate.py",
+      "zone_detection.py"
+    ],
+    "outputs/__init__.py": [],
+    "outputs/writer.py": [],
+    "parse.py": [
+      "config.py",
+      "inputs.py"
+    ],
+    "validate/__init__.py": [],
+    "validate/forecast_gate.py": [
+      "inputs.py",
+      "parse.py"
+    ],
+    "zone_detection.py": [
+      "config.py",
+      "inputs.py",
+      "parse.py"
+    ]
+  }
+}

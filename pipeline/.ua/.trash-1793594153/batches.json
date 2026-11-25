@@ -1,0 +1,1054 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 28,
+  "totalBatches": 4,
+  "exportsByPath": {
+    "__init__.py": [],
+    "config.py": [
+      "speed_to_severity"
+    ],
+    "coordination/__init__.py": [],
+    "coordination/agents.py": [
+      "ZoneContext",
+      "NeighborMsg",
+      "message_from",
+      "yield_targets",
+      "rule_severities",
+      "RuleAgent",
+      "LLMAgent",
+      "make_agent"
+    ],
+    "coordination/common.py": [
+      "_haversine_km",
+      "candidate_corridors",
+      "priority",
+      "zone_link",
+      "neighbors",
+      "link_density",
+      "targets_of",
+      "zone_footprints",
+      "_overlap",
+      "detect_conflicts",
+      "corridor_neighbors",
+      "conflicts_visible_to"
+    ],
+    "coordination/coordinators.py": [
+      "central_rule",
+      "central_llm",
+      "coordinate"
+    ],
+    "coordination/negotiation.py": [
+      "_rr",
+      "plan_conflicts",
+      "_snapshot",
+      "negotiate"
+    ],
+    "data_source.py": [
+      "load_test",
+      "load_stations",
+      "load_distance_adj",
+      "load_forecasts",
+      "learned_adj",
+      "_knn_geo",
+      "_distance_topk",
+      "_rewire",
+      "consensus_adj",
+      "topology",
+      "Scenario",
+      "n_samples",
+      "build_input",
+      "select_scenarios"
+    ],
+    "generate/__init__.py": [],
+    "generate/advisory_dq_agent.py": [
+      "AdvisoryQualityAgent"
+    ],
+    "generate/det_guards.py": [
+      "congested_roads",
+      "semantic_retry_errors",
+      "DeterministicGuards"
+    ],
+    "generate/rules.py": [
+      "pick_target",
+      "rule_advisory"
+    ],
+    "generate/schema.py": [
+      "structural_errors",
+      "hallucinated_routes"
+    ],
+    "generate/supervisor_agent.py": [
+      "build_prompt",
+      "NetworkSupervisorAgent"
+    ],
+    "generate/zone_worker.py": [
+      "zone_forecast_at",
+      "build_prompt",
+      "describe_conflict",
+      "revision_block",
+      "ZoneWorkerAgent"
+    ],
+    "graph/__init__.py": [],
+    "graph/message_passing.py": [
+      "GraphMessagePassingLayer",
+      "no_communication"
+    ],
+    "graph/zone_state.py": [
+      "ZoneMessage",
+      "EnrichedZoneState"
+    ],
+    "inputs.py": [
+      "LineageTracker",
+      "PipelineInput",
+      "PipelineResult"
+    ],
+    "llm_client.py": [
+      "LLMError",
+      "LLMClient",
+      "_error_body",
+      "is_json_validate_failure",
+      "failed_generation"
+    ],
+    "orchestrator.py": [
+      "Variant",
+      "_usage_delta",
+      "_reroutes",
+      "run_scenario",
+      "_single_agent",
+      "MASTraPipeline"
+    ],
+    "outputs/__init__.py": [],
+    "outputs/writer.py": [
+      "OutputWriter"
+    ],
+    "parse.py": [
+      "ParsedData",
+      "Parser"
+    ],
+    "validate/__init__.py": [],
+    "validate/forecast_gate.py": [
+      "GateResult",
+      "ForecastIntegrityGate"
+    ],
+    "zone_detection.py": [
+      "CongestionZone",
+      "ZoneDetector"
+    ]
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "config.py",
+          "language": "python",
+          "sizeLines": 109,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/advisory_dq_agent.py",
+          "language": "python",
+          "sizeLines": 34,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/det_guards.py",
+          "language": "python",
+          "sizeLines": 57,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/schema.py",
+          "language": "python",
+          "sizeLines": 66,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/supervisor_agent.py",
+          "language": "python",
+          "sizeLines": 68,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/zone_worker.py",
+          "language": "python",
+          "sizeLines": 146,
+          "fileCategory": "code"
+        },
+        {
+          "path": "llm_client.py",
+          "language": "python",
+          "sizeLines": 141,
+          "fileCategory": "code"
+        },
+        {
+          "path": "orchestrator.py",
+          "language": "python",
+          "sizeLines": 245,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "config.py": [],
+        "generate/advisory_dq_agent.py": [
+          "config.py",
+          "graph/zone_state.py",
+          "llm_client.py"
+        ],
+        "generate/det_guards.py": [
+          "config.py",
+          "graph/zone_state.py",
+          "parse.py"
+        ],
+        "generate/schema.py": [
+          "config.py"
+        ],
+        "generate/supervisor_agent.py": [
+          "config.py",
+          "llm_client.py"
+        ],
+        "generate/zone_worker.py": [
+          "config.py",
+          "coordination/common.py",
+          "generate/det_guards.py",
+          "generate/schema.py",
+          "llm_client.py"
+        ],
+        "llm_client.py": [
+          "config.py"
+        ],
+        "orchestrator.py": [
+          "config.py",
+          "coordination/agents.py",
+          "coordination/common.py",
+          "coordination/coordinators.py",
+          "coordination/negotiation.py",
+          "data_source.py",
+          "generate/advisory_dq_agent.py",
+          "generate/det_guards.py",
+          "generate/schema.py",
+          "generate/zone_worker.py",
+          "graph/message_passing.py",
+          "inputs.py",
+          "llm_client.py",
+          "parse.py",
+          "validate/forecast_gate.py",
+          "zone_detection.py"
+        ]
+      },
+      "neighborMap": {
+        "config.py": [
+          {
+            "path": "coordination/agents.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneContext",
+              "NeighborMsg",
+              "message_from",
+              "yield_targets",
+              "rule_severities",
+              "RuleAgent",
+              "LLMAgent",
+              "make_agent"
+            ]
+          },
+          {
+            "path": "coordination/common.py",
+            "batchIndex": 2,
+            "symbols": [
+              "_haversine_km",
+              "candidate_corridors",
+              "priority",
+              "zone_link",
+              "neighbors",
+              "link_density",
+              "targets_of",
+              "zone_footprints",
+              "_overlap",
+              "detect_conflicts",
+              "corridor_neighbors",
+              "conflicts_visible_to"
+            ]
+          },
+          {
+            "path": "data_source.py",
+            "batchIndex": 3,
+            "symbols": [
+              "load_test",
+              "load_stations",
+              "load_distance_adj",
+              "load_forecasts",
+              "learned_adj",
+              "_knn_geo",
+              "_distance_topk",
+              "_rewire",
+              "consensus_adj",
+              "topology",
+              "Scenario",
+              "n_samples",
+              "build_input",
+              "select_scenarios"
+            ]
+          },
+          {
+            "path": "generate/rules.py",
+            "batchIndex": 2,
+            "symbols": [
+              "pick_target",
+              "rule_advisory"
+            ]
+          },
+          {
+            "path": "graph/message_passing.py",
+            "batchIndex": 3,
+            "symbols": [
+              "GraphMessagePassingLayer",
+              "no_communication"
+            ]
+          },
+          {
+            "path": "parse.py",
+            "batchIndex": 3,
+            "symbols": [
+              "ParsedData",
+              "Parser"
+            ]
+          },
+          {
+            "path": "zone_detection.py",
+            "batchIndex": 3,
+            "symbols": [
+              "CongestionZone",
+              "ZoneDetector"
+            ]
+          }
+        ],
+        "generate/advisory_dq_agent.py": [
+          {
+            "path": "graph/zone_state.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneMessage",
+              "EnrichedZoneState"
+            ]
+          }
+        ],
+        "generate/det_guards.py": [
+          {
+            "path": "graph/zone_state.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneMessage",
+              "EnrichedZoneState"
+            ]
+          },
+          {
+            "path": "parse.py",
+            "batchIndex": 3,
+            "symbols": [
+              "ParsedData",
+              "Parser"
+            ]
+          }
+        ],
+        "generate/supervisor_agent.py": [
+          {
+            "path": "coordination/coordinators.py",
+            "batchIndex": 2,
+            "symbols": [
+              "central_rule",
+              "central_llm",
+              "coordinate"
+            ]
+          }
+        ],
+        "generate/zone_worker.py": [
+          {
+            "path": "coordination/common.py",
+            "batchIndex": 2,
+            "symbols": [
+              "_haversine_km",
+              "candidate_corridors",
+              "priority",
+              "zone_link",
+              "neighbors",
+              "link_density",
+              "targets_of",
+              "zone_footprints",
+              "_overlap",
+              "detect_conflicts",
+              "corridor_neighbors",
+              "conflicts_visible_to"
+            ]
+          },
+          {
+            "path": "coordination/agents.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneContext",
+              "NeighborMsg",
+              "message_from",
+              "yield_targets",
+              "rule_severities",
+              "RuleAgent",
+              "LLMAgent",
+              "make_agent"
+            ]
+          }
+        ],
+        "orchestrator.py": [
+          {
+            "path": "coordination/agents.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneContext",
+              "NeighborMsg",
+              "message_from",
+              "yield_targets",
+              "rule_severities",
+              "RuleAgent",
+              "LLMAgent",
+              "make_agent"
+            ]
+          },
+          {
+            "path": "coordination/common.py",
+            "batchIndex": 2,
+            "symbols": [
+              "_haversine_km",
+              "candidate_corridors",
+              "priority",
+              "zone_link",
+              "neighbors",
+              "link_density",
+              "targets_of",
+              "zone_footprints",
+              "_overlap",
+              "detect_conflicts",
+              "corridor_neighbors",
+              "conflicts_visible_to"
+            ]
+          },
+          {
+            "path": "coordination/coordinators.py",
+            "batchIndex": 2,
+            "symbols": [
+              "central_rule",
+              "central_llm",
+              "coordinate"
+            ]
+          },
+          {
+            "path": "coordination/negotiation.py",
+            "batchIndex": 2,
+            "symbols": [
+              "_rr",
+              "plan_conflicts",
+              "_snapshot",
+              "negotiate"
+            ]
+          },
+          {
+            "path": "data_source.py",
+            "batchIndex": 3,
+            "symbols": [
+              "load_test",
+              "load_stations",
+              "load_distance_adj",
+              "load_forecasts",
+              "learned_adj",
+              "_knn_geo",
+              "_distance_topk",
+              "_rewire",
+              "consensus_adj",
+              "topology",
+              "Scenario",
+              "n_samples",
+              "build_input",
+              "select_scenarios"
+            ]
+          },
+          {
+            "path": "graph/message_passing.py",
+            "batchIndex": 3,
+            "symbols": [
+              "GraphMessagePassingLayer",
+              "no_communication"
+            ]
+          },
+          {
+            "path": "inputs.py",
+            "batchIndex": 3,
+            "symbols": [
+              "LineageTracker",
+              "PipelineInput",
+              "PipelineResult"
+            ]
+          },
+          {
+            "path": "parse.py",
+            "batchIndex": 3,
+            "symbols": [
+              "ParsedData",
+              "Parser"
+            ]
+          },
+          {
+            "path": "validate/forecast_gate.py",
+            "batchIndex": 3,
+            "symbols": [
+              "GateResult",
+              "ForecastIntegrityGate"
+            ]
+          },
+          {
+            "path": "zone_detection.py",
+            "batchIndex": 3,
+            "symbols": [
+              "CongestionZone",
+              "ZoneDetector"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "coordination/agents.py",
+          "language": "python",
+          "sizeLines": 133,
+          "fileCategory": "code"
+        },
+        {
+          "path": "coordination/common.py",
+          "language": "python",
+          "sizeLines": 152,
+          "fileCategory": "code"
+        },
+        {
+          "path": "coordination/coordinators.py",
+          "language": "python",
+          "sizeLines": 57,
+          "fileCategory": "code"
+        },
+        {
+          "path": "coordination/negotiation.py",
+          "language": "python",
+          "sizeLines": 75,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/rules.py",
+          "language": "python",
+          "sizeLines": 41,
+          "fileCategory": "code"
+        },
+        {
+          "path": "graph/zone_state.py",
+          "language": "python",
+          "sizeLines": 23,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "coordination/agents.py": [
+          "config.py",
+          "coordination/common.py",
+          "generate/rules.py",
+          "generate/zone_worker.py",
+          "graph/zone_state.py",
+          "inputs.py"
+        ],
+        "coordination/common.py": [
+          "config.py",
+          "graph/zone_state.py",
+          "inputs.py"
+        ],
+        "coordination/coordinators.py": [
+          "coordination/agents.py",
+          "coordination/common.py",
+          "generate/rules.py",
+          "generate/supervisor_agent.py"
+        ],
+        "coordination/negotiation.py": [
+          "coordination/agents.py",
+          "coordination/common.py"
+        ],
+        "generate/rules.py": [
+          "config.py",
+          "graph/zone_state.py"
+        ],
+        "graph/zone_state.py": [
+          "zone_detection.py"
+        ]
+      },
+      "neighborMap": {
+        "coordination/agents.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          },
+          {
+            "path": "generate/zone_worker.py",
+            "batchIndex": 1,
+            "symbols": [
+              "zone_forecast_at",
+              "build_prompt",
+              "describe_conflict",
+              "revision_block",
+              "ZoneWorkerAgent"
+            ]
+          },
+          {
+            "path": "inputs.py",
+            "batchIndex": 3,
+            "symbols": [
+              "LineageTracker",
+              "PipelineInput",
+              "PipelineResult"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "coordination/common.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          },
+          {
+            "path": "inputs.py",
+            "batchIndex": 3,
+            "symbols": [
+              "LineageTracker",
+              "PipelineInput",
+              "PipelineResult"
+            ]
+          },
+          {
+            "path": "generate/zone_worker.py",
+            "batchIndex": 1,
+            "symbols": [
+              "zone_forecast_at",
+              "build_prompt",
+              "describe_conflict",
+              "revision_block",
+              "ZoneWorkerAgent"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "coordination/coordinators.py": [
+          {
+            "path": "generate/supervisor_agent.py",
+            "batchIndex": 1,
+            "symbols": [
+              "build_prompt",
+              "NetworkSupervisorAgent"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "coordination/negotiation.py": [
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "generate/rules.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          }
+        ],
+        "graph/zone_state.py": [
+          {
+            "path": "zone_detection.py",
+            "batchIndex": 3,
+            "symbols": [
+              "CongestionZone",
+              "ZoneDetector"
+            ]
+          },
+          {
+            "path": "generate/advisory_dq_agent.py",
+            "batchIndex": 1,
+            "symbols": [
+              "AdvisoryQualityAgent"
+            ]
+          },
+          {
+            "path": "generate/det_guards.py",
+            "batchIndex": 1,
+            "symbols": [
+              "congested_roads",
+              "semantic_retry_errors",
+              "DeterministicGuards"
+            ]
+          },
+          {
+            "path": "graph/message_passing.py",
+            "batchIndex": 3,
+            "symbols": [
+              "GraphMessagePassingLayer",
+              "no_communication"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "data_source.py",
+          "language": "python",
+          "sizeLines": 267,
+          "fileCategory": "code"
+        },
+        {
+          "path": "graph/message_passing.py",
+          "language": "python",
+          "sizeLines": 95,
+          "fileCategory": "code"
+        },
+        {
+          "path": "inputs.py",
+          "language": "python",
+          "sizeLines": 36,
+          "fileCategory": "code"
+        },
+        {
+          "path": "parse.py",
+          "language": "python",
+          "sizeLines": 51,
+          "fileCategory": "code"
+        },
+        {
+          "path": "validate/forecast_gate.py",
+          "language": "python",
+          "sizeLines": 33,
+          "fileCategory": "code"
+        },
+        {
+          "path": "zone_detection.py",
+          "language": "python",
+          "sizeLines": 92,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "data_source.py": [
+          "config.py",
+          "inputs.py"
+        ],
+        "graph/message_passing.py": [
+          "config.py",
+          "graph/zone_state.py",
+          "inputs.py",
+          "zone_detection.py"
+        ],
+        "inputs.py": [],
+        "parse.py": [
+          "config.py",
+          "inputs.py"
+        ],
+        "validate/forecast_gate.py": [
+          "inputs.py",
+          "parse.py"
+        ],
+        "zone_detection.py": [
+          "config.py",
+          "inputs.py",
+          "parse.py"
+        ]
+      },
+      "neighborMap": {
+        "data_source.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "graph/message_passing.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          },
+          {
+            "path": "graph/zone_state.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneMessage",
+              "EnrichedZoneState"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "inputs.py": [
+          {
+            "path": "coordination/agents.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneContext",
+              "NeighborMsg",
+              "message_from",
+              "yield_targets",
+              "rule_severities",
+              "RuleAgent",
+              "LLMAgent",
+              "make_agent"
+            ]
+          },
+          {
+            "path": "coordination/common.py",
+            "batchIndex": 2,
+            "symbols": [
+              "_haversine_km",
+              "candidate_corridors",
+              "priority",
+              "zone_link",
+              "neighbors",
+              "link_density",
+              "targets_of",
+              "zone_footprints",
+              "_overlap",
+              "detect_conflicts",
+              "corridor_neighbors",
+              "conflicts_visible_to"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "parse.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          },
+          {
+            "path": "generate/det_guards.py",
+            "batchIndex": 1,
+            "symbols": [
+              "congested_roads",
+              "semantic_retry_errors",
+              "DeterministicGuards"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "validate/forecast_gate.py": [
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ],
+        "zone_detection.py": [
+          {
+            "path": "config.py",
+            "batchIndex": 1,
+            "symbols": [
+              "speed_to_severity"
+            ]
+          },
+          {
+            "path": "graph/zone_state.py",
+            "batchIndex": 2,
+            "symbols": [
+              "ZoneMessage",
+              "EnrichedZoneState"
+            ]
+          },
+          {
+            "path": "orchestrator.py",
+            "batchIndex": 1,
+            "symbols": [
+              "Variant",
+              "_usage_delta",
+              "_reroutes",
+              "run_scenario",
+              "_single_agent",
+              "MASTraPipeline"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "FLOW.md",
+          "language": "markdown",
+          "sizeLines": 158,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "__init__.py",
+          "language": "python",
+          "sizeLines": 4,
+          "fileCategory": "code"
+        },
+        {
+          "path": "coordination/__init__.py",
+          "language": "python",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "generate/__init__.py",
+          "language": "python",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "graph/__init__.py",
+          "language": "python",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "outputs/__init__.py",
+          "language": "python",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "outputs/writer.py",
+          "language": "python",
+          "sizeLines": 15,
+          "fileCategory": "code"
+        },
+        {
+          "path": "validate/__init__.py",
+          "language": "python",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "FLOW.md": [],
+        "__init__.py": [],
+        "coordination/__init__.py": [],
+        "generate/__init__.py": [],
+        "graph/__init__.py": [],
+        "outputs/__init__.py": [],
+        "outputs/writer.py": [],
+        "validate/__init__.py": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

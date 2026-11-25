@@ -1,0 +1,147 @@
+{
+ "args": {
+  "run_id": "rule_cells_s42",
+  "variants": "@rule_cells",
+  "list_variants": false,
+  "per_regime": 30,
+  "runs": 1,
+  "forecast_seed": 42,
+  "scenario_seed": 0,
+  "dry_run": false,
+  "max_scenarios": null
+ },
+ "config": {
+  "ROOT": "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file",
+  "TEST_PKL": "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\assets\\test_5min.pkl",
+  "STATIONS_CSV": "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\assets\\traffic_stations.csv",
+  "DISTANCE_ADJ_PKL": "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\assets\\adj_mx_bay.pkl",
+  "LEARNED_ADJ_DIR": "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\assets\\learned_adj",
+  "FORECAST_FILES": {
+   "42": [
+    "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\papers\\Adaptive_LSTGAN_Paper\\analysis\\paper_inference_data.npz",
+    "adaptive"
+   ],
+   "123": [
+    "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\papers\\Adaptive_LSTGAN_Paper\\analysis\\global_eval\\pred_pems_adaptive_s123.npy",
+    null
+   ],
+   "456": [
+    "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\papers\\Adaptive_LSTGAN_Paper\\analysis\\global_eval\\pred_pems_adaptive_s456.npy",
+    null
+   ],
+   "789": [
+    "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\papers\\Adaptive_LSTGAN_Paper\\analysis\\global_eval\\pred_pems_adaptive_s789.npy",
+    null
+   ],
+   "1024": [
+    "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\papers\\Adaptive_LSTGAN_Paper\\analysis\\global_eval\\pred_pems_adaptive_s1024.npy",
+    null
+   ]
+  },
+  "WEEKLY_WINDOW": 2016,
+  "HORIZON": 12,
+  "HIST_WINDOW": 12,
+  "SEV_HIGH_BELOW": 35.0,
+  "SEV_MEDIUM_BELOW": 50.0,
+  "SEVERITY_LEVELS": [
+   "LOW",
+   "MEDIUM",
+   "HIGH"
+  ],
+  "SEV_SCORES": {
+   "HIGH": 1.0,
+   "MEDIUM": 0.5,
+   "LOW": 0.2
+  },
+  "ZONE_SPEED_THRESHOLD": 50.0,
+  "DBSCAN_EPS_DEG": 0.015,
+  "DBSCAN_MIN_SAMPLES": 2,
+  "BFS_HOPS": 2,
+  "BFS_ADJ_THRESHOLD": 0.3,
+  "TREND_DELTA_MPH": 2.0,
+  "SENSOR_FAULT_SPEED": 0.0,
+  "GMP_EDGE_THRESHOLD": 0.0,
+  "GMP_LAMBDA": 0.3,
+  "GMP_WEIGHT_AGG": "mean",
+  "GMP_PRESSURE": "normalized",
+  "REROUTE_RADIUS_KM": 5.0,
+  "NEGOTIATION_ROUNDS": 3,
+  "COORDINATOR_FALLBACK": true,
+  "NEIGHBOR_THRESHOLD": 0.0,
+  "CONSENSUS_MIN_SEEDS": 2,
+  "GATE_SEVERE_OVERRIDE_MPH": 15.0,
+  "GATE_CASCADE_BLOCK_RISK": 0.85,
+  "RUSH_HOURS": [
+   [
+    7,
+    9
+   ],
+   [
+    16,
+    19
+   ]
+  ],
+  "MAX_RETRIES": 2,
+  "LLM_PROVIDER": "groq",
+  "LLM_BASE_URLS": {
+   "groq": "https://api.groq.com/openai/v1",
+   "local": "http://localhost:8000/v1"
+  },
+  "LLM_API_KEY_ENV": {
+   "groq": "GROQ_API_KEY",
+   "local": "MASTRA_LOCAL_API_KEY"
+  },
+  "WORKER_MODEL": "openai/gpt-oss-120b",
+  "SUPERVISOR_MODEL": "openai/gpt-oss-120b",
+  "DQ_MODEL": "openai/gpt-oss-20b",
+  "WORKER_TEMPERATURE": 0.2,
+  "SUPERVISOR_TEMPERATURE": 0.2,
+  "DQ_TEMPERATURE": 0.0,
+  "MAX_TOKENS": {
+   "worker": 4000,
+   "supervisor": 8000,
+   "dq": 2000
+  },
+  "REQUEST_TIMEOUT_S": 60,
+  "RATE_LIMIT_SLEEP_S": 0.0,
+  "RESULTS_DIR": "D:\\Deep Traffic Brain\\PART_1\\New_ipynb_file\\evaluation\\results",
+  "DEFAULT_FORECAST_SEED": 42
+ },
+ "file_sha1": {
+  "evaluation/__init__.py": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "evaluation/analyze_rule_cells.py": "6f71c2447e608d1c554a069072461166f1d7321f",
+  "evaluation/metrics.py": "1a2b1373b1c224ddb60fa8b0cc0f7de078c2f0e2",
+  "evaluation/run_ablation.py": "21ed53764318f65ee2cf19de300812037a175e68",
+  "evaluation/run_ablation_fast.py": "1713f7a3bc20eb2baae930a870b9bcd31e0e6c2e",
+  "evaluation/run_mastra.py": "14657b13eb736d5953b4eecf146dc39b1fa6b15a",
+  "evaluation/summarize_mastra.py": "29bb68f8bb09d5bba3dbe79cad716eef9ecb8820",
+  "pipeline/__init__.py": "b5fdc919845008158dde61be7928af807a29e606",
+  "pipeline/config.py": "5e50459d3029ce553b696006a86ee573d8fd2c90",
+  "pipeline/coordination/__init__.py": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "pipeline/coordination/agents.py": "4d57f347382225549aea2c577dece4255be9af4f",
+  "pipeline/coordination/common.py": "2f00ee3c38c665a483c41135d70d075a890df351",
+  "pipeline/coordination/coordinators.py": "fd26eef21f68b1b24d424695db266afb2b5ebe97",
+  "pipeline/coordination/negotiation.py": "c75e79ddb644ededd484c3f846fb428baf0e21f2",
+  "pipeline/data_source.py": "35121cd7e43c5f27328dd78127aeb3dc282814aa",
+  "pipeline/generate/__init__.py": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "pipeline/generate/advisory_dq_agent.py": "b86295cd4cef76d4ef2f30d3cf6389b0e35f05d5",
+  "pipeline/generate/det_guards.py": "a366c804b897df7190f4f20b60a38fb6ff857202",
+  "pipeline/generate/rules.py": "07e575c95834f8ad3ee2ca853ad852a86d1d9072",
+  "pipeline/generate/schema.py": "2a98d4280cc182cb4b25222420fa18db5ab2e62a",
+  "pipeline/generate/supervisor_agent.py": "c4b612ed006ca603deb05e54e2b145d0c956ce3f",
+  "pipeline/generate/zone_worker.py": "3d17a722b4ae18f693c7619725fbd41e531d1011",
+  "pipeline/graph/__init__.py": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "pipeline/graph/message_passing.py": "646eb8fece74935de385324763663fdf71672f9e",
+  "pipeline/graph/zone_state.py": "f2647c7421e54df38833af663bf195b1e97e5588",
+  "pipeline/inputs.py": "174bc602f4240510c0958dccb567c317548b0604",
+  "pipeline/llm_client.py": "db18a074cc96b9a1b78497d4e809d6526b53d961",
+  "pipeline/orchestrator.py": "eb5b8a9a3e4c0d6473da16ad8357dd12277eb6d7",
+  "pipeline/outputs/__init__.py": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "pipeline/outputs/writer.py": "e811a6a4b80cbf504baffd302052fe3d1a939f64",
+  "pipeline/parse.py": "828976f21868e4934e6c8c97e5cb116860855a33",
+  "pipeline/validate/__init__.py": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+  "pipeline/validate/forecast_gate.py": "3db7ee122b734f92d7e79a42cc36f46d4175d999",
+  "pipeline/zone_detection.py": "b589854d86ec8e1ebefa0c6b19ff70c1b2b992a4"
+ },
+ "started": "2026-10-17T23:58:16"
+}
