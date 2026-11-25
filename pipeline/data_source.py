@@ -51,7 +51,7 @@ def load_forecasts(seed: int, forecaster: str = "adaptive") -> np.ndarray:
     """
     if forecaster == "adaptive":
         path, key = C.FORECAST_FILES[seed]
-        slim = os.path.join(os.path.dirname(path), "..", "..", "assets", "forecasts_120scenarios.npz")
+        slim = os.path.join(C.ROOT, "assets", "forecasts_120scenarios.npz")
         slim = os.path.normpath(slim)
         if not os.path.exists(path) and os.path.exists(slim):
             arr = np.load(slim)[f"adaptive_s{seed}"]
@@ -212,8 +212,7 @@ def build_input(sample_idx: int, forecast_seed: int = C.DEFAULT_FORECAST_SEED,
     if mode == "forecast":
         forecasts = load_forecasts(forecast_seed, forecaster)
         # When using the slim 120-scenario NPZ the array is indexed by position, not sample_idx.
-        idx_map_path = os.path.join(os.path.dirname(C.FORECAST_FILES[forecast_seed][0]),
-                                    "..", "..", "assets", "forecast_index_map.json")
+        idx_map_path = os.path.join(C.ROOT, "assets", "forecast_index_map.json")
         idx_map_path = os.path.normpath(idx_map_path)
         if forecasts.shape[0] == 120 and os.path.exists(idx_map_path):
             import json as _json
